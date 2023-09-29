@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+
+    <style name="Ai.Theme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowBackground">#1E1D1D</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+        <item name="android:statusBarColor">#1E1D1D</item>
+        <item name="android:navigationBarColor">#1E1D1D</item>
+    </style>
+    <style name="Style.App.5_percent" parent="">
+        <item name="shapeAppearance">@style/ShapeAppearanceOverlay.App.5_percent</item>
+    </style>
+    <style name="ShapeAppearanceOverlay.App.5_percent" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">5%</item>
+    </style>
+
+</resources>

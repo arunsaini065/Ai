@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import com.bumptech.glide.Glide
 import com.rocks.ui.databinding.ActivityResultBinding
@@ -40,6 +41,13 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>() {
             finish()
 
         }
+    }
+
+    override fun onRegisterForActivityResult(activityResult: ActivityResult) {
+
+
+
+
     }
 
 }

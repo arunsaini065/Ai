@@ -3,13 +3,13 @@
 
     <application>
         <activity
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:theme="@style/Ai.Theme"
             android:name=".ResultActivity"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/Ai.Theme" />
     </application>
 
 </manifest>
