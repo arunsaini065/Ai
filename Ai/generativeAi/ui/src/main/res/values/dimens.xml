@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="spacing10">10dp</dimen>
+    <dimen name="size_50dp">50dp</dimen>
+    <dimen name="size_46dp">46dp</dimen>
+
+    <declare-styleable name="ViewSizeCalculate">
+    <!-- Sets view ratio size of width -->
+    <attr name="widthRatio" format="float" />
+    <!-- Sets view ratio size of height -->
+    <attr name="heightRatio" format="float" />
+    <!-- Sets view ratio size of square -->
+    <attr name="layoutSquare" format="boolean" />
+    <!-- Sets view ratio size of aspect -->
+    <attr name="layoutAspectRatio" format="float" />
+    <!-- Sets view ratio size of mode -->
+    <attr name="datumRatio">
+        <enum name="datumAuto" value="0" />
+        <enum name="datumWidth" value="1" />
+        <enum name="datumHeight" value="2" />
+    </attr>
+</declare-styleable>
+</resources>
