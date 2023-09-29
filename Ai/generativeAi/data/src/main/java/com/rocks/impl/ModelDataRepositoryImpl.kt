@@ -23,7 +23,13 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
                 val result = apiInterface?.getModelIdData(requestBody)
 
-                emit(ModelUiState.Success(result))
+                if (result?.status.equals("error")){
+
+                    emit(ModelUiState.Error(result?.message?:"error"))
+
+                }else {
+                    emit(ModelUiState.Success(result))
+                }
 
             }.onFailure {
 

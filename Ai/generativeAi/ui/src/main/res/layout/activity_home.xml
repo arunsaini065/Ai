@@ -163,6 +163,16 @@
                 </TextView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <ProgressBar
+                android:id="@+id/progress_circular"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/btnGenerate"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/app_name"
+                app:layout_constraintStart_toStartOf="@+id/app_name" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
