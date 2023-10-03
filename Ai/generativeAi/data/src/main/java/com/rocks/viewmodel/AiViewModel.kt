@@ -32,11 +32,11 @@ class AiViewModel (private val modelUseCase: ModelUseCase): ViewModel() {
 
          viewModelScope.launch {
 
-              modelUseCase.fetchIdModelBaseData(requestBody).collect {
+             /* modelUseCase.fetchIdModelBaseData(requestBody).collect {
 
                  _stateflowAiModel.value = it
 
-             }
+             }*/
 
          }
 

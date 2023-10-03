@@ -72,12 +72,12 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>() {
 
                     progressCircular.beGone()
 
-                    if (it.data != null) {
+//                    if (it.data != null) {
 
                         OutPutSingleton.setOutput(it.data)
 
                         ResultActivity.goToAiResultActivity(this@HomeActivity, activityLauncher)
-                    }
+//                    }
                 }else if (it is ModelUiState.Error){
 
                     progressCircular.beGone()

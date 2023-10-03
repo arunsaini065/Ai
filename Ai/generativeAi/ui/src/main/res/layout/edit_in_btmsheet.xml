@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/linearLayout"
+        android:background="#1E1D1D"
+        android:clipToPadding="false"
+        android:layout_width="match_parent"
+        android:paddingBottom="52dp"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Edit Input"
+            android:textSize="16dp"
+            android:layout_marginTop="18dp"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/edit"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edit_txt"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:minHeight="60dp"
+                android:textColorHint="@color/white"
+                android:hint="What do you want to create?"
+                android:background="@drawable/edttxt_bkgnd"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="20dp"
+                android:layout_height="20dp"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtmodel"
+            android:layout_marginTop="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/edit"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Model and Style"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/white"/>
+        
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/model_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/txtmodel">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_marginTop="16dp"
+                android:background="@drawable/model_drawable"
+                android:textColor="@color/white"
+                android:text="Choose Model"
+                app:layout_constraintTop_toTopOf="parent"
+
+                android:id="@+id/slct_model"
+                android:paddingStart="20dp"
+                android:gravity="center_vertical"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                app:drawableEndCompat="@drawable/arrow_drop_down"
+
+                android:paddingEnd="20dp"
+               app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/add_style"
+                android:layout_width="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                android:layout_height="60dp">
+            </androidx.appcompat.widget.AppCompatTextView>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_marginTop="16dp"
+                android:background="@drawable/model_drawable"
+                android:textColor="@color/white"
+                android:text="Add Style"
+                app:layout_constraintHorizontal_weight="1"
+                android:id="@+id/add_style"
+                android:paddingStart="20dp"
+                android:gravity="center_vertical"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintStart_toEndOf="@+id/slct_model"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:drawableEndCompat="@drawable/arrow_drop_down"
+                android:paddingEnd="20dp"
+
+                android:layout_width="0dp"
+                android:layout_height="60dp">
+            </androidx.appcompat.widget.AppCompatTextView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtsettings"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/model_style"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Advanced Settings"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/white"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_marginTop="16dp"
+            android:background="@drawable/model_drawable"
+            android:textColor="@color/white"
+            android:text="Choose Settings"
+            app:layout_constraintTop_toBottomOf="@+id/txtsettings"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/ch_setting"
+            android:paddingStart="20dp"
+            android:gravity="center_vertical"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            app:drawableEndCompat="@drawable/arrow_drop_down"
+            android:paddingEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+        </androidx.appcompat.widget.AppCompatTextView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_marginTop="22dp"
+            android:background="@drawable/generate_output_bg"
+            android:textColor="@color/black"
+            android:text="Generate"
+            android:textSize="18dp"
+            app:layout_constraintTop_toBottomOf="@+id/ch_setting"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/generate"
+            android:paddingStart="20dp"
+            android:gravity="center"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:paddingEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+        </androidx.appcompat.widget.AppCompatTextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -38,14 +38,14 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>() {
 
             val outPutSingleton = OutPutSingleton.getOutPut()
 
-            if (outPutSingleton?.output?.isEmpty() == false){
+//            if (outPutSingleton?.output?.isEmpty() == false){
 
-                Glide.with(this)
-                    .load(outPutSingleton.output[0])
-                    .into(mBinding.resultLoader)
+//                Glide.with(this)
+//                    .load(outPutSingleton.output[0])
+//                    .into(mBinding.resultLoader)
 
 
-            }
+//            }
 
 
 
@@ -54,6 +54,11 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>() {
 
             finish()
 
+        }
+
+        mBinding.editInput.setOnClickListener {
+            var btsheet = EditInputBtmSheet()
+            btsheet.show(supportFragmentManager,"")
         }
     }
 
