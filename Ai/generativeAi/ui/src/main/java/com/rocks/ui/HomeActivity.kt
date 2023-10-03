@@ -54,15 +54,22 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>() {
 
         mBinding.mStyle.setOnClickListener {
 
-            var btsheet = ModelBtmSheet()
-            btsheet.show(supportFragmentManager,"")
+
+           ModelBtmSheet().apply {
+
+                show(supportFragmentManager,"MODEL_BTM")
+
+            }
 
         }
 
         mBinding.advanceChoose.setOnClickListener {
 
-            var btsheet = SettingBtmSheet()
-            btsheet.show(supportFragmentManager,"")
+        SettingBtmSheet().apply {
+
+                show(supportFragmentManager,"SETTING_BTM")
+
+            }
         }
         lifecycleScope.launch {
 
@@ -72,12 +79,12 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>() {
 
                     progressCircular.beGone()
 
-//                    if (it.data != null) {
+                    if (it.data != null) {
 
                         OutPutSingleton.setOutput(it.data)
 
                         ResultActivity.goToAiResultActivity(this@HomeActivity, activityLauncher)
-//                    }
+                    }
                 }else if (it is ModelUiState.Error){
 
                     progressCircular.beGone()
@@ -107,8 +114,6 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>() {
                 }
 
             }
-
-
 
 
 

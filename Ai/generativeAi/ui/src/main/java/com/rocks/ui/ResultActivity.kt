@@ -47,38 +47,38 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>() {
 
             val outPutSingleton = OutPutSingleton.getOutPut()
 
-//            if (outPutSingleton?.output?.isEmpty() == false){
-//
-//                mBinding.resultProgressLoader.beVisible()
-//
-//                Glide.with(this).asBitmap()
-//
-//                    .load(outPutSingleton.output[0])
-//
-//                    .addListener(object :RequestListener<Bitmap>{
-//
-//                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>, isFirstResource: Boolean): Boolean {
-//
-//                            mBinding.resultProgressLoader.beGone()
-//
-//                            return false
-//
-//                        }
-//
-//                        override fun onResourceReady(resource: Bitmap, model: Any, target: Target<Bitmap>?, dataSource: DataSource, isFirstResource: Boolean): Boolean {
-//
-//                            mBinding.resultProgressLoader.beGone()
-//
-//                            downloadBitmap=resource
-//
-//                            return false
-//
-//                        }
-//
-//                    }).into(mBinding.resultLoader)
-//
-//
-//            }
+            if (outPutSingleton?.output?.isEmpty() == false){
+
+                mBinding.resultProgressLoader.beVisible()
+
+                Glide.with(this).asBitmap()
+
+                    .load(outPutSingleton.output[0])
+
+                    .addListener(object :RequestListener<Bitmap>{
+
+                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>, isFirstResource: Boolean): Boolean {
+
+                            mBinding.resultProgressLoader.beGone()
+
+                            return false
+
+                        }
+
+                        override fun onResourceReady(resource: Bitmap, model: Any, target: Target<Bitmap>?, dataSource: DataSource, isFirstResource: Boolean): Boolean {
+
+                            mBinding.resultProgressLoader.beGone()
+
+                            downloadBitmap=resource
+
+                            return false
+
+                        }
+
+                    }).into(mBinding.resultLoader)
+
+
+            }
 
 
 
@@ -106,8 +106,12 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>() {
         }
 
         mBinding.editInput.setOnClickListener {
-            var sheet = EditInputBtmSheet()
-            sheet.show(supportFragmentManager,"")
+
+             EditInputBtmSheet().apply {
+
+                 show(supportFragmentManager,"EDIT_INPUT")
+
+             }
         }
     }
 
