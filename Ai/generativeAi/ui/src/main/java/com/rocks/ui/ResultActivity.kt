@@ -47,7 +47,7 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>() {
 
             val outPutSingleton = OutPutSingleton.getOutPut()
 
-//            if (outPutSingleton?.output?.isEmpty() == false){
+            if (outPutSingleton?.output?.isEmpty() == false){
 
                 mBinding.resultProgressLoader.beVisible()
 
