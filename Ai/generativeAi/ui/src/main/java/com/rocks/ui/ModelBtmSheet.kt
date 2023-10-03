@@ -45,11 +45,4 @@ class ModelBtmSheet: BottomSheetDialogFragment() {
         } }
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
-
-
-        return bottomSheetDialog
-    }
-
 }
