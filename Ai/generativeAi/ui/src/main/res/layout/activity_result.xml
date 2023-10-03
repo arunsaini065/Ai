@@ -17,6 +17,7 @@
        </androidx.appcompat.widget.AppCompatImageView>
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/m_download"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginEnd="@dimen/spacing10"
             app:layout_constraintEnd_toEndOf="parent"
@@ -37,6 +38,16 @@
             app:layout_constraintBottom_toBottomOf="@+id/m_back_press"
             app:layout_constraintStart_toEndOf="@id/m_back_press"
             app:layout_constraintTop_toTopOf="@+id/m_back_press" />
+
+        <ProgressBar
+            android:id="@+id/result_progress_loader"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/result_loader"
+            app:layout_constraintEnd_toEndOf="@+id/result_loader"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/result_loader" />
 
 
         <com.google.android.material.imageview.ShapeableImageView

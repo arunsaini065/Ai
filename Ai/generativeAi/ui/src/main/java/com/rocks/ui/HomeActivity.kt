@@ -80,7 +80,20 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>() {
 
         btnGenerate.setOnClickListener {
 
-            _viewModel.postModelIdBase(Api.getBodyForModel("dog"))
+
+            runCatching {
+
+                val prompt = positivePrompt.text?.toString()?:""
+
+                if (prompt.isEmpty().not()) {
+
+                    _viewModel.postModelIdBase(Api.getBodyForModel(prompt))
+
+                }
+
+            }
+
+
 
 
 

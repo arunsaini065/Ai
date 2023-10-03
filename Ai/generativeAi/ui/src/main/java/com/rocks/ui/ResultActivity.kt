@@ -2,16 +2,25 @@ package com.rocks.ui
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.rocks.OutPutSingleton
+import com.rocks.downloader.FileDownloader
 import com.rocks.ui.databinding.ActivityResultBinding
 
 class ResultActivity : AiBaseActivity<ActivityResultBinding>() {
 
+
+    private lateinit var downloadBitmap:Bitmap
 
     companion object{
 
@@ -40,9 +49,33 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>() {
 
             if (outPutSingleton?.output?.isEmpty() == false){
 
-                Glide.with(this)
+                mBinding.resultProgressLoader.beVisible()
+
+                Glide.with(this).asBitmap()
+
                     .load(outPutSingleton.output[0])
-                    .into(mBinding.resultLoader)
+
+                    .addListener(object :RequestListener<Bitmap>{
+
+                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>, isFirstResource: Boolean): Boolean {
+
+                            mBinding.resultProgressLoader.beGone()
+
+                            return false
+
+                        }
+
+                        override fun onResourceReady(resource: Bitmap, model: Any, target: Target<Bitmap>?, dataSource: DataSource, isFirstResource: Boolean): Boolean {
+
+                            mBinding.resultProgressLoader.beGone()
+
+                            downloadBitmap=resource
+
+                            return false
+
+                        }
+
+                    }).into(mBinding.resultLoader)
 
 
             }
@@ -50,6 +83,22 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>() {
 
 
         }
+
+        mBinding.mDownload.setOnClickListener {
+
+            if (::downloadBitmap.isInitialized){
+
+                FileDownloader(lifecycleScope).saveImage(downloadBitmap){
+
+                    Toast.makeText(this,it.absolutePath,Toast.LENGTH_SHORT).show()
+
+                }
+
+            }
+
+        }
+
+
         mBinding.mBackPress.setOnClickListener {
 
             finish()
