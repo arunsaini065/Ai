@@ -14,7 +14,7 @@ object Api {
 
         val jsonParams: ArrayMap<String?, Any?> = ArrayMap()
 
-        jsonParams["key"] = "oXQquZgB44Ssi2bjm2JxGjE5CGthtW06iSaHzCsLqk4iEauI8L9OqyC1WDpf"
+        jsonParams["key"] = "TpiKVCfSqEzeCN7SEvAbF2HP7cLPHcQp0n6mj9DHUiCsgcrvfWprAAtCZeHT"
         jsonParams["model_id"] = "midjourney"
         jsonParams["prompt"] = prompt
         jsonParams["negative_prompt"] = "milk"

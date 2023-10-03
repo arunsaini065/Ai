@@ -4,12 +4,13 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import com.bumptech.glide.Glide
+import com.rocks.OutPutSingleton
 import com.rocks.ui.databinding.ActivityResultBinding
 
 class ResultActivity : AiBaseActivity<ActivityResultBinding>() {
-
 
 
     companion object{
@@ -33,13 +34,34 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>() {
 
     override fun onReadyActivity(savedInstanceState: Bundle?) {
 
-        Glide.with(this).load("https://cdn.pixabay.com/photo/2018/04/26/16/39/beach-3352363_1280.jpg").into(mBinding.resultLoader)
+        if (OutPutSingleton.hasOutput()) {
 
+            val outPutSingleton = OutPutSingleton.getOutPut()
+
+            if (outPutSingleton?.output?.isEmpty() == false){
+
+                Glide.with(this)
+                    .load(outPutSingleton.output[0])
+                    .into(mBinding.resultLoader)
+
+
+            }
+
+
+
+        }
         mBinding.mBackPress.setOnClickListener {
 
             finish()
 
         }
+    }
+
+    override fun onRegisterForActivityResult(activityResult: ActivityResult) {
+
+
+
+
     }
 
 }
