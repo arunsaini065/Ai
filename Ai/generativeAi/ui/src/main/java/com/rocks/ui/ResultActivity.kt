@@ -106,8 +106,12 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>() {
         }
 
         mBinding.editInput.setOnClickListener {
-            var btsheet = EditInputBtmSheet()
-            btsheet.show(supportFragmentManager,"")
+
+             EditInputBtmSheet().apply {
+
+                 show(supportFragmentManager,"EDIT_INPUT")
+
+             }
         }
     }
 
