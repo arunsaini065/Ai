@@ -34,6 +34,23 @@ class EditInputBtmSheet: BottomSheetDialogFragment() {
 
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        _binding.slctModel.setOnClickListener {
+
+            var btsheet = ModelBtmSheet()
+            activity?.supportFragmentManager?.let { it1 -> btsheet.show(it1, "") }
+        }
+
+
+
+        _binding.chSetting.setOnClickListener {
+            var btsheet = SettingBtmSheet()
+            activity?.supportFragmentManager?.let { it1 -> btsheet.show(it1, "") }
+
+        }
+    }
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
 
