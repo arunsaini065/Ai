@@ -29,6 +29,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
+            android:layout_marginTop="18dp"
             android:layout_height="wrap_content">
 
             <EditText
@@ -36,6 +37,7 @@
                 android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:minHeight="60dp"
+                android:paddingStart="20dp"
                 android:textColorHint="@color/white"
                 android:hint="What do you want to create?"
                 android:background="@drawable/edttxt_bkgnd"
@@ -88,10 +90,12 @@
                 app:layout_constraintEnd_toStartOf="@+id/add_style"
                 android:layout_width="0dp"
                 app:layout_constraintHorizontal_weight="1"
-                android:layout_height="60dp">
+                android:layout_height="50dp">
             </androidx.appcompat.widget.AppCompatTextView>
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_marginTop="16dp"
+                android:visibility="gone"
+
                 android:background="@drawable/model_drawable"
                 android:textColor="@color/white"
                 android:text="Add Style"
@@ -108,7 +112,7 @@
                 android:paddingEnd="20dp"
 
                 android:layout_width="0dp"
-                android:layout_height="60dp">
+                android:layout_height="50dp">
             </androidx.appcompat.widget.AppCompatTextView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
