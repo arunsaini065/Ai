@@ -41,7 +41,7 @@ class CropRatioRecyclerView : RecyclerView {
 
     }
 
-    fun init(context: Context) {
+    private fun init(context: Context) {
 
         _ratioMutableList.add(Ratio("1:1", 1, 1))
 

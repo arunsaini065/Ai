@@ -19,8 +19,8 @@ object Api {
         jsonParams["model_id"] = "midjourney"
         jsonParams["prompt"] = positivePrompt
         jsonParams["negative_prompt"] = negativePrompt
-        jsonParams["width"] = width
-        jsonParams["height"] = height
+        jsonParams["width"] = aspectRatio?.getSize()?.width.toString()
+        jsonParams["height"] = aspectRatio?.getSize()?.width.toString()
         jsonParams["safety_checker"] = safetyChecker
         jsonParams["samples"] = "1"
         jsonParams["num_inference_steps"] = numbInferenceSteps

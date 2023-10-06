@@ -1,11 +1,13 @@
 package com.rocks.ui
 
+import android.content.Context
 import android.os.Bundle
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.rocks.OnBodyHandlerListener
 import com.rocks.model.Model
 import com.rocks.ui.databinding.BtmSheetSelectmodelBinding
 
@@ -13,9 +15,22 @@ class ModelBtmSheet: BottomSheetDialogFragment() {
 
     private val _binding by lazy { BtmSheetSelectmodelBinding.inflate(layoutInflater) }
 
+    private lateinit var onBodyHandlerListener: OnBodyHandlerListener
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.BootomSheetDialogTheme);
+    }
+
+    override fun onAttach(context: Context) {
+
+        if (context is OnBodyHandlerListener){
+
+            onBodyHandlerListener = context
+
+        }
+
+        super.onAttach(context)
     }
 
 
@@ -23,7 +38,7 @@ class ModelBtmSheet: BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = with(_binding) {
+    ): View {
 
 
         return _binding.root
@@ -40,7 +55,16 @@ class ModelBtmSheet: BottomSheetDialogFragment() {
         tmpList.add(Model("https://content.delivery-asset.com/img/default/Notification/b51e426d-feb5-4c47-9d07-b74b267af305.jpg","Honey"))
         tmpList.add(Model("https://content.delivery-asset.com/img/default/Notification/c823eb77-a721-487f-82e5-2aa891dcb81b.jpg","Bebo"))
 
-        _binding.modelRv.adapter = context?.let { ModelAdapter(it).apply {
+        _binding.modelRv.adapter = context?.let { ModelAdapter {
+
+            if (::onBodyHandlerListener.isInitialized){
+
+                onBodyHandlerListener.getHandlerBody().modelId = it.model_id
+
+            }
+
+
+        }.apply {
             submitList(tmpList)
         } }
     }

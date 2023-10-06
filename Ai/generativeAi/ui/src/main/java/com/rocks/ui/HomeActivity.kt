@@ -11,12 +11,15 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.rocks.AspectRatio
 import com.rocks.BodyDataHandler
+import com.rocks.OnBodyHandlerListener
 import com.rocks.OutPutSingleton
 import com.rocks.api.Api
 import com.rocks.factory.AiViewModelFactory
 import com.rocks.impl.ModelDataRepositoryImpl
 import com.rocks.ui.databinding.ActivityHomeBinding
+import com.rocks.ui.ratio.CropRatioRecyclerView
 import com.rocks.uistate.ModelUiState
 import com.rocks.usecase.ModelUseCase
 import com.rocks.viewmodel.AiViewModel
@@ -26,10 +29,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class HomeActivity : AiBaseActivity<ActivityHomeBinding>() {
+class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener {
 
 
-    val bodyDataHandler by lazy { BodyDataHandler() }
+    private val bodyDataHandler by lazy { BodyDataHandler() }
 
 
     companion object{
@@ -89,7 +92,8 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>() {
 
                         ResultActivity.goToAiResultActivity(this@HomeActivity, activityLauncher)
                     }
-                }else if (it is ModelUiState.Error){
+
+                } else if (it is ModelUiState.Error){
 
                     progressCircular.beGone()
 
@@ -99,6 +103,16 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>() {
 
                     progressCircular.beVisible()
                 }
+
+            }
+
+        }
+
+        aspectRatioRv.iChangeRatioListener= object :CropRatioRecyclerView.IChangeRatioListener{
+
+            override fun onChangeRatio(width: Int, height: Int) {
+
+                bodyDataHandler.aspectRatio = AspectRatio(widthR = width, heightR = height)
 
             }
 
@@ -133,6 +147,7 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>() {
 
     }
 
+    override fun getHandlerBody() = bodyDataHandler
 
 
 }

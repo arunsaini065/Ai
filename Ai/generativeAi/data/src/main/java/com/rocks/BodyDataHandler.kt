@@ -10,9 +10,7 @@ class BodyDataHandler {
 
     var modelId:String?="midjourney"
 
-    var width:String?="512"
-
-    var height:String?="512"
+    var aspectRatio:AspectRatio?= AspectRatio()
 
     var safetyChecker:String?="yes"
 
