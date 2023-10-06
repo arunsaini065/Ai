@@ -1,6 +1,7 @@
 package com.rocks.api
 
 import android.util.ArrayMap
+import com.rocks.BodyDataHandler
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -10,25 +11,25 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object Api {
 
-    fun getBodyForModel(prompt:String): RequestBody {
+    fun getBodyForModel(bodyDataHandler: BodyDataHandler): RequestBody = with(bodyDataHandler) {
 
         val jsonParams: ArrayMap<String?, Any?> = ArrayMap()
 
-        jsonParams["key"] = "TpiKVCfSqEzeCN7SEvAbF2HP7cLPHcQp0n6mj9DHUiCsgcrvfWprAAtCZeHT"
+        jsonParams["key"] = key
         jsonParams["model_id"] = "midjourney"
-        jsonParams["prompt"] = prompt
-        jsonParams["negative_prompt"] = "milk"
-        jsonParams["width"] = "512"
-        jsonParams["height"] = "512"
-        jsonParams["safety_checker"] = "yes"
+        jsonParams["prompt"] = positivePrompt
+        jsonParams["negative_prompt"] = negativePrompt
+        jsonParams["width"] = width
+        jsonParams["height"] = height
+        jsonParams["safety_checker"] = safetyChecker
         jsonParams["samples"] = "1"
-        jsonParams["num_inference_steps"] = "30"
-        jsonParams["seed"] = "null"
-        jsonParams["guidance_scale"] = "7.5"
-        jsonParams["webhook"] = "null"
-        jsonParams["track_id"] = "null"
-        jsonParams["tomesd"] = "yes"
-        jsonParams["scheduler"] = "DPMSolverMultistepScheduler"
+        jsonParams["num_inference_steps"] = numbInferenceSteps
+        jsonParams["seed"] = seed
+        jsonParams["guidance_scale"] = guidanceScale
+        jsonParams["webhook"] = webhook
+        jsonParams["track_id"] =trackId
+        jsonParams["tomesd"] = tomesd
+        jsonParams["scheduler"] = scheduler
 
         return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), JSONObject(jsonParams).toString())
 

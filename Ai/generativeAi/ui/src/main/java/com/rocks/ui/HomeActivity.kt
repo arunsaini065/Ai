@@ -11,6 +11,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.rocks.BodyDataHandler
 import com.rocks.OutPutSingleton
 import com.rocks.api.Api
 import com.rocks.factory.AiViewModelFactory
@@ -26,6 +27,9 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class HomeActivity : AiBaseActivity<ActivityHomeBinding>() {
+
+
+    val bodyDataHandler by lazy { BodyDataHandler() }
 
 
     companion object{
@@ -109,7 +113,9 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>() {
 
                 if (prompt.isEmpty().not()) {
 
-                    _viewModel.postModelIdBase(Api.getBodyForModel(prompt))
+                    bodyDataHandler.positivePrompt=prompt
+
+                    _viewModel.postModelIdBase(Api.getBodyForModel(bodyDataHandler))
 
                 }
 
