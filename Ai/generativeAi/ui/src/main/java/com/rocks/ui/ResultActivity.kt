@@ -35,8 +35,11 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
         runCatching {
 
+             if (::bodyDataHandler.isInitialized){
 
-            _viewModel.postModelIdBase(Api.getBodyForModel(bodyDataHandler))
+                _viewModel.postModelIdBase(Api.getBodyForModel(bodyDataHandler))
+
+             }
 
 
         }
