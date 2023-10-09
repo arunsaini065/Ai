@@ -122,9 +122,6 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
         btnGenerate.setOnClickListener {
 
-            OutPutSingleton.setBodyHandler(bodyDataHandler)
-            ResultActivity.goToAiResultActivity(this@HomeActivity, activityLauncher)
-
             runCatching {
 
                 val prompt = positivePrompt.text?.toString()?:""
