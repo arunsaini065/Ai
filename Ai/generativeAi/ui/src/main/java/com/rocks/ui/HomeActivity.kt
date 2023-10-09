@@ -80,31 +80,33 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
         }
         lifecycleScope.launch {
 
-            _viewModel.stateflowAiModel.collect{
 
-                if (it is ModelUiState.Success) {
+                 _viewModel.stateflowAiModel.collect{
 
-                    progressCircular.beGone()
+                     if (it is ModelUiState.Success) {
 
-                    if (it.data != null) {
+                         progressCircular.beGone()
 
-                        OutPutSingleton.setOutput(it.data)
+                         if (it.data != null) {
 
-                        ResultActivity.goToAiResultActivity(this@HomeActivity, activityLauncher)
-                    }
+                             OutPutSingleton.setOutput(it.data)
 
-                } else if (it is ModelUiState.Error){
+                             OutPutSingleton.setBodyHandler(bodyDataHandler)
 
-                    progressCircular.beGone()
+                             ResultActivity.goToAiResultActivity(this@HomeActivity, activityLauncher)
+                         }
 
-                    Toast.makeText(this@HomeActivity,it.message,Toast.LENGTH_SHORT).show()
+                     } else if (it is ModelUiState.Error){
 
-                }else if (it is ModelUiState.Loading){
+                         progressCircular.beGone()
 
-                    progressCircular.beVisible()
-                }
 
-            }
+                     }else if (it is ModelUiState.Loading){
+
+                         progressCircular.beVisible()
+                     }
+
+                 }
 
         }
 
@@ -120,6 +122,8 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
         btnGenerate.setOnClickListener {
 
+            OutPutSingleton.setBodyHandler(bodyDataHandler)
+            ResultActivity.goToAiResultActivity(this@HomeActivity, activityLauncher)
 
             runCatching {
 

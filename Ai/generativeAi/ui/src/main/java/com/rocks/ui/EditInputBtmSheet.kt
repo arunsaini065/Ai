@@ -1,62 +1,95 @@
 package com.rocks.ui
 
-import android.app.Dialog
+
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import androidx.core.widget.addTextChangedListener
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.rocks.OnBodyHandlerListener
+import com.rocks.OnGeneratorListener
 import com.rocks.ui.databinding.EditInBtmsheetBinding
 
 class EditInputBtmSheet: BottomSheetDialogFragment() {
 
+    private lateinit var onBodyHandlerListener: OnBodyHandlerListener
+
+    private lateinit var onGeneratorListener: OnGeneratorListener
+
     private val _binding by lazy { EditInBtmsheetBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.BootomSheetDialogTheme);
+
+        setStyle(STYLE_NORMAL, R.style.BootomSheetDialogTheme)
+
     }
 
     override fun onAttach(context: Context) {
+
+        if (context is OnBodyHandlerListener){
+
+            onBodyHandlerListener = context
+
+        }
+
+        if (context is OnGeneratorListener){
+
+            onGeneratorListener = context
+
+        }
+
         super.onAttach(context)
     }
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View = with(_binding) {
 
-//        modelRv.adapter = ModelAdapter()
 
-        return _binding.root
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View = _binding.root
 
-    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
+
+        _binding.editTxt.addTextChangedListener {
+
+            if (::onBodyHandlerListener.isInitialized){
+
+                onBodyHandlerListener.getHandlerBody().positivePrompt = it.toString()
+
+            }
+
+        }
 
         _binding.slctModel.setOnClickListener {
 
-            var btsheet = ModelBtmSheet()
-            activity?.supportFragmentManager?.let { it1 -> btsheet.show(it1, "") }
+            activity?.supportFragmentManager?.let { it1 -> ModelBtmSheet().show(it1,"") }
+
+        }
+
+        _binding.generate.setOnClickListener {
+
+            if (::onGeneratorListener.isInitialized) {
+
+                onGeneratorListener.onGenerator()
+
+            }
+
         }
 
 
 
         _binding.chSetting.setOnClickListener {
-            var btsheet = SettingBtmSheet()
-            activity?.supportFragmentManager?.let { it1 -> btsheet.show(it1, "") }
+
+            activity?.supportFragmentManager?.let { it1 -> SettingBtmSheet().show(it1,"") }
+
 
         }
     }
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
 
-
-        return bottomSheetDialog
-    }
 
 }
 
