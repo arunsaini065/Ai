@@ -26,7 +26,7 @@ class CropRatioRecyclerView : RecyclerView {
 
     var iChangeRatioListener: IChangeRatioListener? = null
 
-    private var selectedItem: Int = -1
+    private var selectedItem: Int = 0
 
     data class Ratio(val name: String?,  val width: Int,val height: Int,val src:Int=0 ){
         fun toId() = "$width/$height"
@@ -190,12 +190,6 @@ class CropRatioRecyclerView : RecyclerView {
 
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun clearRatio(){
-        selectedItem=-1
-        adapter?.notifyDataSetChanged()
-    }
-    fun isRatio()=selectedItem!=-1
 
     @SuppressLint("NotifyDataSetChanged")
     fun notifySelectedItem(bodyDataHandler: BodyDataHandler?, lifecycleScope: LifecycleCoroutineScope) {

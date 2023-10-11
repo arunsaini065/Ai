@@ -26,6 +26,8 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
                 Log.d("@Arun", "getModelIdBaseData: "+result?.status)
 
+                Log.d("@Arun", "getModelIdBaseData  -msg-  : "+result?.message)
+
                 if (result?.status.equals("error")){
 
                     emit(ModelUiState.Error(result?.message?:"error"))
