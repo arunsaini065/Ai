@@ -20,6 +20,16 @@ import kotlinx.coroutines.launch
 
 class SettingBtmSheet: BottomSheetDialogFragment() {
 
+    companion object{
+
+        const val CGF_SCALE_MIN =  10
+
+        const val SEED_SCALE_MIN =  1
+
+        const val STEP_SCALE_MIN =  11
+
+    }
+
     override fun onCancel(dialog: DialogInterface) {
 
         if (::onCancelFragment.isInitialized){
@@ -44,8 +54,111 @@ class SettingBtmSheet: BottomSheetDialogFragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?)  {
+
         super.onCreate(savedInstanceState)
+
         setStyle(STYLE_NORMAL, R.style.BootomSheetDialogTheme)
+
+        _settingBinding.seek1.cfgSeekbar.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+
+                var p = progress
+
+                if (progress<= CGF_SCALE_MIN){
+                    p = CGF_SCALE_MIN
+                }
+
+                if (::onBodyHandlerListener.isInitialized){
+
+                    onBodyHandlerListener.getHandlerBody().guidanceScale = p.toDouble().div(10)
+
+                    _settingBinding.seek1.cgfCount.text = "${onBodyHandlerListener.getHandlerBody().guidanceScale}"
+
+
+                }
+            }
+        })
+        _settingBinding.seek2.stepsSeekbar.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+
+
+                val p = progress+STEP_SCALE_MIN
+
+
+                if (::onBodyHandlerListener.isInitialized){
+
+                    onBodyHandlerListener.getHandlerBody().numbInferenceSteps = p.toString()
+
+                    _settingBinding.seek2.stepsCount.text = "${onBodyHandlerListener.getHandlerBody().numbInferenceSteps}"
+
+
+                }
+            }
+        })
+
+        _settingBinding.seek3.seedSeekbar.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+
+                var p = progress
+
+                if (progress<= SEED_SCALE_MIN){
+
+                    p = SEED_SCALE_MIN
+
+                }
+
+                if (::onBodyHandlerListener.isInitialized){
+
+                    onBodyHandlerListener.getHandlerBody().seed = p
+
+                    _settingBinding.seek3.stepsCount.text = "${onBodyHandlerListener.getHandlerBody().seed}"
+
+
+                }
+            }
+        })
+
+
+        if (::onBodyHandlerListener.isInitialized) {
+
+            with(onBodyHandlerListener.getHandlerBody()){
+
+                _settingBinding.seek1.cfgSeekbar.progress = (guidanceScale?.times(10.00))?.toInt()?:0
+
+                _settingBinding.seek2.stepsSeekbar.progress = numbInferenceSteps?.toInt()?:0
+
+                _settingBinding.seek3.seedSeekbar.progress=seed?:0
+
+            }
+
+        }
 
         _settingBinding.negativePrompt.addTextChangedListener {
 
@@ -66,58 +179,8 @@ class SettingBtmSheet: BottomSheetDialogFragment() {
             }
         }
 
-     _settingBinding.seedTxt.addTextChangedListener {
-
-            if (::onBodyHandlerListener.isInitialized){
-
-                onBodyHandlerListener.getHandlerBody().seed = it.toString().toInt()
-
-            }
-
-        }
-
-        _settingBinding.stepsSeekbar.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
-
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-                if (::onBodyHandlerListener.isInitialized){
-
-                    onBodyHandlerListener.getHandlerBody().numbInferenceSteps = seekBar?.progress.toString()
-
-                }
-
-            }
-        })
-
-        _settingBinding.cfgSeekbar.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
-
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-                if (::onBodyHandlerListener.isInitialized){
-
-                    onBodyHandlerListener.getHandlerBody().guidanceScale = seekBar?.progress?.toDouble()
 
 
-                }
-
-            }
-        })
 
         _settingBinding.aspectRatioRvStng.iChangeRatioListener = object :CropRatioRecyclerView.IChangeRatioListener{
 

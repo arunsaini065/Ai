@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/linearLayout"
         android:background="#1E1D1D"
         android:paddingBottom="42dp"
@@ -92,38 +92,30 @@
             app:layout_constraintTop_toBottomOf="@id/aspect_ratio_rv_stng"
             app:layout_constraintStart_toStartOf="parent" />
 
+          <include
+              android:id="@+id/seek_1"
+              layout="@layout/cgf_scale_seekbar">
+          </include>
 
-        <SeekBar
-            android:id="@+id/cfg_seekbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="12dp"
-            app:layout_constraintTop_toBottomOf="@id/txt3"
-            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/txt4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-
             android:text="Steps"
             android:textSize="16dp"
             android:textColor="@color/white"
             android:layout_marginStart="12dp"
             android:layout_marginTop="18dp"
-            app:layout_constraintTop_toBottomOf="@id/cfg_seekbar"
-            app:layout_constraintStart_toStartOf="parent"  />
+            app:layout_constraintTop_toBottomOf="@id/cfg_seekbar_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="NotSibling" />
 
+         <include
+             android:id="@+id/seek_2"
+             layout="@layout/steps_seekbar">
+        </include>
 
-        <SeekBar
-            android:id="@+id/steps_seekbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="12dp"
-            app:layout_constraintTop_toBottomOf="@id/txt4"
-            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/txt5"
@@ -131,20 +123,20 @@
             android:layout_height="wrap_content"
             android:text="Seed"
             android:textSize="16dp"
+
             android:layout_marginTop="18dp"
             android:layout_marginStart="12dp"
             android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/steps_seekbar"
-            app:layout_constraintStart_toStartOf="parent"  />
+            app:layout_constraintTop_toBottomOf="@id/steps_seekbar_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="NotSibling" />
 
-        <SeekBar
-            android:id="@+id/seed_seekbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="12dp"
-            app:layout_constraintTop_toBottomOf="@id/txt5"
-            app:layout_constraintEnd_toEndOf="@id/txt5"
-            app:layout_constraintStart_toStartOf="@id/txt5" />
+        <include
+            android:id="@+id/seek_3"
+            layout="@layout/seed_seekbar">
+        </include>
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
