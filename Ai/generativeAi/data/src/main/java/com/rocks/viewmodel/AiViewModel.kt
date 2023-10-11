@@ -32,11 +32,11 @@ class AiViewModel (private val modelUseCase: ModelUseCase): ViewModel() {
 
          viewModelScope.launch {
 
-            /*  modelUseCase.fetchIdModelBaseData(requestBody).collect {
+              modelUseCase.fetchIdModelBaseData(requestBody).collect {
 
                  _stateflowAiModel.value = it
 
-             }*/
+             }
          }
 
     }
@@ -44,12 +44,12 @@ class AiViewModel (private val modelUseCase: ModelUseCase): ViewModel() {
     fun postModelIdsList(requestBody: RequestBody)  {
 
          viewModelScope.launch {
-/*
+
               modelUseCase.getAllModelList(requestBody).collect {
 
                   _stateflowAiModelList.value = it
 
-             }*/
+             }
 
          }
 
@@ -62,12 +62,12 @@ class AiViewModel (private val modelUseCase: ModelUseCase): ViewModel() {
 
          viewModelScope.launch {
 
-           /*   modelUseCase.getSchedulerList(requestBody).collect {
+              modelUseCase.getSchedulerList(requestBody).collect {
 
                   _stateflowAiModelSchedulerList.value = it
 
              }
-*/
+
          }
 
     }
