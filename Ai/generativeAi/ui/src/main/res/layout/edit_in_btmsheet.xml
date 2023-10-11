@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:minHeight="60dp"
                 android:paddingStart="20dp"
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/text_hint"
                 android:hint="What do you want to create?"
                 android:background="@drawable/edttxt_bkgnd"
                 android:layout_height="wrap_content"

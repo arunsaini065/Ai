@@ -74,6 +74,7 @@
                 android:layout_marginTop="@dimen/spacing10"
                 android:background="@drawable/model_drawable"
                 android:textColor="@color/white"
+                android:textColorHint="@color/text_hint"
                 android:id="@+id/m_style"
                 android:paddingStart="20dp"
                 android:gravity="center_vertical"
