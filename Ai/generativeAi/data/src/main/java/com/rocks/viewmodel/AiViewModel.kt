@@ -3,7 +3,7 @@ package com.rocks.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rocks.model.ApiOutput
-import com.rocks.model.ModelListData
+import com.rocks.model.ModelListDataItem
 import com.rocks.model.SchedulerList
 import com.rocks.uistate.ModelUiState
 import com.rocks.usecase.ModelUseCase
@@ -17,7 +17,7 @@ class AiViewModel (private val modelUseCase: ModelUseCase): ViewModel() {
 
     private val _stateflowAiModel:MutableStateFlow<ModelUiState<ApiOutput>> = MutableStateFlow(ModelUiState.Success(null))
 
-    private val _stateflowAiModelList:MutableStateFlow<ModelUiState<ModelListData>> = MutableStateFlow(ModelUiState.Success(null))
+    private val _stateflowAiModelList:MutableStateFlow<ModelUiState<MutableList<ModelListDataItem>>> = MutableStateFlow(ModelUiState.Success(null))
 
     private val _stateflowAiModelSchedulerList:MutableStateFlow<ModelUiState<SchedulerList>> = MutableStateFlow(ModelUiState.Success(null))
 
@@ -32,12 +32,11 @@ class AiViewModel (private val modelUseCase: ModelUseCase): ViewModel() {
 
          viewModelScope.launch {
 
-             /* modelUseCase.fetchIdModelBaseData(requestBody).collect {
+              modelUseCase.fetchIdModelBaseData(requestBody).collect {
 
                  _stateflowAiModel.value = it
 
-             }*/
-
+             }
          }
 
     }

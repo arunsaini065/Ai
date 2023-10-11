@@ -1,24 +1,46 @@
 package com.rocks.ui
 
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rocks.AspectRatio
 import com.rocks.OnBodyHandlerListener
 import com.rocks.ui.databinding.ChooseSettingBtmsheetBinding
 import com.rocks.ui.ratio.CropRatioRecyclerView
+import kotlinx.coroutines.launch
 
 class SettingBtmSheet: BottomSheetDialogFragment() {
 
+    override fun onCancel(dialog: DialogInterface) {
+
+        if (::onCancelFragment.isInitialized){
+
+            onCancelFragment.onCancel()
+
+        }
+
+        super.onCancel(dialog)
+
+    }
+
     private lateinit var onBodyHandlerListener: OnBodyHandlerListener
+
+    private lateinit var onCancelFragment: OnCancelFragment
+
 
 
     private val _settingBinding by lazy { ChooseSettingBtmsheetBinding.inflate(layoutInflater) }
+
+    private val _aiUiViewModel by activityViewModels<AiUiViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?)  {
@@ -35,11 +57,20 @@ class SettingBtmSheet: BottomSheetDialogFragment() {
 
         }
 
+        lifecycleScope.launch {
+
+            _aiUiViewModel.ratioUpdate.collect{
+
+                _settingBinding.aspectRatioRvStng.notifySelectedItem(it,lifecycleScope)
+
+            }
+        }
+
      _settingBinding.seedTxt.addTextChangedListener {
 
             if (::onBodyHandlerListener.isInitialized){
 
-                onBodyHandlerListener.getHandlerBody().seed = it.toString()
+                onBodyHandlerListener.getHandlerBody().seed = it.toString().toInt()
 
             }
 
@@ -67,6 +98,7 @@ class SettingBtmSheet: BottomSheetDialogFragment() {
         })
 
         _settingBinding.cfgSeekbar.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
+
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
 
             }
@@ -79,7 +111,8 @@ class SettingBtmSheet: BottomSheetDialogFragment() {
 
                 if (::onBodyHandlerListener.isInitialized){
 
-                    onBodyHandlerListener.getHandlerBody().guidanceScale = seekBar?.progress.toString()
+                    onBodyHandlerListener.getHandlerBody().guidanceScale = seekBar?.progress?.toDouble()
+
 
                 }
 
@@ -93,6 +126,8 @@ class SettingBtmSheet: BottomSheetDialogFragment() {
                 if (::onBodyHandlerListener.isInitialized){
 
                     onBodyHandlerListener.getHandlerBody().aspectRatio = AspectRatio(widthR = width, heightR = height)
+
+                    _aiUiViewModel.ratioUpdate.value = onBodyHandlerListener.getHandlerBody()
 
                 }
 
@@ -108,6 +143,11 @@ class SettingBtmSheet: BottomSheetDialogFragment() {
         if (context is OnBodyHandlerListener){
 
             onBodyHandlerListener = context
+
+        }
+        if (context is OnCancelFragment) {
+
+            onCancelFragment = context
 
         }
 

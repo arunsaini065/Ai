@@ -8,8 +8,14 @@
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
-            android:exported="false"
-            android:theme="@style/Ai.Theme" />
+            android:exported="true"
+            android:theme="@style/Ai.Theme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

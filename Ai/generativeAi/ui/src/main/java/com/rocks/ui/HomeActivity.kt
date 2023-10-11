@@ -7,9 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
-
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.rocks.AspectRatio
 import com.rocks.BodyDataHandler
@@ -23,16 +21,37 @@ import com.rocks.ui.ratio.CropRatioRecyclerView
 import com.rocks.uistate.ModelUiState
 import com.rocks.usecase.ModelUseCase
 import com.rocks.viewmodel.AiViewModel
-
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener {
+class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener,OnCancelFragment {
+
+    override fun onCancel() {
+
+        lifecycleScope.launch {
+
+            _aiUiViewModel.ratioUpdate.collect{
+
+                mBinding.aspectRatioRv.notifySelectedItem(it,lifecycleScope)
+
+            }
+
+        }
+
+        lifecycleScope.launch {
+
+            _aiUiViewModel.styleUpdate.collect{
+
+                mBinding.mStyle.text = it?.modelId
+
+            }
+        }
+
+    }
 
 
     private val bodyDataHandler by lazy { BodyDataHandler() }
+
+    private val _aiUiViewModel by viewModels<AiUiViewModel>()
 
 
     companion object{
@@ -53,10 +72,16 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
     override val mBinding: ActivityHomeBinding by lazy { ActivityHomeBinding.inflate(layoutInflater) }
 
-    private val _viewModel by lazy { ViewModelProvider(this,AiViewModelFactory(ModelUseCase(ModelDataRepositoryImpl(Api.createApi()))))[AiViewModel::class.java] }
+    private val _viewModel by viewModels<AiViewModel> { AiViewModelFactory(ModelUseCase(ModelDataRepositoryImpl(Api.createApi()))) }
+
+
 
 
     override fun onReadyActivity(savedInstanceState: Bundle?) = with(mBinding) {
+
+        _viewModel.postModelIdsList(Api.getBodyOnlyKey(bodyDataHandler))
+
+        mBinding.mStyle.text = bodyDataHandler.modelId
 
 
         mBinding.mStyle.setOnClickListener {
@@ -69,6 +94,7 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
             }
 
         }
+
 
         mBinding.advanceChoose.setOnClickListener {
 
@@ -98,6 +124,8 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
                      } else if (it is ModelUiState.Error){
 
+                         Toast.makeText(this@HomeActivity,""+it.message,Toast.LENGTH_SHORT).show()
+
                          progressCircular.beGone()
 
 
@@ -110,15 +138,22 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
         }
 
+
+
         aspectRatioRv.iChangeRatioListener= object :CropRatioRecyclerView.IChangeRatioListener{
 
             override fun onChangeRatio(width: Int, height: Int) {
 
                 bodyDataHandler.aspectRatio = AspectRatio(widthR = width, heightR = height)
 
+                _aiUiViewModel.ratioUpdate.value = bodyDataHandler
+
             }
 
         }
+
+
+
 
         btnGenerate.setOnClickListener {
 
@@ -148,7 +183,10 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
     }
 
-    override fun getHandlerBody() = bodyDataHandler
+    override fun getHandlerBody():BodyDataHandler{
+
+        return bodyDataHandler
+    }
 
 
 }

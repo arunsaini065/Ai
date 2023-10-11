@@ -1,8 +1,9 @@
 package com.rocks.impl
 
+import android.util.Log
 import com.rocks.api.ApiInterface
 import com.rocks.model.ApiOutput
-import com.rocks.model.ModelListData
+import com.rocks.model.ModelListDataItem
 import com.rocks.model.SchedulerList
 import com.rocks.repository.ModelDataRepository
 import com.rocks.uistate.ModelUiState
@@ -23,17 +24,20 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
                 val result = apiInterface?.getModelIdData(requestBody)
 
+                Log.d("@Arun", "getModelIdBaseData: "+result?.status)
+
                 if (result?.status.equals("error")){
 
                     emit(ModelUiState.Error(result?.message?:"error"))
 
-                }else {
+                }else if (result?.status.equals("success")) {
                     emit(ModelUiState.Success(result))
                 }
 
             }.onFailure {
 
-                emit(ModelUiState.Error("error"))
+                emit(ModelUiState.Error(""+it))
+
             }
 
 
@@ -43,7 +47,7 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
 
 
-    override fun getModelListData(requestBody: RequestBody): Flow<ModelUiState<ModelListData>>  = flow<ModelUiState<ModelListData>> {
+    override fun getModelListData(requestBody: RequestBody): Flow<ModelUiState<MutableList<ModelListDataItem>>>  = flow<ModelUiState<MutableList<ModelListDataItem>>> {
 
 
         emit(ModelUiState.Loading())

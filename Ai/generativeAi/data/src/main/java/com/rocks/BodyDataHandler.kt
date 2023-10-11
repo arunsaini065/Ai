@@ -2,7 +2,7 @@ package com.rocks
 
 class BodyDataHandler {
 
-    var key  = "TpiKVCfSqEzeCN7SEvAbF2HP7cLPHcQp0n6mj9DHUiCsgcrvfWprAAtCZeHT"
+    var key  = "bXXHLMZmQL5D7Lgb4yM1ZWtUuqYleNf6Tqyz658zj1PIAvC7N2hk0jgtCk7N"
 
     var positivePrompt:String?=null
 
@@ -18,9 +18,9 @@ class BodyDataHandler {
 
     var numbInferenceSteps:String?="30"
 
-    var seed:String?="null"
+    var seed:Int?=89
 
-    var guidanceScale:String?="7.5"
+    var guidanceScale:Double?=7.5
 
     var webhook:String?="null"
 
@@ -29,6 +29,5 @@ class BodyDataHandler {
     var tomesd:String?="yes"
 
     var scheduler:String?="DPMSolverMultistepScheduler"
-
 
 }

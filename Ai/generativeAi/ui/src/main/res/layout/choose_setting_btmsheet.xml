@@ -42,6 +42,7 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:hint="Don't include..."
+
             android:id="@+id/negative_prompt"
             android:paddingStart="20dp"
             android:gravity="center_vertical"

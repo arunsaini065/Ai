@@ -49,6 +49,7 @@
                 app:layout_constraintTop_toBottomOf="@id/text_prompt"
                 app:layout_constraintEnd_toEndOf="@id/text_prompt"
                 android:gravity="top"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="@id/text_prompt"
                 android:layout_width="0dp"
                 android:padding="5dp"
@@ -57,7 +58,7 @@
             <TextView
 
                 android:id="@+id/model_and_style"
-                android:text="Model"
+                android:text="Style"
                 android:textColor="@color/white"
                 android:textSize="14dp"
                 android:textStyle="bold"
@@ -73,7 +74,6 @@
                 android:layout_marginTop="@dimen/spacing10"
                 android:background="@drawable/model_drawable"
                 android:textColor="@color/white"
-                android:text="V4"
                 android:id="@+id/m_style"
                 android:paddingStart="20dp"
                 android:gravity="center_vertical"

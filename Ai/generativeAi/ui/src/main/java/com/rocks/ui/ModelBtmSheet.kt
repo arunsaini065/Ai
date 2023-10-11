@@ -1,25 +1,66 @@
 package com.rocks.ui
 
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rocks.OnBodyHandlerListener
-import com.rocks.model.Model
+import com.rocks.stripHtml
 import com.rocks.ui.databinding.BtmSheetSelectmodelBinding
+import com.rocks.viewmodel.AiViewModel
+import kotlinx.coroutines.launch
 
 class ModelBtmSheet: BottomSheetDialogFragment() {
+
+    private lateinit var onCancelFragment: OnCancelFragment
+
+
+    override fun onCancel(dialog: DialogInterface) {
+
+        if (::onCancelFragment.isInitialized){
+
+            onCancelFragment.onCancel()
+
+        }
+
+        super.onCancel(dialog)
+
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+
+        if (::onCancelFragment.isInitialized){
+
+            onCancelFragment.onCancel()
+
+        }
+
+        super.onDismiss(dialog)
+
+    }
 
     private val _binding by lazy { BtmSheetSelectmodelBinding.inflate(layoutInflater) }
 
     private lateinit var onBodyHandlerListener: OnBodyHandlerListener
 
+    private val _viewModel  by activityViewModels<AiViewModel>()
+
+    private val _aiUiViewModel  by activityViewModels<AiUiViewModel>()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.BootomSheetDialogTheme);
+
+        setStyle(STYLE_NORMAL, R.style.BootomSheetDialogTheme)
+
     }
 
     override fun onAttach(context: Context) {
@@ -27,6 +68,12 @@ class ModelBtmSheet: BottomSheetDialogFragment() {
         if (context is OnBodyHandlerListener){
 
             onBodyHandlerListener = context
+
+        }
+
+        if (context is OnCancelFragment) {
+
+            onCancelFragment = context
 
         }
 
@@ -40,33 +87,35 @@ class ModelBtmSheet: BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
 
+           lifecycleScope.launch {
+
+               _viewModel.stateflowAiModelList.collect{ list->
+
+                   _binding.modelRv.adapter = context?.let { ModelAdapter {
+
+
+                       if (::onBodyHandlerListener.isInitialized){
+
+
+                           onBodyHandlerListener.getHandlerBody().modelId = it.model_id
+
+                           _aiUiViewModel.styleUpdate.value = onBodyHandlerListener.getHandlerBody()
+
+                           dismiss()
+
+                       }
+
+
+                   }.apply {
+                       submitList(list.data)
+                   } }
+               }
+
+           }
+
 
         return _binding.root
 
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val tmpList:ArrayList<Model> = ArrayList()
-        tmpList.add(Model("https://content.delivery-asset.com/img/default/Notification/51dcc727-feb9-4fac-bd97-038acbba1d75.jpg","Baby"))
-        tmpList.add(Model("https://content.delivery-asset.com/img/default/Notification/6f8a5568-4387-4a69-8006-95a1f22eba46.jpg","Sona"))
-        tmpList.add(Model("https://content.delivery-asset.com/img/default/Notification/c1c2260c-e466-42a8-a910-4d88bb16f8b9.jpg","Babu"))
-        tmpList.add(Model("https://content.delivery-asset.com/img/default/Notification/62aa258e-66d2-4e6f-af3d-cdfe83d1b573.jpg","Chiku"))
-        tmpList.add(Model("https://content.delivery-asset.com/img/default/Notification/b51e426d-feb5-4c47-9d07-b74b267af305.jpg","Honey"))
-        tmpList.add(Model("https://content.delivery-asset.com/img/default/Notification/c823eb77-a721-487f-82e5-2aa891dcb81b.jpg","Bebo"))
-
-        _binding.modelRv.adapter = context?.let { ModelAdapter {
-
-            if (::onBodyHandlerListener.isInitialized){
-
-                onBodyHandlerListener.getHandlerBody().modelId = it.model_id
-
-            }
-
-
-        }.apply {
-            submitList(tmpList)
-        } }
     }
 
 }

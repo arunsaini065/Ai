@@ -15,4 +15,6 @@ class AspectRatio (private val height: Int = 1024, private val widthR: Int=1, pr
     }
 
     fun getSize() = Size(getWidth(),height)
+
+    fun toId() = "$widthR/$heightR"
 }

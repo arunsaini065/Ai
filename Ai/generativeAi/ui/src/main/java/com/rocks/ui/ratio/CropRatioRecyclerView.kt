@@ -5,8 +5,10 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.rocks.BodyDataHandler
 import com.rocks.ui.R
 import com.rocks.ui.beGone
 import com.rocks.ui.beVisible
@@ -14,6 +16,9 @@ import com.rocks.ui.databinding.CropRatioItemListBinding
 import com.rocks.ui.ratio.ratiolayout.RatioDatumMode
 import com.rocks.ui.setTintColor
 import com.rocks.ui.toBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CropRatioRecyclerView : RecyclerView {
 
@@ -23,7 +28,10 @@ class CropRatioRecyclerView : RecyclerView {
 
     private var selectedItem: Int = -1
 
-    data class Ratio(val name: String?,  val width: Int,val height: Int,val src:Int=0 )
+    data class Ratio(val name: String?,  val width: Int,val height: Int,val src:Int=0 ){
+        fun toId() = "$width/$height"
+
+    }
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -81,6 +89,7 @@ class CropRatioRecyclerView : RecyclerView {
         adapter = CropRatioViewAdapter()
 
     }
+
 
     private inner class CropRatioViewAdapter : Adapter<CropRatioViewHolder>() {
 
@@ -187,5 +196,26 @@ class CropRatioRecyclerView : RecyclerView {
         adapter?.notifyDataSetChanged()
     }
     fun isRatio()=selectedItem!=-1
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun notifySelectedItem(bodyDataHandler: BodyDataHandler?, lifecycleScope: LifecycleCoroutineScope) {
+
+        runCatching {
+
+            lifecycleScope.launch {
+
+                selectedItem = _ratioMutableList.map { it.toId() }.indexOf(bodyDataHandler?.aspectRatio?.toId())
+
+                withContext(Dispatchers.Main){
+
+                    adapter?.notifyDataSetChanged()
+
+                }
+            }
+
+
+        }
+
+    }
 
 }

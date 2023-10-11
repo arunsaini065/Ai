@@ -1,7 +1,7 @@
 package com.rocks.repository
 
 import com.rocks.model.ApiOutput
-import com.rocks.model.ModelListData
+import com.rocks.model.ModelListDataItem
 import com.rocks.model.SchedulerList
 import com.rocks.uistate.ModelUiState
 import kotlinx.coroutines.flow.Flow
@@ -12,7 +12,7 @@ interface ModelDataRepository {
 
     fun getModelIdBaseData(requestBody: RequestBody):Flow<ModelUiState<ApiOutput>>
 
-    fun getModelListData(requestBody: RequestBody):Flow<ModelUiState<ModelListData>>
+    fun getModelListData(requestBody: RequestBody):Flow<ModelUiState<MutableList<ModelListDataItem>>>
 
     fun getSchedulerList(requestBody: RequestBody):Flow<ModelUiState<SchedulerList>>
 

@@ -3,10 +3,12 @@ package com.rocks.api
 import android.util.ArrayMap
 import com.rocks.BodyDataHandler
 import okhttp3.MediaType
+import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 
 object Api {
@@ -29,17 +31,17 @@ object Api {
         jsonParams["webhook"] = webhook
         jsonParams["track_id"] =trackId
         jsonParams["tomesd"] = tomesd
-        jsonParams["scheduler"] = scheduler
+       // jsonParams["scheduler"] = scheduler
 
         return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), JSONObject(jsonParams).toString())
 
     }
 
-    fun getBodyOnlyKey(): RequestBody {
+    fun getBodyOnlyKey(bodyDataHandler: BodyDataHandler): RequestBody {
 
         val jsonParams: ArrayMap<String?, Any?> = ArrayMap()
 
-        jsonParams["key"] = "oXQquZgB44Ssi2bjm2JxGjE5CGthtW06iSaHzCsLqk4iEauI8L9OqyC1WDpf"
+        jsonParams["key"] = bodyDataHandler.key
 
         return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), JSONObject(jsonParams).toString())
 
@@ -50,8 +52,14 @@ object Api {
 
     private fun getInstance(): Retrofit {
 
+        val client: OkHttpClient.Builder = OkHttpClient.Builder()
+        client.connectTimeout(150, TimeUnit.SECONDS)
+        client.readTimeout(150, TimeUnit.SECONDS)
+        client.writeTimeout(150, TimeUnit.SECONDS)
+
         return Retrofit.Builder().baseUrl(getBaseUrl())
             .addConverterFactory(GsonConverterFactory.create())
+            .client(client.build())
             .build()
 
     }
