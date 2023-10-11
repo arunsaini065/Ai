@@ -79,6 +79,7 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
     override fun onReadyActivity(savedInstanceState: Bundle?) = with(mBinding) {
 
+
         _viewModel.postModelIdsList(Api.getBodyOnlyKey(bodyDataHandler))
 
         mBinding.mStyle.text = bodyDataHandler.modelId

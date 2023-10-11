@@ -22,6 +22,12 @@ class ModelBtmSheet: BottomSheetDialogFragment() {
     private lateinit var onCancelFragment: OnCancelFragment
 
 
+      var callback: OnCancelFragment?=null
+
+
+
+
+
     override fun onCancel(dialog: DialogInterface) {
 
         if (::onCancelFragment.isInitialized){
@@ -29,6 +35,7 @@ class ModelBtmSheet: BottomSheetDialogFragment() {
             onCancelFragment.onCancel()
 
         }
+        callback?.onCancel()
 
         super.onCancel(dialog)
 
@@ -41,6 +48,7 @@ class ModelBtmSheet: BottomSheetDialogFragment() {
             onCancelFragment.onCancel()
 
         }
+        callback?.onCancel()
 
         super.onDismiss(dialog)
 

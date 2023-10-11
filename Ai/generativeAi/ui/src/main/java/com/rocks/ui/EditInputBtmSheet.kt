@@ -2,6 +2,7 @@ package com.rocks.ui
 
 
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +19,32 @@ class EditInputBtmSheet: BottomSheetDialogFragment() {
 
     private lateinit var onGeneratorListener: OnGeneratorListener
 
+    private lateinit var onCancelFragment: OnCancelFragment
+
     private val _binding by lazy { EditInBtmsheetBinding.inflate(layoutInflater) }
+
+    override fun onCancel(dialog: DialogInterface) {
+
+        if (::onCancelFragment.isInitialized){
+
+            onCancelFragment.onCancel()
+
+        }
+
+        super.onCancel(dialog)
+
+    }
+
+    override fun dismiss() {
+
+        if (::onCancelFragment.isInitialized){
+
+            onCancelFragment.onCancel()
+
+        }
+
+        super.dismiss()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -42,6 +68,12 @@ class EditInputBtmSheet: BottomSheetDialogFragment() {
 
         }
 
+        if (context is OnCancelFragment){
+
+            onCancelFragment = context
+
+        }
+
         super.onAttach(context)
     }
 
@@ -53,6 +85,8 @@ class EditInputBtmSheet: BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
+
+
 
         _binding.editTxt.addTextChangedListener {
 
@@ -66,7 +100,23 @@ class EditInputBtmSheet: BottomSheetDialogFragment() {
 
         _binding.slctModel.setOnClickListener {
 
-            activity?.supportFragmentManager?.let { it1 -> ModelBtmSheet().show(it1,"") }
+            activity?.supportFragmentManager?.let { it1 -> ModelBtmSheet().apply {
+
+                callback = object :OnCancelFragment{
+
+                    override fun onCancel() {
+
+                        if (::onBodyHandlerListener.isInitialized){
+
+                            _binding.slctModel.text = onBodyHandlerListener.getHandlerBody().modelId
+
+
+                        }
+                    }
+
+                }
+
+            }.show(it1,"") }
 
         }
 

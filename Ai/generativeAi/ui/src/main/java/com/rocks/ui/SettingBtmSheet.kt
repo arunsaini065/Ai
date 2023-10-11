@@ -218,11 +218,7 @@ class SettingBtmSheet: BottomSheetDialogFragment() {
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View  {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View  {
 
 
         return _settingBinding.root

@@ -3,6 +3,8 @@ package com.rocks.ui
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.media.MediaScannerConnection
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -29,7 +31,7 @@ import com.rocks.viewmodel.AiViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerListener,OnGeneratorListener {
+class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerListener,OnGeneratorListener,OnCancelFragment {
 
     override fun onGenerator() {
 
@@ -44,6 +46,19 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
         }
     }
+
+    override fun onCancel() {
+
+        if (::bodyDataHandler.isInitialized) {
+
+            mBinding.positivePrompt.setText(bodyDataHandler.positivePrompt)
+
+            mBinding.positivePrompt.setText(bodyDataHandler.positivePrompt)
+
+        }
+
+    }
+
 
 
 
@@ -128,6 +143,9 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
             mBinding.positivePrompt.setText( body?.positivePrompt)
 
+            _viewModel.postModelIdsList(Api.getBodyOnlyKey(bodyDataHandler))
+
+
 
         }
 
@@ -189,8 +207,15 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
                 FileDownloader(lifecycleScope).saveImage(downloadBitmap){
 
-                    Toast.makeText(this,it.absolutePath,Toast.LENGTH_SHORT).show()
+                    MediaScannerConnection(this,object :MediaScannerConnection.MediaScannerConnectionClient{
+                        override fun onScanCompleted(path: String?, uri: Uri?) {
 
+                        }
+
+                        override fun onMediaScannerConnected() {
+
+                        }
+                    }).scanFile(it.absolutePath,"image/png")
                 }
 
             }
