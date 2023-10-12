@@ -122,6 +122,8 @@ class EditInputBtmSheet: BottomSheetDialogFragment() {
 
         _binding.generate.setOnClickListener {
 
+            dismiss()
+
             if (::onGeneratorListener.isInitialized) {
 
                 onGeneratorListener.onGenerator()
