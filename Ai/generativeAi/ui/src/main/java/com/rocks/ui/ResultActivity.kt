@@ -190,6 +190,8 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
                     mBinding.resultProgressLoader.beGone()
 
+                    Toast.makeText(this@ResultActivity,""+it.message,Toast.LENGTH_SHORT).show()
+
 
                 }else if (it is ModelUiState.Loading){
 
