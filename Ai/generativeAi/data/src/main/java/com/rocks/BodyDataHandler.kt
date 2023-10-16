@@ -36,6 +36,10 @@ class BodyDataHandler {
 
     var uploadImage:UploadImage?=null
 
+    var isAddImage = false
+
     var strength = 0.7
+
+
 
 }

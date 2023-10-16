@@ -90,7 +90,7 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
     override fun onReadyActivity(savedInstanceState: Bundle?) = with(mBinding) {
 
 
-      //  _viewModel.postModelIdsList(Api.getBodyOnlyKey(bodyDataHandler))
+        _viewModel.postModelIdsList(Api.getBodyOnlyKey(bodyDataHandler))
 
         mStyle.text = bodyDataHandler.modelId
 
@@ -178,16 +178,23 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
             runCatching {
 
-                val prompt = positivePrompt.text?.toString()?:""
+                if (bodyDataHandler.isAddImage && bodyDataHandler.uploadImage==null) {
 
-                if (prompt.isEmpty().not()) {
+                    _viewModel.uploadImage(Api.getBodyForUploadImage(bodyDataHandler))
 
-                    bodyDataHandler.positivePrompt=prompt
+                } else {
 
-                    _viewModel.postModelIdBase(bodyDataHandler)
+                    val prompt = positivePrompt.text?.toString() ?: ""
+
+                    if (prompt.isEmpty().not()) {
+
+                        bodyDataHandler.positivePrompt = prompt
+
+                        _viewModel.postModelIdBase(bodyDataHandler)
+
+                    }
 
                 }
-
             }
 
 
@@ -250,6 +257,9 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
         mBinding.uploadTxt.beGone()
 
+        mBinding.progressCircular.beVisible()
+
+
         mBinding.addIcon.setImageResource(R.drawable.baseline_keyboard_arrow_right_24)
 
         Glide.with(this).asBitmap().load(it).transform( CenterCrop(), RoundedCorners(10)).into(mBinding.mUploadThumbnail)
@@ -267,9 +277,13 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
                         bodyDataHandler.base64 =  Base64.encodeToString(it.toByteArray(), Base64.DEFAULT)
 
-                        withContext(Dispatchers.Default){
+                        bodyDataHandler.isAddImage = true
 
-                            _viewModel.uploadImage(Api.getBodyForUploadImage(bodyDataHandler))
+                        bodyDataHandler.uploadImage = null
+
+                        withContext(Dispatchers.Main){
+
+                            mBinding.progressCircular.beGone()
 
                         }
 
