@@ -1,5 +1,7 @@
 package com.rocks
 
+import com.rocks.model.UploadImage
+
 class BodyDataHandler {
 
     var key  = "bXXHLMZmQL5D7Lgb4yM1ZWtUuqYleNf6Tqyz658zj1PIAvC7N2hk0jgtCk7N"
@@ -28,6 +30,12 @@ class BodyDataHandler {
 
     var tomesd:String?="yes"
 
-    var scheduler:String?="DPMSolverMultistepScheduler"
+    var base64:String?="yes"
+
+    var scheduler:String?="UniPCMultistepScheduler"
+
+    var uploadImage:UploadImage?=null
+
+    var strength = 0.7
 
 }

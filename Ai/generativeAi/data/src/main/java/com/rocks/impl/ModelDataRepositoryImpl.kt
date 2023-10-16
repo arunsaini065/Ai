@@ -1,10 +1,13 @@
 package com.rocks.impl
 
 import android.util.Log
+import com.rocks.BodyDataHandler
+import com.rocks.api.Api
 import com.rocks.api.ApiInterface
 import com.rocks.model.ApiOutput
 import com.rocks.model.ModelListDataItem
 import com.rocks.model.SchedulerList
+import com.rocks.model.UploadImage
 import com.rocks.repository.ModelDataRepository
 import com.rocks.uistate.ModelUiState
 import kotlinx.coroutines.Dispatchers
@@ -15,14 +18,22 @@ import okhttp3.RequestBody
 
 class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDataRepository {
 
-    override fun getModelIdBaseData(requestBody: RequestBody): Flow<ModelUiState<ApiOutput>> = flow<ModelUiState<ApiOutput>> {
+    override fun getModelIdBaseData(bodyDataHandler: BodyDataHandler): Flow<ModelUiState<ApiOutput>> = flow<ModelUiState<ApiOutput>> {
 
 
             emit(ModelUiState.Loading())
 
             runCatching {
 
-                val result = apiInterface?.getModelIdData(requestBody)
+                val result = if (bodyDataHandler.uploadImage==null) {
+
+                    apiInterface?.getModelIdData(Api.getBodyForModel(bodyDataHandler))
+
+                }else{
+
+                    apiInterface?.getModelIdDataImg2Img(Api.getBodyForModel(bodyDataHandler))
+
+                }
 
                 if (result?.status.equals("error")){
 
@@ -34,9 +45,12 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
                 }
 
+
             }.onFailure {
 
                 emit(ModelUiState.Error(""+it))
+
+
 
             }
 
@@ -58,6 +72,7 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
             emit(ModelUiState.Success(result))
 
+
         }.onFailure {
 
             emit(ModelUiState.Error("error"))
@@ -66,6 +81,40 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
 
     }.flowOn(Dispatchers.IO)
+
+    override fun uploadImage(requestBody: RequestBody) =flow<ModelUiState<UploadImage>> {
+
+            emit(ModelUiState.Loading())
+
+
+            runCatching {
+
+                val result = apiInterface?.uploadImage(requestBody)
+
+
+                if (result?.status.equals("error")){
+
+                    emit(ModelUiState.Error(result?.messege?:"error"))
+
+                }else if (result?.status.equals("success")) {
+
+                    emit(ModelUiState.Success(result))
+
+                }
+
+
+
+
+            }.onFailure {
+
+                emit(ModelUiState.Error("error"))
+
+
+            }
+
+        }.flowOn(Dispatchers.IO)
+
+
 
     override fun getSchedulerList(requestBody: RequestBody): Flow<ModelUiState<SchedulerList>>  = flow<ModelUiState<SchedulerList>> {
 

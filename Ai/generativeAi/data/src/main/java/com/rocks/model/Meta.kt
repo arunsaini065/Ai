@@ -5,6 +5,7 @@ data class Meta(
     val W: Int,
     val algorithm_type: String,
     val base64: String,
+    val init_image: String,
     val clip_skip: Int,
     val embeddings: Any,
     val file_prefix: String,

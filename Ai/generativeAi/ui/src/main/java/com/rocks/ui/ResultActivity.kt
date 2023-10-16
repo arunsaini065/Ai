@@ -28,7 +28,6 @@ import com.rocks.ui.databinding.ActivityResultBinding
 import com.rocks.uistate.ModelUiState
 import com.rocks.usecase.ModelUseCase
 import com.rocks.viewmodel.AiViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerListener,OnGeneratorListener,OnCancelFragment {
@@ -39,7 +38,7 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
              if (::bodyDataHandler.isInitialized){
 
-                _viewModel.postModelIdBase(Api.getBodyForModel(bodyDataHandler))
+                _viewModel.postModelIdBase(bodyDataHandler)
 
              }
 

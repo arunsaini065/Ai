@@ -31,7 +31,45 @@ object Api {
         jsonParams["webhook"] = webhook
         jsonParams["track_id"] =trackId
         jsonParams["tomesd"] = tomesd
-       // jsonParams["scheduler"] = scheduler
+
+        if (bodyDataHandler.uploadImage!=null){
+
+            with(bodyDataHandler.uploadImage){
+
+                jsonParams["init_image"] = this?.link
+
+                jsonParams["scheduler"] = bodyDataHandler.scheduler
+
+                jsonParams["strength"] = bodyDataHandler.strength
+
+                jsonParams["use_karras_sigmas"] = "yes"
+
+                jsonParams["vae"] = null
+
+                jsonParams["lora_model"] = null
+
+                jsonParams["lora_strength"] = null
+
+                jsonParams["embeddings_model"] = null
+
+                jsonParams["enhance_prompt"] = "yes"
+
+            }
+
+        }
+
+        return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), JSONObject(jsonParams).toString())
+
+    }
+
+    fun getBodyForUploadImage(bodyDataHandler: BodyDataHandler): RequestBody {
+        val jsonParams: ArrayMap<String?, Any?> = ArrayMap()
+
+        jsonParams["key"] = bodyDataHandler.key
+
+        jsonParams["image"] ="data:image/jpeg;base64," + bodyDataHandler.base64
+
+        jsonParams["crop"] ="false"
 
         return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), JSONObject(jsonParams).toString())
 

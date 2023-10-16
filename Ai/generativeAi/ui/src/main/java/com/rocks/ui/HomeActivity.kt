@@ -2,13 +2,18 @@ package com.rocks.ui
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
-
+import android.util.Base64
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.rocks.AspectRatio
 import com.rocks.BodyDataHandler
 import com.rocks.OnBodyHandlerListener
@@ -17,11 +22,16 @@ import com.rocks.api.Api
 import com.rocks.factory.AiViewModelFactory
 import com.rocks.impl.ModelDataRepositoryImpl
 import com.rocks.ui.databinding.ActivityHomeBinding
+import com.rocks.ui.imageloader.ImageLoader
 import com.rocks.ui.ratio.CropRatioRecyclerView
 import com.rocks.uistate.ModelUiState
 import com.rocks.usecase.ModelUseCase
 import com.rocks.viewmodel.AiViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
+
 
 class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener,OnCancelFragment {
 
@@ -80,12 +90,20 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
     override fun onReadyActivity(savedInstanceState: Bundle?) = with(mBinding) {
 
 
-        _viewModel.postModelIdsList(Api.getBodyOnlyKey(bodyDataHandler))
+      //  _viewModel.postModelIdsList(Api.getBodyOnlyKey(bodyDataHandler))
 
-        mBinding.mStyle.text = bodyDataHandler.modelId
+        mStyle.text = bodyDataHandler.modelId
 
 
-        mBinding.mStyle.setOnClickListener {
+        uploadImageLayout.setOnClickListener {
+
+
+            imageLauncher.launch("image/*")
+
+
+        }
+
+        mStyle.setOnClickListener {
 
 
            ModelBtmSheet().apply {
@@ -97,7 +115,7 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
         }
 
 
-        mBinding.advanceChoose.setOnClickListener {
+        advanceChoose.setOnClickListener {
 
         SettingBtmSheet().apply {
 
@@ -166,7 +184,7 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
                     bodyDataHandler.positivePrompt=prompt
 
-                    _viewModel.postModelIdBase(Api.getBodyForModel(bodyDataHandler))
+                    _viewModel.postModelIdBase(bodyDataHandler)
 
                 }
 
@@ -175,6 +193,43 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
 
         }
+
+        lifecycleScope.launch {
+
+            _viewModel.stateflowUploadImage.collect{
+
+                when (it) {
+                    is ModelUiState.Success -> {
+
+                        bodyDataHandler.uploadImage = it.data
+
+                        progressCircular.beGone()
+
+                        _viewModel.postModelIdBase(bodyDataHandler)
+
+                    }
+
+                    is ModelUiState.Error -> {
+
+                        Toast.makeText(this@HomeActivity,""+it.message,Toast.LENGTH_SHORT).show()
+
+                        progressCircular.beGone()
+
+
+                    }
+
+                    is ModelUiState.Loading -> {
+
+                        progressCircular.beVisible()
+                    }
+                }
+
+
+            }
+
+        }
+
+        return@with
 
 
     }
@@ -187,6 +242,54 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
     override fun getHandlerBody():BodyDataHandler{
 
         return bodyDataHandler
+    }
+
+    private val imageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { it ->
+
+        mBinding.mGroupSelectImage.beVisible()
+
+        mBinding.uploadTxt.beGone()
+
+        mBinding.addIcon.setImageResource(R.drawable.baseline_keyboard_arrow_right_24)
+
+        Glide.with(this).asBitmap().load(it).transform( CenterCrop(), RoundedCorners(10)).into(mBinding.mUploadThumbnail)
+
+        ImageLoader(it,window.decorView){ bitmap ->
+
+            lifecycleScope.launch(Dispatchers.IO) {
+
+                runCatching {
+
+
+                    ByteArrayOutputStream().use {
+
+                        bitmap?.compress(Bitmap.CompressFormat.PNG, 100, it)
+
+                        bodyDataHandler.base64 =  Base64.encodeToString(it.toByteArray(), Base64.DEFAULT)
+
+                        withContext(Dispatchers.Default){
+
+                            _viewModel.uploadImage(Api.getBodyForUploadImage(bodyDataHandler))
+
+                        }
+
+
+                    }
+
+
+
+                }
+
+
+
+
+
+            }
+
+        }.execute()
+
+
+
     }
 
 
