@@ -90,7 +90,7 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
     override fun onReadyActivity(savedInstanceState: Bundle?) = with(mBinding) {
 
 
-        _viewModel.postModelIdsList(Api.getBodyOnlyKey(bodyDataHandler))
+   //     _viewModel.postModelIdsList(Api.getBodyOnlyKey(bodyDataHandler))
 
         mStyle.text = bodyDataHandler.modelId
 
@@ -171,6 +171,21 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
         }
 
+        closeImg.setOnClickListener {
+
+            bodyDataHandler.uploadImage=null
+
+            bodyDataHandler.isAddImage=false
+
+            mBinding.mGroupSelectImage.beGone()
+
+            mBinding.uploadTxt.beVisible()
+
+            mBinding.addIcon.setImageResource(R.drawable.baseline_add_24)
+
+
+        }
+
 
 
 
@@ -208,11 +223,14 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
                 when (it) {
                     is ModelUiState.Success -> {
 
-                        bodyDataHandler.uploadImage = it.data
+                        if (it.data!=null) {
 
-                        progressCircular.beGone()
+                            bodyDataHandler.uploadImage = it.data
 
-                        _viewModel.postModelIdBase(bodyDataHandler)
+                            progressCircular.beGone()
+
+                            _viewModel.postModelIdBase(bodyDataHandler)
+                        }
 
                     }
 
@@ -252,6 +270,11 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
     }
 
     private val imageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { it ->
+
+        if (it==null){
+
+            return@registerForActivityResult
+        }
 
         mBinding.mGroupSelectImage.beVisible()
 

@@ -58,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:visibility="gone"
                     android:id="@+id/m_group_select_image"
-                    app:constraint_referenced_ids="m_upload_thumbnail,change_txt"
+                    app:constraint_referenced_ids="m_upload_thumbnail,change_txt,close_img"
                     android:layout_height="wrap_content">
                 </androidx.constraintlayout.widget.Group>
 
@@ -72,6 +72,20 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp">
                 </androidx.appcompat.widget.AppCompatImageView>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="20dp"
+                    android:id="@+id/close_img"
+                    android:background="@drawable/circle_bg"
+                    android:backgroundTint="#246BD5"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginEnd="1dp"
+                    app:srcCompat="@drawable/baseline_close_24"
+                    android:padding="4dp"
+                    android:scaleType="centerInside"
+                    app:layout_constraintTop_toTopOf="@id/m_upload_thumbnail"
+                    app:layout_constraintEnd_toEndOf="@id/m_upload_thumbnail"
+                    android:layout_height="20dp">
+                </androidx.appcompat.widget.AppCompatImageView>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     app:layout_constraintTop_toTopOf="parent"
@@ -80,6 +94,7 @@
                     android:layout_marginEnd="@dimen/spacing10"
                     android:layout_width="wrap_content"
                     android:text="Change"
+                    android:textColor="@color/white"
                     android:id="@+id/change_txt"
                     android:layout_height="wrap_content">
                 </androidx.appcompat.widget.AppCompatTextView>
