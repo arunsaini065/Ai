@@ -35,6 +35,7 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
                 }
 
+
                 if (result?.status.equals("error")){
 
                     emit(ModelUiState.Error(result?.message?:"error"))
