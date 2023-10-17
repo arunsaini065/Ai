@@ -11,5 +11,5 @@ data class ApiOutput(
     val webhook_status: String,
     val message: String,
     val fetch_result:String,
-    val future_links:String
+    val future_links:MutableList<String>
 )
