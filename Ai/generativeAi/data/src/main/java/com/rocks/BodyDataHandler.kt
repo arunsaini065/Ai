@@ -16,6 +16,10 @@ class BodyDataHandler {
 
     var safetyChecker:String?="yes"
 
+    var enhancePrompt:String?="yes"
+
+    var useKarrasSigmas:String?="yes"
+
     var samples:String?="1"
 
     var numbInferenceSteps:String?="30"

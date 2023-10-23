@@ -1,6 +1,7 @@
 package com.rocks.api
 
 import android.util.ArrayMap
+import android.util.Log
 import com.rocks.BodyDataHandler
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
@@ -18,19 +19,48 @@ object Api {
         val jsonParams: ArrayMap<String?, Any?> = ArrayMap()
 
         jsonParams["key"] = key
-        jsonParams["model_id"] = "midjourney"
-        jsonParams["prompt"] = positivePrompt
-        jsonParams["negative_prompt"] = negativePrompt
-        jsonParams["width"] = aspectRatio?.getSize()?.width.toString()
-        jsonParams["height"] = aspectRatio?.getSize()?.width.toString()
-        jsonParams["safety_checker"] = safetyChecker
-        jsonParams["samples"] = "1"
-        jsonParams["num_inference_steps"] = numbInferenceSteps
-        jsonParams["seed"] = seed
-        jsonParams["guidance_scale"] = guidanceScale
-        jsonParams["webhook"] = webhook
-        jsonParams["track_id"] =trackId
-        jsonParams["tomesd"] = tomesd
+
+        jsonParams["model_id"] = bodyDataHandler.modelId
+
+        jsonParams["prompt"] = bodyDataHandler.positivePrompt
+
+        jsonParams["negative_prompt"] = bodyDataHandler.negativePrompt
+
+        jsonParams["width"] = bodyDataHandler.aspectRatio?.getSize()?.width.toString()
+
+        jsonParams["height"] = bodyDataHandler.aspectRatio?.getSize()?.height.toString()
+
+        jsonParams["safety_checker"] = bodyDataHandler.safetyChecker
+
+        jsonParams["enhance_prompt"] = bodyDataHandler.enhancePrompt
+
+        jsonParams["samples"] = bodyDataHandler.samples
+
+        jsonParams["scheduler"] = bodyDataHandler.scheduler
+
+        jsonParams["num_inference_steps"] = bodyDataHandler.numbInferenceSteps
+
+        jsonParams["seed"] = bodyDataHandler.seed
+
+        jsonParams["guidance_scale"] = bodyDataHandler.guidanceScale
+
+        jsonParams["webhook"] = null
+
+        jsonParams["track_id"] =null
+
+        jsonParams["tomesd"] = bodyDataHandler.tomesd
+
+        jsonParams["lora_model"] = null
+
+        jsonParams["lora_strength"] = null
+
+        jsonParams["embeddings_model"] = null
+
+        jsonParams["use_karras_sigmas"] = bodyDataHandler.useKarrasSigmas
+
+        jsonParams["vae"] = null
+
+
 
         if (bodyDataHandler.uploadImage!=null){
 
@@ -38,26 +68,14 @@ object Api {
 
                 jsonParams["init_image"] = this?.link
 
-                jsonParams["scheduler"] = bodyDataHandler.scheduler
-
                 jsonParams["strength"] = bodyDataHandler.strength
 
-                jsonParams["use_karras_sigmas"] = "yes"
 
-                jsonParams["vae"] = null
-
-                jsonParams["lora_model"] = null
-
-                jsonParams["lora_strength"] = null
-
-                jsonParams["embeddings_model"] = null
-
-                jsonParams["enhance_prompt"] = "yes"
 
             }
 
         }
-
+        Log.d("@Arun", "getBodyForModel: "+JSONObject(jsonParams).toString())
         return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), JSONObject(jsonParams).toString())
 
     }
