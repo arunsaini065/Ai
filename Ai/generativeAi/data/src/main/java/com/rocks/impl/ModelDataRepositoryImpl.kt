@@ -1,10 +1,13 @@
 package com.rocks.impl
 
 import android.util.Log
+import com.rocks.BodyDataHandler
+import com.rocks.api.Api
 import com.rocks.api.ApiInterface
 import com.rocks.model.ApiOutput
-import com.rocks.model.ModelListData
+import com.rocks.model.ModelListDataItem
 import com.rocks.model.SchedulerList
+import com.rocks.model.UploadImage
 import com.rocks.repository.ModelDataRepository
 import com.rocks.uistate.ModelUiState
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +18,7 @@ import okhttp3.RequestBody
 
 class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDataRepository {
 
-    override fun getModelIdBaseData(requestBody: RequestBody): Flow<ModelUiState<ApiOutput>> = flow<ModelUiState<ApiOutput>> {
+    override fun getModelIdBaseData(bodyDataHandler: BodyDataHandler): Flow<ModelUiState<ApiOutput>> = flow<ModelUiState<ApiOutput>> {
 
 
             emit(ModelUiState.Loading())
@@ -23,6 +26,16 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
             runCatching {
 
                 var result = apiInterface?.getModelIdData(requestBody)
+                val result = if (bodyDataHandler.uploadImage==null) {
+
+                    apiInterface?.getModelIdData(Api.getBodyForModel(bodyDataHandler))
+
+                }else{
+
+                    apiInterface?.getModelIdDataImg2Img(Api.getBodyForModel(bodyDataHandler))
+
+                }
+
 
                 if (result?.status.equals("error")){
 
@@ -42,7 +55,10 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
             }.onFailure {
 
-                emit(ModelUiState.Error("error"))
+                emit(ModelUiState.Error(""+it))
+
+
+
             }
 
 
@@ -52,7 +68,7 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
 
 
-    override fun getModelListData(requestBody: RequestBody): Flow<ModelUiState<ModelListData>>  = flow<ModelUiState<ModelListData>> {
+    override fun getModelListData(requestBody: RequestBody): Flow<ModelUiState<MutableList<ModelListDataItem>>>  = flow<ModelUiState<MutableList<ModelListDataItem>>> {
 
 
         emit(ModelUiState.Loading())

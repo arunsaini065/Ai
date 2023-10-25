@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:minHeight="60dp"
                 android:paddingStart="20dp"
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/text_hint"
                 android:hint="What do you want to create?"
                 android:background="@drawable/edttxt_bkgnd"
                 android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/edit"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="Model and Style"
+            android:text="Style"
             android:layout_marginStart="12dp"
             android:textColor="@color/white"/>
         
@@ -75,9 +75,8 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/model_drawable"
                 android:textColor="@color/white"
-                android:text="Choose Model"
+                android:text="Choose Style"
                 app:layout_constraintTop_toTopOf="parent"
-
                 android:id="@+id/slct_model"
                 android:paddingStart="20dp"
                 android:gravity="center_vertical"

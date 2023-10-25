@@ -1,3 +1,5 @@
+import org.gradle.internal.impldep.org.apache.commons.compress.harmony.pack200.PackingUtils.config
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -12,7 +14,17 @@ android {
         enable = true
 
     }
+    signingConfigs {
 
+        create("release")  {
+            keyAlias= "appspace@123"
+            keyPassword= "appspace@123"
+            storePassword = "appspace@123"
+            storeFile = file("\\appsignkey.jks")
+
+        }
+
+    }
     defaultConfig {
         applicationId = "com.rocks.ai"
         minSdk = 24
@@ -29,6 +41,8 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
