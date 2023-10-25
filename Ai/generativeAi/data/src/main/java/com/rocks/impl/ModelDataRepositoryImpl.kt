@@ -1,5 +1,6 @@
 package com.rocks.impl
 
+import android.util.Log
 import com.rocks.api.ApiInterface
 import com.rocks.model.ApiOutput
 import com.rocks.model.ModelListData
@@ -21,13 +22,21 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
             runCatching {
 
-                val result = apiInterface?.getModelIdData(requestBody)
+                var result = apiInterface?.getModelIdData(requestBody)
 
                 if (result?.status.equals("error")){
 
                     emit(ModelUiState.Error(result?.message?:"error"))
 
-                }else {
+                }else if(result?.status.equals("processing")){
+//                    Log.d("@processing","old result  $result")
+                    var newResult = result?.let { apiInterface?.getProcessingData(requestBody, it.id.toString()) }
+//                    Log.d("@processing","middle result  $newResult")
+                    result?.output = newResult?.output!!
+                    emit(ModelUiState.Success(result))
+//                    Log.d("@processing","new result  $result")
+                }
+                else {
                     emit(ModelUiState.Success(result))
                 }
 
