@@ -1,6 +1,5 @@
 package com.rocks.impl
 
-import android.util.Log
 import com.rocks.BodyDataHandler
 import com.rocks.api.Api
 import com.rocks.api.ApiInterface
@@ -25,8 +24,8 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
             runCatching {
 
-                var result = apiInterface?.getModelIdData(requestBody)
-                val result = if (bodyDataHandler.uploadImage==null) {
+//                var result = apiInterface?.getModelIdData(requestBody)
+                var result = if (bodyDataHandler.uploadImage==null) {
 
                     apiInterface?.getModelIdData(Api.getBodyForModel(bodyDataHandler))
 
@@ -43,7 +42,8 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
                 }else if(result?.status.equals("processing")){
 //                    Log.d("@processing","old result  $result")
-                    var newResult = result?.let { apiInterface?.getProcessingData(requestBody, it.id.toString()) }
+                       emit(ModelUiState.Processing(result))
+                    var newResult = result?.let { apiInterface?.getProcessingData(bodyDataHandler, it.id.toString()) }
 //                    Log.d("@processing","middle result  $newResult")
                     result?.output = newResult?.output!!
                     emit(ModelUiState.Success(result))
@@ -107,5 +107,9 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
 
     }.flowOn(Dispatchers.IO)
+
+    override fun uploadImage(requestBody: RequestBody): Flow<ModelUiState<UploadImage>> {
+        TODO("Not yet implemented")
+    }
 
 }

@@ -1,7 +1,7 @@
 package com.rocks.api
 
+import com.rocks.BodyDataHandler
 import com.rocks.model.ApiOutput
-import com.rocks.model.ModelListData
 import com.rocks.model.ProcessingOutput
 import com.rocks.model.ModelListDataItem
 import com.rocks.model.SchedulerList
@@ -20,7 +20,7 @@ interface ApiInterface {
     suspend fun getModelIdDataImg2Img(@Body  params: RequestBody): ApiOutput?
 
     @POST("/api/v4/dreambooth/{id}")
-    suspend fun getProcessingData(@Body params: RequestBody,@Path("id") id: String): ProcessingOutput?
+    suspend fun getProcessingData(@Body params: BodyDataHandler, @Path("id") id: String): ProcessingOutput?
 
 
     @POST("/api/v4/dreambooth/model_list")

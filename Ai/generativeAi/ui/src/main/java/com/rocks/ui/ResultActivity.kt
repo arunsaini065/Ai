@@ -195,6 +195,8 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
                 }else if (it is ModelUiState.Loading){
 
                     mBinding.resultProgressLoader.beVisible()
+                } else if (it is ModelUiState.Processing){
+                    Toast.makeText(this@ResultActivity,"Processing",Toast.LENGTH_SHORT).show()
                 }
 
             }
