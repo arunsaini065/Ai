@@ -10,10 +10,12 @@ import com.rocks.model.UploadImage
 import com.rocks.repository.ModelDataRepository
 import com.rocks.uistate.ModelUiState
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import okhttp3.RequestBody
+import java.util.logging.Handler
 
 class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDataRepository {
 
@@ -24,8 +26,7 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
             runCatching {
 
-//                var result = apiInterface?.getModelIdData(requestBody)
-                var result = if (bodyDataHandler.uploadImage==null) {
+                val result = if (bodyDataHandler.uploadImage==null) {
 
                     apiInterface?.getModelIdData(Api.getBodyForModel(bodyDataHandler))
 
@@ -40,17 +41,25 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
                     emit(ModelUiState.Error(result?.message?:"error"))
 
-                }else if(result?.status.equals("processing")){
-//                    Log.d("@processing","old result  $result")
-                       emit(ModelUiState.Processing(result))
-                    var newResult = result?.let { apiInterface?.getProcessingData(bodyDataHandler, it.id.toString()) }
-//                    Log.d("@processing","middle result  $newResult")
-                    result?.output = newResult?.output!!
+                } else if (result?.status.equals("processing")) {
+
+                    emit(ModelUiState.Processing(result))
+
+                    delay(10000)
+
+                    val newResult = result?.let { apiInterface?.getProcessingData(bodyDataHandler, it.id.toString()) }
+                    if (newResult?.output.isNullOrEmpty().not()) {
+                        result?.output = newResult?.output!!
+                    }else{
+                        result?.output = result?.future_links!!
+                    }
+
                     emit(ModelUiState.Success(result))
-//                    Log.d("@processing","new result  $result")
-                }
-                else {
+
+                } else {
+
                     emit(ModelUiState.Success(result))
+
                 }
 
             }.onFailure {
