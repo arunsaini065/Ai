@@ -47,13 +47,26 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
                     delay(10000)
 
-                    val newResult = result?.let { apiInterface?.getProcessingData(bodyDataHandler, it.id.toString()) }
 
-                    if (newResult?.output.isNullOrEmpty().not()) {
+                    runCatching {
 
-                        result?.output = newResult?.output!!
+                        val newResult = result?.let {
+                            apiInterface?.getProcessingData(
+                                bodyDataHandler,
+                                it.id.toString()
+                            )
+                        }
 
-                    }else{
+                        if (newResult?.output.isNullOrEmpty().not()) {
+
+                            result?.output = newResult?.output!!
+
+                        } else {
+
+                            result?.output = result?.future_links!!
+
+                        }
+                    }.onFailure {
 
                         result?.output = result?.future_links!!
 
