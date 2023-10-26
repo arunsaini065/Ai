@@ -75,7 +75,6 @@ object Api {
             }
 
         }
-        Log.d("@Arun", "getBodyForModel: "+JSONObject(jsonParams).toString())
         return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), JSONObject(jsonParams).toString())
 
     }
