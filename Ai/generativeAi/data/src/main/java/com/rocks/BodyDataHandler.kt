@@ -44,6 +44,10 @@ class BodyDataHandler {
 
     var strength = 0.7
 
+    var loraModel:String? =null
+
+    var loraStrength:String? =null
+
 
 
 }

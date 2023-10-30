@@ -50,9 +50,9 @@ object Api {
 
         jsonParams["tomesd"] = bodyDataHandler.tomesd
 
-        jsonParams["lora_model"] = null
+        jsonParams["lora_model"] = bodyDataHandler.loraModel
 
-        jsonParams["lora_strength"] = null
+        jsonParams["lora_strength"] = bodyDataHandler.loraStrength
 
         jsonParams["embeddings_model"] = null
 
