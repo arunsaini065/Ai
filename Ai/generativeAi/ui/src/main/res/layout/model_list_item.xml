@@ -17,7 +17,7 @@
             <ImageView
                 android:scaleType="centerCrop"
                 android:id="@+id/model_img"
-                android:background="@color/material_dynamic_neutral20"
+                android:background="#272829"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
