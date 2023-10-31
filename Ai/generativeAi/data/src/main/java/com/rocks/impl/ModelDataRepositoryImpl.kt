@@ -135,8 +135,24 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
     }.flowOn(Dispatchers.IO)
 
-    override fun uploadImage(requestBody: RequestBody): Flow<ModelUiState<UploadImage>> {
-        TODO("Not yet implemented")
-    }
+    override fun uploadImage(requestBody: RequestBody)=flow<ModelUiState<UploadImage>> {
+
+
+        emit(ModelUiState.Loading())
+
+        runCatching {
+
+            val result = apiInterface?.uploadImage(requestBody)
+
+            emit(ModelUiState.Success(result))
+
+        }.onFailure {
+
+            emit(ModelUiState.Error("error"))
+        }
+
+
+
+    }.flowOn(Dispatchers.IO)
 
 }
