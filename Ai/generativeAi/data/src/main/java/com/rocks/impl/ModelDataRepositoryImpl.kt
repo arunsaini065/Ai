@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import okhttp3.RequestBody
-import java.util.logging.Handler
 
 class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDataRepository {
 
