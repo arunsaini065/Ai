@@ -98,6 +98,35 @@ class EditInputBtmSheet: BottomSheetDialogFragment() {
 
         }
 
+        _binding.addStyle.setOnClickListener {
+
+            activity?.supportFragmentManager?.let { it1 -> ModelBtmSheet().apply {
+
+                arguments = Bundle().apply {
+
+                    putBoolean("is_style",true)
+
+                }
+
+                callback = object :OnCancelFragment{
+
+                    override fun onCancel() {
+
+                        if (::onBodyHandlerListener.isInitialized){
+
+
+                            _binding.addStyle.text = onBodyHandlerListener.getHandlerBody().loraModel
+
+
+                        }
+                    }
+
+                }
+
+            }.show(it1,"") }
+
+        }
+
         _binding.slctModel.setOnClickListener {
 
             activity?.supportFragmentManager?.let { it1 -> ModelBtmSheet().apply {
