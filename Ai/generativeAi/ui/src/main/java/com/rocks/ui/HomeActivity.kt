@@ -49,9 +49,11 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
         lifecycleScope.launch {
 
-            _aiUiViewModel.styleUpdate.collect{
+            _aiUiViewModel.modelUpdate.collect{
 
-                mBinding.mStyle.text = it?.modelId
+                mBinding.mModelTv.text = it?.modelId?:bodyDataHandler.modelId
+
+                mBinding.mStyleTv.text = it?.loraModel?:bodyDataHandler.loraModel
 
             }
         }
@@ -92,7 +94,9 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
        _viewModel.postModelIdsList(Api.getBodyOnlyKey(bodyDataHandler))
 
-        mStyle.text = bodyDataHandler.modelId
+        mModelTv.text = bodyDataHandler.modelId
+
+        mStyleTv.text = bodyDataHandler.loraModel
 
 
         uploadImageLayout.setOnClickListener {
@@ -103,7 +107,7 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
         }
 
-        mStyle.setOnClickListener {
+        mModelTv.setOnClickListener {
 
 
            ModelBtmSheet().apply {
@@ -114,6 +118,22 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
         }
 
+        mStyleTv.setOnClickListener {
+
+
+            ModelBtmSheet().apply {
+
+                arguments = Bundle().apply {
+
+                    putBoolean("is_style",true)
+
+                }
+
+                show(supportFragmentManager,"MODEL_BTM")
+
+            }
+
+        }
 
         advanceChoose.setOnClickListener {
 

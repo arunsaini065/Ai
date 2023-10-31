@@ -17,12 +17,14 @@
             <ImageView
                 android:scaleType="centerCrop"
                 android:id="@+id/model_img"
+                android:background="@color/material_dynamic_neutral20"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:id="@+id/model_itm_id"
                 android:textColor="@color/white"
+                android:layout_marginBottom="@dimen/spacing10"
                 android:layout_gravity="center_horizontal|bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>

@@ -3,6 +3,7 @@ package com.rocks.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rocks.BodyDataHandler
+import com.rocks.api.Api
 import com.rocks.model.ApiOutput
 import com.rocks.model.ModelListDataItem
 import com.rocks.model.SchedulerList
@@ -92,5 +93,23 @@ class AiViewModel (private val modelUseCase: ModelUseCase): ViewModel() {
          }
 
     }
+
+
+    fun getLocalLoRAId(): ModelUiState<MutableList<ModelListDataItem>> {
+        val listOfLoRAid = mutableListOf<ModelListDataItem>()
+        val listOf = Api.listOfLoRAModel
+        listOf.forEach {
+            listOfLoRAid.add(
+                ModelListDataItem(
+                    "", "", "", "", "", "", "", it, "", "", ""
+                )
+            )
+
+        }
+
+        return ModelUiState.Success(listOfLoRAid)
+    }
+
+
 
 }

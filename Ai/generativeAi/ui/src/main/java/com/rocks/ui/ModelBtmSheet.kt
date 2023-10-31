@@ -3,7 +3,6 @@ package com.rocks.ui
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +11,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rocks.OnBodyHandlerListener
-import com.rocks.stripHtml
+import com.rocks.model.ModelListDataItem
 import com.rocks.ui.databinding.BtmSheetSelectmodelBinding
+import com.rocks.uistate.ModelUiState
 import com.rocks.viewmodel.AiViewModel
 import kotlinx.coroutines.launch
 
@@ -25,6 +25,7 @@ class ModelBtmSheet: BottomSheetDialogFragment() {
       var callback: OnCancelFragment?=null
 
 
+    private val isStyle by lazy { arguments?.getBoolean("is_style")?:false }
 
 
 
@@ -97,33 +98,54 @@ class ModelBtmSheet: BottomSheetDialogFragment() {
 
            lifecycleScope.launch {
 
-               _viewModel.stateflowAiModelList.collect{ list->
-
-                   _binding.modelRv.adapter = context?.let { ModelAdapter {
+               if (isStyle) {
 
 
-                       if (::onBodyHandlerListener.isInitialized){
+                   loadModelAdapter(_viewModel.getLocalLoRAId())
 
 
-                           onBodyHandlerListener.getHandlerBody().modelId = it.model_id
+               } else {
 
-                           _aiUiViewModel.styleUpdate.value = onBodyHandlerListener.getHandlerBody()
+                   _viewModel.stateflowAiModelList.collect { list ->
 
-                           dismiss()
+                       loadModelAdapter(list)
 
-                       }
+                   }
 
-
-                   }.apply {
-                       submitList(list.data)
-                   } }
                }
 
            }
-
-
         return _binding.root
 
+    }
+
+    private fun loadModelAdapter(list: ModelUiState<MutableList<ModelListDataItem>>) {
+        _binding.modelRv.adapter = ModelAdapter {
+
+
+            if (::onBodyHandlerListener.isInitialized) {
+
+
+                if (isStyle) {
+
+                    onBodyHandlerListener.getHandlerBody().loraModel = it.model_id
+
+                }else{
+
+                    onBodyHandlerListener.getHandlerBody().modelId = it.model_id
+
+                }
+
+                _aiUiViewModel.modelUpdate.value = onBodyHandlerListener.getHandlerBody()
+
+                dismiss()
+
+            }
+
+
+        }.apply {
+            submitList(list.data)
+        }
     }
 
 }

@@ -9,6 +9,6 @@ class AiUiViewModel : ViewModel() {
 
     val ratioUpdate = MutableStateFlow<BodyDataHandler?>(null)
 
-    val styleUpdate = MutableStateFlow<BodyDataHandler?>(null)
+    val modelUpdate = MutableStateFlow<BodyDataHandler?>(null)
 
 }
