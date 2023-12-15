@@ -11,4 +11,7 @@ class AiUiViewModel : ViewModel() {
 
     val modelUpdate = MutableStateFlow<BodyDataHandler?>(null)
 
+    val bodyDataHandler by lazy { BodyDataHandler() }
+
+
 }

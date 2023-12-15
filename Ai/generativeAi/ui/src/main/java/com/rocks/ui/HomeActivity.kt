@@ -10,6 +10,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -37,31 +38,10 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
     override fun onCancel() {
 
-        lifecycleScope.launch {
-
-            _aiUiViewModel.ratioUpdate.collect{
-
-                mBinding.aspectRatioRv.notifySelectedItem(it,lifecycleScope)
-
-            }
-
-        }
-
-        lifecycleScope.launch {
-
-            _aiUiViewModel.modelUpdate.collect{
-
-                mBinding.mModelTv.text = it?.modelId?:bodyDataHandler.modelId
-
-                mBinding.mStyleTv.text = it?.loraModel?:bodyDataHandler.loraModel
-
-            }
-        }
 
     }
 
 
-    private val bodyDataHandler by lazy { BodyDataHandler() }
 
     private val _aiUiViewModel by viewModels<AiUiViewModel>()
 
@@ -91,197 +71,27 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
     override fun onReadyActivity(savedInstanceState: Bundle?) = with(mBinding) {
 
-
-       _viewModel.postModelIdsList(Api.getBodyOnlyKey(bodyDataHandler))
-
-        mModelTv.text = bodyDataHandler.modelId
-
-        mStyleTv.text = bodyDataHandler.loraModel
-
-
-        uploadImageLayout.setOnClickListener {
-
-
-            imageLauncher.launch("image/*")
-
-
-        }
-
-        mModelTv.setOnClickListener {
-
-
-           ModelBtmSheet().apply {
-
-                show(supportFragmentManager,"MODEL_BTM")
-
-            }
-
-        }
-
-        mStyleTv.setOnClickListener {
-
-
-            ModelBtmSheet().apply {
-
-                arguments = Bundle().apply {
-
-                    putBoolean("is_style",true)
-
-                }
-
-                show(supportFragmentManager,"MODEL_BTM")
-
-            }
-
-        }
-
-        advanceChoose.setOnClickListener {
-
-        SettingBtmSheet().apply {
-
-                show(supportFragmentManager,"SETTING_BTM")
-
-            }
-        }
-        lifecycleScope.launch {
-
-
-                 _viewModel.stateflowAiModel.collect{
-
-                     if (it is ModelUiState.Success) {
-
-                         progressCircular.beGone()
-
-                         if (it.data != null) {
-
-                             OutPutSingleton.setOutput(it.data)
-
-                             OutPutSingleton.setBodyHandler(bodyDataHandler)
-
-                             ResultActivity.goToAiResultActivity(this@HomeActivity, activityLauncher)
-                         }
-
-                     } else if (it is ModelUiState.Error){
-
-                         Toast.makeText(this@HomeActivity,""+it.message,Toast.LENGTH_SHORT).show()
-
-                         progressCircular.beGone()
-
-
-                     }else if (it is ModelUiState.Loading){
-
-                         progressCircular.beVisible()
-                     }
-
-                 }
-
-        }
-
-
-
-        aspectRatioRv.iChangeRatioListener= object :CropRatioRecyclerView.IChangeRatioListener{
-
-            override fun onChangeRatio(width: Int, height: Int) {
-
-                bodyDataHandler.aspectRatio = AspectRatio(widthR = width, heightR = height)
-
-                _aiUiViewModel.ratioUpdate.value = bodyDataHandler
-
-            }
-
-        }
-
-        closeImg.setOnClickListener {
-
-            bodyDataHandler.uploadImage=null
-
-            bodyDataHandler.isAddImage=false
-
-            mBinding.mGroupSelectImage.beGone()
-
-            mBinding.uploadTxt.beVisible()
-
-            mBinding.addIcon.setImageResource(R.drawable.baseline_add_24)
-
-
-        }
-
-
-
-
-        btnGenerate.setOnClickListener {
-
-            runCatching {
-
-                if (bodyDataHandler.isAddImage && bodyDataHandler.uploadImage==null) {
-
-                    _viewModel.uploadImage(Api.getBodyForUploadImage(bodyDataHandler))
-
-                } else {
-
-                    val prompt = positivePrompt.text?.toString() ?: ""
-
-                    if (prompt.isEmpty().not()) {
-
-                        bodyDataHandler.positivePrompt = prompt
-
-                        _viewModel.postModelIdBase(bodyDataHandler)
-
-                    }
-
-                }
-            }
-
-
-
-        }
-
-        lifecycleScope.launch {
-
-            _viewModel.stateflowUploadImage.collect{
-
-                when (it) {
-                    is ModelUiState.Success -> {
-
-                        if (it.data!=null) {
-
-                            bodyDataHandler.uploadImage = it.data
-
-                            progressCircular.beGone()
-
-                            _viewModel.postModelIdBase(bodyDataHandler)
-                        }
-
-                    }
-
-                    is ModelUiState.Error -> {
-
-                        Toast.makeText(this@HomeActivity,""+it.message,Toast.LENGTH_SHORT).show()
-
-                        progressCircular.beGone()
-
-
-                    }
-
-                    is ModelUiState.Loading -> {
-
-                        progressCircular.beVisible()
-                    }
-
-                    else -> {
-
-                    }
-                }
-
-
-            }
-
-        }
+        textToTextFragment()
 
         return@with
 
 
     }
+
+
+    private fun textToTextFragment(){
+
+        runCatching {
+
+            supportFragmentManager.commit(true) {
+
+                replace(mBinding.fragmentContainerView.id, TextToImageFragment.getInstance())
+
+            }
+
+        }
+    }
+
 
     override fun onRegisterForActivityResult(activityResult: ActivityResult) {
 
@@ -290,68 +100,10 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
     override fun getHandlerBody():BodyDataHandler{
 
-        return bodyDataHandler
-    }
-
-    private val imageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { it ->
-
-        if (it==null){
-
-            return@registerForActivityResult
-        }
-
-        mBinding.mGroupSelectImage.beVisible()
-
-        mBinding.uploadTxt.beGone()
-
-        mBinding.progressCircular.beVisible()
-
-
-        mBinding.addIcon.setImageResource(R.drawable.baseline_keyboard_arrow_right_24)
-
-        Glide.with(this).asBitmap().load(it).transform( CenterCrop(), RoundedCorners(10)).into(mBinding.mUploadThumbnail)
-
-        ImageLoader(it,window.decorView){ bitmap ->
-
-            lifecycleScope.launch(Dispatchers.IO) {
-
-                runCatching {
-
-
-                    ByteArrayOutputStream().use {
-
-                        bitmap?.compress(Bitmap.CompressFormat.PNG, 100, it)
-
-                        bodyDataHandler.base64 =  Base64.encodeToString(it.toByteArray(), Base64.DEFAULT)
-
-                        bodyDataHandler.isAddImage = true
-
-                        bodyDataHandler.uploadImage = null
-
-                        withContext(Dispatchers.Main){
-
-                            mBinding.progressCircular.beGone()
-
-                        }
-
-
-                    }
-
-
-
-                }
-
-
-
-
-
-            }
-
-        }.execute()
-
-
+        return _aiUiViewModel.bodyDataHandler
 
     }
+
 
 
 }

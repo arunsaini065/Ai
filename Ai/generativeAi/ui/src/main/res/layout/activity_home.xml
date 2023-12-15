@@ -1,313 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_marginStart="@dimen/spacing10"
+            android:layout_marginTop="@dimen/spacing10"
+            android:id="@+id/logo"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/baseline_close_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            >
+            android:contentDescription="@string/logo">
+        </androidx.appcompat.widget.AppCompatImageView>
+      <FrameLayout
+          android:id="@+id/fragment_container_view"
+          app:layout_constraintTop_toBottomOf="@id/logo"
+          app:layout_constraintBottom_toTopOf="@id/bottom_layout"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          android:layout_width="0dp"
+          android:layout_height="0dp" />
 
+      <LinearLayout
+          android:background="@drawable/bottom_bg"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          android:id="@+id/bottom_layout"
+          android:layout_width="0dp"
+          android:layout_height="@dimen/size_50dp"
+          android:orientation="horizontal"
+         >
 
+      </LinearLayout>
+   </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:textColor="@color/white"
-                android:id="@+id/app_name"
-                android:text="Imagine"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="30dp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-            </TextView>
-
-            <TextView
-                android:id="@+id/add_image_txt"
-                android:text="Add Image"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                android:layout_marginTop="50dp"
-                app:layout_constraintTop_toBottomOf="@id/app_name"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/app_name"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_width="0dp"
-                android:textColor="@color/white"
-                android:layout_height="wrap_content">
-            </TextView>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/upload_image_layout"
-                app:layout_constraintEnd_toEndOf="@id/app_name"
-                app:layout_constraintStart_toStartOf="@id/add_image_txt"
-                app:layout_constraintTop_toBottomOf="@id/add_image_txt"
-                android:layout_width="0dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/model_drawable"
-                android:layout_height="wrap_content">
-
-                <androidx.constraintlayout.widget.Group
-                    android:layout_width="wrap_content"
-                    android:visibility="gone"
-                    android:id="@+id/m_group_select_image"
-                    app:constraint_referenced_ids="m_upload_thumbnail,change_txt,close_img"
-                    android:layout_height="wrap_content">
-                </androidx.constraintlayout.widget.Group>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:padding="@dimen/spacing10"
-                    android:id="@+id/m_upload_thumbnail"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="20dp"
-                    android:scaleType="centerCrop"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp">
-                </androidx.appcompat.widget.AppCompatImageView>
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="20dp"
-                    android:id="@+id/close_img"
-                    android:background="@drawable/circle_bg"
-                    android:backgroundTint="#246BD5"
-                    android:layout_marginTop="1dp"
-                    android:layout_marginEnd="1dp"
-                    app:srcCompat="@drawable/baseline_close_24"
-                    android:padding="4dp"
-                    android:scaleType="centerInside"
-                    app:layout_constraintTop_toTopOf="@id/m_upload_thumbnail"
-                    app:layout_constraintEnd_toEndOf="@id/m_upload_thumbnail"
-                    android:layout_height="20dp">
-                </androidx.appcompat.widget.AppCompatImageView>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/add_icon"
-                    android:layout_marginEnd="@dimen/spacing10"
-                    android:layout_width="wrap_content"
-                    android:text="Change"
-                    android:textColor="@color/white"
-                    android:id="@+id/change_txt"
-                    android:layout_height="wrap_content">
-                </androidx.appcompat.widget.AppCompatTextView>
-
-
-                <TextView
-                    android:id="@+id/upload_txt"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="Upload Image"
-                    android:textColor="@color/text_hint"
-                    android:layout_marginStart="20dp"
-                    android:gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp">
-                </TextView>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/add_icon"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="@dimen/spacing10"
-                    android:scaleType="centerInside"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/baseline_add_24" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:id="@+id/text_prompt"
-                android:text="Enter Prompt"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/upload_image_layout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/upload_image_layout"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_width="0dp"
-                android:textColor="@color/white"
-                android:layout_height="wrap_content">
-            </TextView>
-
-            <EditText
-                android:id="@+id/positive_prompt"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bg_boarder"
-                app:layout_constraintTop_toBottomOf="@id/text_prompt"
-                app:layout_constraintEnd_toEndOf="@id/app_name"
-                android:gravity="top"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="@id/text_prompt"
-                android:layout_width="0dp"
-                android:padding="5dp"
-                android:layout_height="100dp">
-            </EditText>
-
-            <TextView
-
-                android:id="@+id/style_text"
-                android:text="Style"
-                android:textColor="@color/white"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/positive_prompt"
-                app:layout_constraintStart_toStartOf="@id/m_style_tv"
-                android:layout_marginTop="20dp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-            </TextView>
-
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/m_style_tv"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/model_drawable"
-                android:gravity="center_vertical"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:singleLine="true"
-                android:textColor="@color/white"
-                android:textColorHint="@color/text_hint"
-                app:drawableEndCompat="@drawable/arrow_drop_down"
-                app:layout_constraintEnd_toEndOf="@id/positive_prompt"
-                app:layout_constraintStart_toEndOf="@id/m_model_tv"
-                app:layout_constraintTop_toBottomOf="@id/model_text" />
-
-            <TextView
-
-                android:id="@+id/model_text"
-                android:text="Model"
-                android:textColor="@color/white"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/positive_prompt"
-                app:layout_constraintStart_toStartOf="@id/positive_prompt"
-                android:layout_marginTop="20dp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-            </TextView>
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_marginTop="@dimen/spacing10"
-                android:background="@drawable/model_drawable"
-                android:textColor="@color/white"
-                android:textColorHint="@color/text_hint"
-                android:id="@+id/m_model_tv"
-                android:paddingStart="20dp"
-                android:gravity="center_vertical"
-                android:layout_marginEnd="5dp"
-                android:singleLine="true"
-                app:drawableEndCompat="@drawable/arrow_drop_down"
-                android:paddingEnd="20dp"
-                app:layout_constraintTop_toBottomOf="@id/model_text"
-                app:layout_constraintEnd_toStartOf="@id/m_style_tv"
-                app:layout_constraintStart_toStartOf="@id/positive_prompt"
-                android:layout_width="0dp"
-                android:layout_height="60dp">
-            </androidx.appcompat.widget.AppCompatTextView>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/aspect_ratio"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/m_model_tv"
-                app:layout_constraintStart_toStartOf="@id/m_model_tv"
-                android:layout_width="0dp"
-                android:text="Aspect Ratio"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:layout_height="wrap_content">
-            </androidx.appcompat.widget.AppCompatTextView>
-
-            <com.rocks.ui.ratio.CropRatioRecyclerView
-                android:id="@+id/aspect_ratio_rv"
-                android:layout_marginTop="@dimen/spacing10"
-                app:layout_constraintTop_toBottomOf="@id/aspect_ratio"
-                android:clipToPadding="false"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </com.rocks.ui.ratio.CropRatioRecyclerView>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_advance"
-                android:layout_marginTop="20dp"
-                android:text="Advance Settings"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="@id/aspect_ratio"
-                app:layout_constraintTop_toBottomOf="@id/aspect_ratio_rv"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-            </androidx.appcompat.widget.AppCompatTextView>
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_marginTop="@dimen/spacing10"
-                android:background="@drawable/model_drawable"
-                android:textColor="@color/white"
-                android:text="Choose Settings"
-                android:id="@+id/advance_choose"
-                android:paddingStart="20dp"
-                android:gravity="center_vertical"
-                app:drawableEndCompat="@drawable/arrow_drop_down"
-                android:paddingEnd="20dp"
-                app:layout_constraintTop_toBottomOf="@id/text_advance"
-                app:layout_constraintEnd_toEndOf="@id/positive_prompt"
-                app:layout_constraintStart_toStartOf="@id/text_advance"
-                android:layout_width="0dp"
-                android:layout_height="60dp">
-            </androidx.appcompat.widget.AppCompatTextView>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_marginTop="20dp"
-                android:id="@+id/btnGenerate"
-                app:layout_constraintEnd_toEndOf="@id/advance_choose"
-                app:layout_constraintTop_toBottomOf="@id/advance_choose"
-                app:layout_constraintStart_toStartOf="@id/advance_choose"
-                android:layout_width="0dp"
-                android:background="@drawable/generate_output_bg"
-                android:layout_height="55dp">
-                <TextView
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:gravity="center"
-                    android:text="Generate"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </TextView>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <ProgressBar
-                android:id="@+id/progress_circular"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/btnGenerate"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="@+id/app_name"
-                app:layout_constraintStart_toStartOf="@+id/app_name" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
 </layout>
