@@ -126,17 +126,12 @@ class CropRatioRecyclerView : RecyclerView {
 
                 holder.mBinding.mRatioLayout.setBackgroundResource(R.drawable.ratio_background_selected)
 
-                holder.mBinding.name.setTextColor(ContextCompat.getColor(context,R.color.black))
 
-                holder.mBinding.ratio.setTintColor(R.color.black)
 
             } else {
 
                 holder.mBinding.mRatioLayout.setBackgroundResource(R.drawable.ratio_background_unselected)
 
-                holder.mBinding.name.setTextColor(ContextCompat.getColor(context,R.color.white))
-
-                holder.mBinding.ratio.setTintColor(R.color.white)
 
 
             }
@@ -151,7 +146,6 @@ class CropRatioRecyclerView : RecyclerView {
 
             }
 
-            holder.mBinding.ratio.setImageResource(item.src)
 
             holder.itemView.setOnClickListener {
 

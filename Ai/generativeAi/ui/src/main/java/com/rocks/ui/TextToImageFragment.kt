@@ -84,7 +84,7 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
 
             ModelBtmSheet().apply {
 
-                show(childFragmentManager,"MODEL_BTM")
+                show(this@TextToImageFragment.childFragmentManager,"MODEL_BTM")
 
             }
 
@@ -101,7 +101,7 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
 
                 }
 
-                show(childFragmentManager,"MODEL_BTM")
+                show(this@TextToImageFragment.childFragmentManager,"MODEL_BTM")
 
             }
 
@@ -111,7 +111,7 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
 
             SettingBtmSheet().apply {
 
-                show(childFragmentManager,"SETTING_BTM")
+                show(this@TextToImageFragment.childFragmentManager,"SETTING_BTM")
 
             }
         }
@@ -122,7 +122,6 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
 
                 if (it is ModelUiState.Success) {
 
-                    progressCircular.beGone()
 
                     if (it.data != null) {
 
@@ -137,12 +136,10 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
 
                     Toast.makeText(context,""+it.message, Toast.LENGTH_SHORT).show()
 
-                    progressCircular.beGone()
 
 
                 }else if (it is ModelUiState.Loading){
 
-                    progressCircular.beVisible()
                 }
 
             }
@@ -202,7 +199,6 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
 
                             bodyDataHandler.uploadImage = it.data
 
-                            progressCircular.beGone()
 
                             _viewModel.postModelIdBase(bodyDataHandler)
                         }
@@ -213,14 +209,12 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
 
                         Toast.makeText(requireContext(),""+it.message, Toast.LENGTH_SHORT).show()
 
-                        progressCircular.beGone()
 
 
                     }
 
                     is ModelUiState.Loading -> {
 
-                        progressCircular.beVisible()
                     }
 
                     else -> {

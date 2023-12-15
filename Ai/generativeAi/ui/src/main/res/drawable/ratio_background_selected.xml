@@ -4,8 +4,11 @@
         android:width="48dp"
         >
     </size>
-    <solid android:color="#EBDAD4D4">
-    </solid>
+    <gradient
+        android:startColor="#F33859"
+        android:endColor="#F4A80B"
+        >
+    </gradient>
     <corners android:radius="4dp">
     </corners>
 
