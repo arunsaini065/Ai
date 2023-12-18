@@ -150,7 +150,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:gravity="center"
-                    android:text="Generate"
+                    android:text="@string/generate"
                     android:textSize="18dp"
                     android:textStyle="bold"
                     android:textColor="@color/white"
@@ -160,6 +160,24 @@
                 </TextView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="@string/inspiration"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/advance_choose"
+                app:layout_constraintTop_toBottomOf="@+id/btnGenerate" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="18dp"
+                android:layout_width="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

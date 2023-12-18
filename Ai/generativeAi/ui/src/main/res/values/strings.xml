@@ -2,4 +2,6 @@
     <string name="logo">logo</string>
     <string name="aspect_ratio">Aspect Ratio</string>
     <string name="effects_style">Effects | Style</string>
+    <string name="inspiration">Inspiration</string>
+    <string name="generate">Generate</string>
 </resources>
