@@ -41,6 +41,7 @@
          >
 
          <androidx.appcompat.widget.AppCompatTextView
+             android:id="@+id/txt_to_txt"
              app:drawableTopCompat="@drawable/tic_ext_to_image"
              android:text="Text to image"
              android:textColor="@color/white"
@@ -53,6 +54,8 @@
           <androidx.appcompat.widget.AppCompatTextView
               app:drawableTopCompat="@drawable/ic_image_to_txt"
               android:text="Image to image"
+              android:id="@+id/img_to_img"
+
               android:textColor="@color/white"
               android:gravity="center"
               android:layout_weight="1"
@@ -61,11 +64,12 @@
               android:layout_height="40dp">
           </androidx.appcompat.widget.AppCompatTextView>
           <androidx.appcompat.widget.AppCompatTextView
-              app:drawableTopCompat="@drawable/ic_gn_fil"
+              app:drawableTopCompat="@drawable/gt_fill"
               android:text="Generate Fill"
               android:textColor="@color/white"
               android:gravity="center"
               android:textSize="10dp"
+              android:id="@+id/gt_fill"
               android:layout_weight="1"
               android:layout_width="match_parent"
               android:layout_height="40dp">

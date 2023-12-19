@@ -69,9 +69,31 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
 
 
+
+
+
     override fun onReadyActivity(savedInstanceState: Bundle?) = with(mBinding) {
 
-        imageToImageFragment()
+        textToImageFragment()
+
+        txtToTxt.setOnClickListener {
+
+            textToImageFragment()
+
+        }
+
+        gtFill.setOnClickListener {
+
+            imageToImageFragment(true)
+
+        }
+
+
+        imgToImg.setOnClickListener {
+
+            imageToImageFragment(false)
+
+        }
 
         return@with
 
@@ -89,16 +111,39 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
             }
 
+            mBinding.txtToTxt.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.tic_ext_to_image, 0, 0)
+
+            mBinding.imgToImg.setTextViewDrawableColor(R.color.white)
+
+            mBinding.gtFill.setTextViewDrawableColor(R.color.white)
+
+
         }
     }
 
-    private fun imageToImageFragment(){
+    private fun imageToImageFragment(fromFill:Boolean){
 
         runCatching {
 
             supportFragmentManager.commit(true) {
 
-                replace(mBinding.fragmentContainerView.id, ImageToImageFragment.getInstance(ImageToImageFragment.Args(true)))
+                replace(mBinding.fragmentContainerView.id, ImageToImageFragment.getInstance(ImageToImageFragment.Args(fromFill)))
+
+            }
+            if (fromFill){
+
+
+                mBinding.txtToTxt.setTextViewDrawableColor(R.color.white)
+
+                mBinding.imgToImg.setTextViewDrawableColor(R.color.white)
+
+                mBinding.gtFill.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.gt_fill, 0, 0)
+
+            }else {
+
+                mBinding.txtToTxt.setTextViewDrawableColor(R.color.white)
+                mBinding.imgToImg.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_image_to_txt, 0, 0)
+                mBinding.gtFill.setTextViewDrawableColor(R.color.white)
 
             }
 

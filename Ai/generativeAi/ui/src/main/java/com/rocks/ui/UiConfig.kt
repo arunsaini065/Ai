@@ -1,10 +1,12 @@
 package com.rocks.ui
 
 import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import com.rocks.ui.inspiration.InspirationData
@@ -43,4 +45,13 @@ fun getDummyIns(): MutableList<InspirationData> {
 
     return list
 
+}
+
+
+ fun TextView.setTextViewDrawableColor(color: Int) {
+    for (drawable in compoundDrawables) {
+        if (drawable != null) {
+            drawable.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(context, color), PorterDuff.Mode.SRC_IN)
+        }
+    }
 }
