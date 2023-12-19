@@ -142,7 +142,9 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
             }else {
 
                 mBinding.txtToTxt.setTextViewDrawableColor(R.color.white)
+
                 mBinding.imgToImg.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_image_to_txt, 0, 0)
+
                 mBinding.gtFill.setTextViewDrawableColor(R.color.white)
 
             }
