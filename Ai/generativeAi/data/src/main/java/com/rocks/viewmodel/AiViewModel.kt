@@ -98,10 +98,13 @@ class AiViewModel (private val modelUseCase: ModelUseCase): ViewModel() {
     fun getLocalLoRAId(): ModelUiState<MutableList<ModelListDataItem>> {
         val listOfLoRAid = mutableListOf<ModelListDataItem>()
         val listOf = Api.listOfLoRAModel
+        val dummyUrl = "https://fastly.picsum.photos/id/278/536/354.jpg?hmac=B3RGgunW6oirJoQEgt80to9HNb7oZqLut-4fFVVc9NM"
         listOf.forEach {
             listOfLoRAid.add(
                 ModelListDataItem(
-                    "", "", "", "", "", "", "", it, "", "", ""
+                    "", "",
+                    "", "",
+                    "", "", "", it, "", dummyUrl, ""
                 )
             )
 

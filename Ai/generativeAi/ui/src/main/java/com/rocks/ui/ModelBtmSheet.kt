@@ -115,6 +115,15 @@ class ModelBtmSheet: BottomSheetDialogFragment() {
                }
 
            }
+        if (isStyle){
+
+            _binding.textView.text = getString(R.string.select_style)
+
+        }else{
+
+            _binding.textView.text = getString(R.string.select_effects)
+
+        }
         return _binding.root
 
     }

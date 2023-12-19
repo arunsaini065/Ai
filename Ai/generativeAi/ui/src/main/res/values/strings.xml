@@ -7,4 +7,6 @@
     <string name="drag_and_drop_or_browse">Drag and drop or browse</string>
     <string name="discover_more">Discover More</string>
     <string name="upload_or_browse">Upload or browse</string>
+    <string name="select_effects">Select Effects</string>
+    <string name="select_style">Select Style</string>
 </resources>

@@ -11,8 +11,8 @@ class ModelAdapter(var callback:(ModelListDataItem)->Unit): AiModelBaseAdapter<M
 
 
     override fun onCreateViewHolderItem(parent: ViewGroup, viewType: Int): AiModelBaseHolder {
-        return  ModelHolder(parent.toBinding())
 
+        return  ModelHolder(parent.toBinding())
 
     }
 

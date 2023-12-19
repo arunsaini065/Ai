@@ -6,7 +6,7 @@
     <corners
 
         android:topLeftRadius="20dp"
-        android:topRightRadius="@dimen/spacing10"
+        android:topRightRadius="20dp"
         >
     </corners>
 

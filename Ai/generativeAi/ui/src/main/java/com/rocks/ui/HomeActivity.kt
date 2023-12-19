@@ -2,36 +2,19 @@ package com.rocks.ui
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Base64
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.fragment.app.commit
-import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.rocks.AspectRatio
 import com.rocks.BodyDataHandler
 import com.rocks.OnBodyHandlerListener
-import com.rocks.OutPutSingleton
 import com.rocks.api.Api
 import com.rocks.factory.AiViewModelFactory
 import com.rocks.impl.ModelDataRepositoryImpl
 import com.rocks.ui.databinding.ActivityHomeBinding
-import com.rocks.ui.imageloader.ImageLoader
-import com.rocks.ui.ratio.CropRatioRecyclerView
-import com.rocks.uistate.ModelUiState
 import com.rocks.usecase.ModelUseCase
 import com.rocks.viewmodel.AiViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
 
 
 class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener,OnCancelFragment {
@@ -74,24 +57,24 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
     override fun onReadyActivity(savedInstanceState: Bundle?) = with(mBinding) {
 
-        textToImageFragment()
+        replaceTextToImageFragment()
 
         txtToTxt.setOnClickListener {
 
-            textToImageFragment()
+            replaceTextToImageFragment()
 
         }
 
         gtFill.setOnClickListener {
 
-            imageToImageFragment(true)
+            replaceImageToImageFragment(true)
 
         }
 
 
         imgToImg.setOnClickListener {
 
-            imageToImageFragment(false)
+            replaceImageToImageFragment(false)
 
         }
 
@@ -101,7 +84,7 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
     }
 
 
-    private fun textToImageFragment(){
+    private fun replaceTextToImageFragment(){
 
         runCatching {
 
@@ -121,7 +104,7 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
         }
     }
 
-    private fun imageToImageFragment(fromFill:Boolean){
+    private fun replaceImageToImageFragment(fromFill:Boolean){
 
         runCatching {
 
