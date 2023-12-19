@@ -71,7 +71,7 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
 
     override fun onReadyActivity(savedInstanceState: Bundle?) = with(mBinding) {
 
-        textToTextFragment()
+        imageToImageFragment()
 
         return@with
 
@@ -79,7 +79,7 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
     }
 
 
-    private fun textToTextFragment(){
+    private fun textToImageFragment(){
 
         runCatching {
 
@@ -92,6 +92,18 @@ class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener
         }
     }
 
+    private fun imageToImageFragment(){
+
+        runCatching {
+
+            supportFragmentManager.commit(true) {
+
+                replace(mBinding.fragmentContainerView.id, ImageToImageFragment.getInstance(ImageToImageFragment.Args(true)))
+
+            }
+
+        }
+    }
 
     override fun onRegisterForActivityResult(activityResult: ActivityResult) {
 

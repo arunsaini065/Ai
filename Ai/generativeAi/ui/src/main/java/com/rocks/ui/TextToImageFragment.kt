@@ -16,7 +16,6 @@ import com.rocks.factory.AiViewModelFactory
 import com.rocks.impl.ModelDataRepositoryImpl
 import com.rocks.ui.databinding.TextToImageFragmentBinding
 import com.rocks.ui.inspiration.InspirationAdapter
-import com.rocks.ui.inspiration.InspirationData
 import com.rocks.ui.ratio.CropRatioRecyclerView
 import com.rocks.uistate.ModelUiState
 import com.rocks.usecase.ModelUseCase
@@ -24,6 +23,8 @@ import com.rocks.viewmodel.AiViewModel
 import kotlinx.coroutines.launch
 
 class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCancelFragment {
+
+
 
     companion object{
 
@@ -250,20 +251,6 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
     override fun onRegisterForActivityResult(activityResult: ActivityResult) {
 
 
-
-    }
-
-    fun getDummyIns(): MutableList<InspirationData> {
-
-        val list = mutableListOf<InspirationData>()
-
-        repeat(10){
-
-            list.add(InspirationData.DUMMY)
-
-        }
-
-        return list
 
     }
 

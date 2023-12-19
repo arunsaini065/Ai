@@ -4,4 +4,7 @@
     <string name="effects_style">Effects | Style</string>
     <string name="inspiration">Inspiration</string>
     <string name="generate">Generate</string>
+    <string name="drag_and_drop_or_browse">Drag and drop or browse</string>
+    <string name="discover_more">Discover More</string>
+    <string name="upload_or_browse">Upload or browse</string>
 </resources>

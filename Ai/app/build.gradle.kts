@@ -3,6 +3,8 @@ import org.gradle.internal.impldep.org.apache.commons.compress.harmony.pack200.P
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-parcelize")
+
 }
 
 android {

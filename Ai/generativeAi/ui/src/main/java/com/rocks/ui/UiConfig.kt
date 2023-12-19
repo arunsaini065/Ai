@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
+import com.rocks.ui.inspiration.InspirationData
 
 
 inline fun <reified V : ViewDataBinding> ViewGroup.toBinding(): V {
@@ -28,4 +29,18 @@ fun View?.beGone(){
 
 fun ImageView.setTintColor(color:Int){
     this.setColorFilter(ContextCompat.getColor(context, color), PorterDuff.Mode.SRC_IN);
+}
+
+fun getDummyIns(): MutableList<InspirationData> {
+
+    val list = mutableListOf<InspirationData>()
+
+    repeat(10){
+
+        list.add(InspirationData.DUMMY)
+
+    }
+
+    return list
+
 }
