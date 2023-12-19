@@ -2,11 +2,14 @@ package com.rocks.ui
 
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.viewModels
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.rocks.AspectRatio
 import com.rocks.BodyDataHandler
 import com.rocks.OutPutSingleton
@@ -14,6 +17,8 @@ import com.rocks.api.Api
 import com.rocks.factory.AiViewModelFactory
 import com.rocks.impl.ModelDataRepositoryImpl
 import com.rocks.ui.databinding.TextToImageFragmentBinding
+import com.rocks.ui.inspiration.InspirationAdapter
+import com.rocks.ui.inspiration.InspirationData
 import com.rocks.ui.ratio.CropRatioRecyclerView
 import com.rocks.uistate.ModelUiState
 import com.rocks.usecase.ModelUseCase
@@ -74,6 +79,18 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
 
 
         _viewModel.postModelIdsList(Api.getBodyOnlyKey(bodyDataHandler))
+
+        mInspirationRv.apply {
+
+            layoutManager = LinearLayoutManager(requireContext(),RecyclerView.HORIZONTAL,false)
+
+            adapter = InspirationAdapter().apply {
+
+                submitList(getDummyIns())
+
+            }
+
+        }
 
         mModelTv.text = bodyDataHandler.modelId
 
@@ -235,6 +252,20 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
     override fun onRegisterForActivityResult(activityResult: ActivityResult) {
 
 
+
+    }
+
+    fun getDummyIns(): MutableList<InspirationData> {
+
+        val list = mutableListOf<InspirationData>()
+
+        repeat(10){
+
+            list.add(InspirationData.DUMMY)
+
+        }
+
+        return list
 
     }
 
