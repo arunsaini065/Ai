@@ -9,4 +9,6 @@
     <string name="upload_or_browse">Upload or browse</string>
     <string name="select_effects">Select Effects</string>
     <string name="select_style">Select Style</string>
+    <string name="all">All</string>
+    <string name="popular">Popular</string>
 </resources>

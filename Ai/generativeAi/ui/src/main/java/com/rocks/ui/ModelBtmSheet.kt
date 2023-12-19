@@ -3,12 +3,13 @@ package com.rocks.ui
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rocks.OnBodyHandlerListener
 import com.rocks.model.ModelListDataItem
@@ -16,6 +17,7 @@ import com.rocks.ui.databinding.BtmSheetSelectmodelBinding
 import com.rocks.uistate.ModelUiState
 import com.rocks.viewmodel.AiViewModel
 import kotlinx.coroutines.launch
+
 
 class ModelBtmSheet: BottomSheetDialogFragment() {
 
@@ -129,7 +131,24 @@ class ModelBtmSheet: BottomSheetDialogFragment() {
     }
 
     private fun loadModelAdapter(list: ModelUiState<MutableList<ModelListDataItem>>) {
-        _binding.modelRv.adapter = ModelAdapter {
+
+        (_binding.modelRv.layoutManager as GridLayoutManager).spanSizeLookup = object : SpanSizeLookup() {
+
+            override fun getSpanSize(position: Int): Int {
+
+                return when (_binding.modelRv.adapter?.getItemViewType(position)) {
+
+                    ModelAdapter.HEADER -> 3
+
+                    else -> 1
+
+                }
+
+            }
+
+        }
+
+        _binding.modelRv.adapter = ModelAdapter(isStyle) {
 
 
             if (::onBodyHandlerListener.isInitialized) {

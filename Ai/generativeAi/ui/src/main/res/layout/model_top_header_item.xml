@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="@dimen/spacing10"
+        android:layout_height="wrap_content">
+           <TextView
+               android:id="@+id/all"
+               android:text="@string/all"
+               android:gravity="center"
+               android:textSize="@dimen/_14dp"
+               android:textStyle="bold"
+               android:textColor="@color/white"
+               android:background="@drawable/generate_output_bg"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               android:layout_width="80dp"
+               android:layout_height="40dp">
+           </TextView>
+
+        <TextView
+            android:text="@string/popular"
+            android:gravity="center"
+            android:textSize="@dimen/_14dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginStart="16dp"
+            android:backgroundTint="#171717"
+            android:background="@drawable/generate_output_bg"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/all"
+            android:layout_width="130dp"
+            android:layout_height="40dp">
+        </TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
