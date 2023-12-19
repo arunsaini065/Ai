@@ -2,10 +2,8 @@ package com.rocks.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
-import androidx.activity.viewModels
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
