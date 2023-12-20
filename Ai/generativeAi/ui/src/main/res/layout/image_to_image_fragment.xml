@@ -54,10 +54,11 @@
                 android:text="@string/discover_more"
                 android:textSize="14dp"
                 android:textStyle="bold"
+                android:textColor="@color/white"
                 android:layout_marginTop="40dp"
                 app:layout_constraintStart_toStartOf="@+id/gallery_view"
                 app:layout_constraintTop_toBottomOf="@+id/gallery_view"
-                app:layout_editor_absoluteY="@dimen/size_50dp" />
+                />
 
 
             <androidx.recyclerview.widget.RecyclerView

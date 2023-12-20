@@ -50,6 +50,14 @@ class ImageToImageFragment: AiBaseFragment<ImageToImageFragmentBinding>() {
 
             mBinding.topViewTxt.text = getString(R.string.upload_or_browse)
 
+            mBinding.btnGenerate.beGone()
+
+        }
+
+        mBinding.galleryView.setOnClickListener {
+
+            PhotoSelectActivity.goToAiHomeActivity(requireActivity(),activityLauncher)
+
         }
 
         mBinding.btnGenerate.setOnClickListener {
