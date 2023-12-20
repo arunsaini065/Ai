@@ -76,7 +76,6 @@ class ImageToImageFragment: AiBaseFragment<ImageToImageFragmentBinding>() {
 
             if (activityResult.resultCode== PHOTO_SELECT_RQ){
 
-                Log.d("@Arun", "onRegisterForActivityResult: " + activityResult.data?.data)
 
             }
     }
