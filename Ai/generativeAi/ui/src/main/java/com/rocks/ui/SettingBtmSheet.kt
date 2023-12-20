@@ -114,36 +114,6 @@ class SettingBtmSheet: BottomSheetDialogFragment() {
             }
         })
 
-        _settingBinding.seek3.seedSeekbar.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-            }
-
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-
-                var p = progress
-
-                if (progress<= SEED_SCALE_MIN){
-
-                    p = SEED_SCALE_MIN
-
-                }
-
-                if (::onBodyHandlerListener.isInitialized){
-
-                    onBodyHandlerListener.getHandlerBody().seed = p
-
-                    _settingBinding.seek3.stepsCount.text = "${onBodyHandlerListener.getHandlerBody().seed}"
-
-
-                }
-            }
-        })
 
 
         if (::onBodyHandlerListener.isInitialized) {
@@ -154,7 +124,6 @@ class SettingBtmSheet: BottomSheetDialogFragment() {
 
                 _settingBinding.seek2.stepsSeekbar.progress = numbInferenceSteps?.toInt()?:0
 
-                _settingBinding.seek3.seedSeekbar.progress=seed?:0
 
             }
 

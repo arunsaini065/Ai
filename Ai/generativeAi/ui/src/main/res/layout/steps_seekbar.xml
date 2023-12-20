@@ -2,19 +2,22 @@
 <layout>
     <merge>
         <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:id="@+id/steps_seekbar_layout"
-            app:layout_constraintTop_toBottomOf="@id/txt4"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txt3"
+            app:layout_constraintTop_toTopOf="@id/txt4"
+            app:layout_constraintBottom_toBottomOf="@id/txt4"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_height="wrap_content"
             xmlns:app="http://schemas.android.com/apk/res-auto">
             <SeekBar
                 android:id="@+id/steps_seekbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
                 android:layout_marginStart="12dp"
                 android:max="40"
+                android:thumb="@drawable/custom_thumb_seek"
+                android:progressDrawable="@drawable/progress_drawble_bg"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -24,6 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14dp"
+                android:visibility="gone"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

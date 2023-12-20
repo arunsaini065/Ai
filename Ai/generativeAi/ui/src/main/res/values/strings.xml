@@ -12,4 +12,6 @@
     <string name="all">All</string>
     <string name="popular">Popular</string>
     <string name="no_style">No style</string>
+    <string name="don_t_include">Don\'t include...</string>
+    <string name="cfg_scale">CFG Scale</string>
 </resources>
