@@ -3,9 +3,14 @@
 
     <application>
         <activity
+            android:name=".selectimg.PhotoSelectActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Ai.Theme"
-            android:name=".ResultActivity"
             android:exported="false" />
+        <activity
+            android:name=".ResultActivity"
+            android:exported="false"
+            android:theme="@style/Ai.Theme" />
         <activity
             android:name=".HomeActivity"
             android:exported="true"

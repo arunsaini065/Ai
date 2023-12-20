@@ -14,4 +14,5 @@
     <string name="no_style">No style</string>
     <string name="don_t_include">Don\'t include...</string>
     <string name="cfg_scale">CFG Scale</string>
+    <string name="select_photo">Select photo</string>
 </resources>

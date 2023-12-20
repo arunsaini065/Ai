@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rocks.ui.databinding.ImageToImageFragmentBinding
 import com.rocks.ui.discovermore.DiscoverMoreAdapter
+import com.rocks.ui.selectimg.PhotoSelectActivity
 import kotlinx.parcelize.Parcelize
 
 class ImageToImageFragment: AiBaseFragment<ImageToImageFragmentBinding>() {
@@ -47,6 +48,12 @@ class ImageToImageFragment: AiBaseFragment<ImageToImageFragmentBinding>() {
         if (args.fromFill){
 
             mBinding.topViewTxt.text = getString(R.string.upload_or_browse)
+
+        }
+
+        mBinding.btnGenerate.setOnClickListener {
+
+            PhotoSelectActivity.goToAiHomeActivity(requireActivity())
 
         }
 
