@@ -3,10 +3,13 @@
 
     <application>
         <activity
-            android:name=".selectimg.PhotoSelectActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Ai.Theme"
+            android:name=".CropActivity"
             android:exported="false" />
+        <activity
+            android:name=".selectimg.PhotoSelectActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Ai.Theme" />
         <activity
             android:name=".ResultActivity"
             android:exported="false"
