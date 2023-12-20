@@ -11,4 +11,5 @@
     <string name="select_style">Select Style</string>
     <string name="all">All</string>
     <string name="popular">Popular</string>
+    <string name="no_style">No style</string>
 </resources>

@@ -73,7 +73,7 @@ class ModelAdapter(private var isStyle:Boolean, var callback:(ModelListDataItem)
 
     private fun getNewPosition(position: Int): Int {
 
-       var  pos = position-1
+       var  pos = if (isStyle) position-2 else position-1
 
         if (pos<0){
 
