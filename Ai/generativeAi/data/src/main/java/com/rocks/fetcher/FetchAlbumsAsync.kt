@@ -110,7 +110,7 @@ class FetchAlbumsAsync(application: Application, recent: Boolean) {
 
             try {
                 if (recent) {
-                    albumList.add(0, AlbumModel("", "", "Recent", "", ""))
+                    albumList.add(0, AlbumModel("", "", "All", "", ""))
                 }
                 do {
                     if (androidX) {

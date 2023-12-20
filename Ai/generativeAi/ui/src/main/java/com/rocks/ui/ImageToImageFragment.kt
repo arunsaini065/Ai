@@ -2,6 +2,7 @@ package com.rocks.ui
 
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.recyclerview.widget.GridLayoutManager
@@ -53,7 +54,7 @@ class ImageToImageFragment: AiBaseFragment<ImageToImageFragmentBinding>() {
 
         mBinding.btnGenerate.setOnClickListener {
 
-            PhotoSelectActivity.goToAiHomeActivity(requireActivity())
+            PhotoSelectActivity.goToAiHomeActivity(requireActivity(),activityLauncher)
 
         }
 
@@ -73,5 +74,10 @@ class ImageToImageFragment: AiBaseFragment<ImageToImageFragmentBinding>() {
 
     override fun onRegisterForActivityResult(activityResult: ActivityResult) {
 
+            if (activityResult.resultCode== PHOTO_SELECT_RQ){
+
+                Log.d("@Arun", "onRegisterForActivityResult: " + activityResult.data?.data)
+
+            }
     }
 }

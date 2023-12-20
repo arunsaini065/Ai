@@ -33,6 +33,8 @@ fun ImageView.setTintColor(color:Int){
     this.setColorFilter(ContextCompat.getColor(context, color), PorterDuff.Mode.SRC_IN);
 }
 
+const val PHOTO_SELECT_RQ = 34
+
 fun getDummyIns(): MutableList<InspirationData> {
 
     val list = mutableListOf<InspirationData>()

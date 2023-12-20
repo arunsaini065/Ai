@@ -33,6 +33,8 @@
               android:textStyle="bold"
               android:textSize="@dimen/_14dp"
               android:paddingStart="@dimen/spacing10"
+              android:drawablePadding="@dimen/spacing10"
+              android:paddingEnd="@dimen/spacing10"
               app:layout_constraintStart_toStartOf="@id/back_btn"
               android:layout_height="36dp">
           </androidx.appcompat.widget.AppCompatTextView>

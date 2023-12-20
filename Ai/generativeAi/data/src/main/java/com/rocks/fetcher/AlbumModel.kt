@@ -39,7 +39,7 @@ class AlbumModel : Serializable {
 
             override fun areContentsTheSame(oldItem: AlbumModel, newItem: AlbumModel): Boolean {
 
-                return oldItem.path==newItem.path
+                return oldItem.bucketData==newItem.bucketData
 
             }
 

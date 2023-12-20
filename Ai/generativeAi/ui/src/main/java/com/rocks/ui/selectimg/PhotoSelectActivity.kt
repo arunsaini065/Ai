@@ -6,10 +6,12 @@ import android.os.Bundle
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.rocks.fetcher.MediaViewModel
 import com.rocks.ui.AiBaseActivity
+import com.rocks.ui.PHOTO_SELECT_RQ
 import com.rocks.ui.databinding.ActivityPhotoSelectBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -21,6 +23,14 @@ class PhotoSelectActivity : AiBaseActivity<ActivityPhotoSelectBinding>() {
     private val _selectImageAdapter by lazy {
 
         SelectImageAdapter {
+
+            setResult(PHOTO_SELECT_RQ,Intent().apply {
+
+                data = it.uri.toUri()
+
+            })
+
+            finish()
 
         }
 
@@ -51,6 +61,22 @@ class PhotoSelectActivity : AiBaseActivity<ActivityPhotoSelectBinding>() {
 
         _viewModel.fetchAllData()
 
+        lifecycleScope.launch {
+
+            _viewModel.folderName.collect{
+
+                mBinding.selectedBuketName.text = it
+
+            }
+
+        }
+
+        mBinding.selectedBuketName.setOnClickListener {
+
+            FolderBottomSheet().show(supportFragmentManager,"FOLDER")
+
+        }
+
         mBinding.backBtn.setOnClickListener {
 
             onBackPressed()
@@ -58,14 +84,6 @@ class PhotoSelectActivity : AiBaseActivity<ActivityPhotoSelectBinding>() {
         }
 
         mBinding.mRvPhotos.adapter = _selectImageAdapter
-
-        lifecycleScope.launch {
-
-            _viewModel.listOfFolder.collect{
-
-
-            }
-        }
 
         lifecycleScope.launch {
 

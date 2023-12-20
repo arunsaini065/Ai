@@ -5,6 +5,8 @@
     <dimen name="size_46dp">46dp</dimen>
     <dimen name="_14dp">14dp</dimen>
     <dimen name="_16dp">16dp</dimen>
+    <dimen name="_20dp">20dp</dimen>
+    <dimen name="_40dp">40dp</dimen>
 
     <declare-styleable name="ViewSizeCalculate">
     <!-- Sets view ratio size of width -->
