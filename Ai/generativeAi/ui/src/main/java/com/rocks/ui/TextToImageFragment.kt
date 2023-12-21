@@ -1,5 +1,6 @@
 package com.rocks.ui
 
+import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
@@ -18,6 +19,8 @@ import com.rocks.impl.ModelDataRepositoryImpl
 import com.rocks.ui.databinding.TextToImageFragmentBinding
 import com.rocks.ui.inspiration.InspirationAdapter
 import com.rocks.ui.ratio.CropRatioRecyclerView
+import com.rocks.ui.selectimg.PhotoSelectActivity
+import com.rocks.ui.simplecropview.BitmapHolder
 import com.rocks.uistate.ModelUiState
 import com.rocks.usecase.ModelUseCase
 import com.rocks.viewmodel.AiViewModel
@@ -26,16 +29,21 @@ import kotlinx.parcelize.Parcelize
 
 class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCancelFragment {
 
+    private val args by lazy {  arguments?.getParcelable("args")?: Args() }
+
+
+
+
     @Parcelize
-    data class Args(val fromImgToImg:Boolean = false): Parcelable
+    data class Args(val fromImgToImg:Boolean = false,val uri: Uri?=null): Parcelable
 
     companion object{
 
-        fun getInstance(args: Args) = TextToImageFragment().apply {
+        fun getInstance(args: Args = Args()) = TextToImageFragment().apply {
 
             arguments = Bundle().apply {
 
-                putParcelable("person", args)
+                putParcelable("args", args)
 
             }
 
@@ -86,6 +94,26 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
     }
 
     override fun onReadyView(view: View, savedInstanceState: Bundle?) = with(mBinding) {
+
+
+
+        if (args.fromImgToImg){
+
+            mBinding.uploadedImgGp.beVisible()
+
+            mBinding.mInspirationRv.beGone()
+
+            mBinding.inspirationTxt.beGone()
+
+            mBinding.uploadedImg.setImageBitmap(BitmapHolder.getBitmap())
+
+        }
+
+        mBinding.changeTxt.setOnClickListener {
+
+            PhotoSelectActivity.goToAiPhotoActivity(requireActivity(),activityLauncher)
+
+        }
 
 
         _viewModel.postModelIdsList(Api.getBodyOnlyKey(bodyDataHandler))
@@ -165,10 +193,7 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
 
 
 
-                }else if (it is ModelUiState.Loading){
-
                 }
-
             }
 
         }
@@ -261,7 +286,22 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
 
     override fun onRegisterForActivityResult(activityResult: ActivityResult) {
 
+        if (activityResult.resultCode== PHOTO_SELECT_RQ){
 
+             runCatching {
+
+                 CropActivity.goToAiCropActivity(requireActivity(), activityResult.data?.data, activityLauncher)
+
+             }
+
+        }else if (activityResult.resultCode == CROP_RQ){
+            runCatching {
+
+                mBinding.uploadedImg.setImageBitmap(BitmapHolder.getBitmap())
+
+            }
+
+        }
 
     }
 

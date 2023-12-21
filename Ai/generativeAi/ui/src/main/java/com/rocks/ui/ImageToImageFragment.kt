@@ -21,7 +21,7 @@ class ImageToImageFragment: AiBaseFragment<ImageToImageFragmentBinding>() {
 
             arguments = Bundle().apply {
 
-                putParcelable("person", args)
+                putParcelable("args", args)
 
             }
 
@@ -30,7 +30,7 @@ class ImageToImageFragment: AiBaseFragment<ImageToImageFragmentBinding>() {
     }
 
 
-    private val args by lazy {  arguments?.getParcelable("person")?:Args()}
+    private val args by lazy {  arguments?.getParcelable("args")?:Args()}
 
 
     @Parcelize
@@ -78,11 +78,18 @@ class ImageToImageFragment: AiBaseFragment<ImageToImageFragmentBinding>() {
 
             if (activityResult.resultCode== PHOTO_SELECT_RQ){
 
-                CropActivity.goToAiCropActivity(requireActivity(),activityResult.data?.data,activityLauncher)
+                runCatching {
+
+                    CropActivity.goToAiCropActivity(requireActivity(), activityResult.data?.data, activityLauncher)
+                }
 
             }else if (activityResult.resultCode == CROP_RQ){
 
-                Log.d("@Arun", "onRegisterForActivityResult: "+BitmapHolder.getBitmap())
+                runCatching {
+
+                    ImageToImageActivity.goToAiImgToImgActivity(requireActivity(), activityResult.data?.data, activityLauncher)
+
+                }
 
             }
     }

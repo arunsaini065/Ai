@@ -3,10 +3,15 @@
 
     <application>
         <activity
-            android:name=".CropActivity"
+            android:name=".ImageToImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Ai.Theme"
             android:exported="false" />
+        <activity
+            android:name=".CropActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Ai.Theme" />
         <activity
             android:name=".selectimg.PhotoSelectActivity"
             android:exported="false"
