@@ -13,7 +13,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.rocks.ui.databinding.ActivityCropBinding
+import com.rocks.ui.ratio.CropRatioRecyclerView
 import com.rocks.ui.simplecropview.BitmapHolder
+import com.rocks.ui.simplecropview.CropImageView
 import com.rocks.ui.simplecropview.callback.CropCallback
 import com.rocks.ui.simplecropview.callback.LoadCallback
 import kotlinx.coroutines.launch
@@ -42,6 +44,16 @@ class CropActivity : AiBaseActivity<ActivityCropBinding>() {
     override val mBinding  by lazy { ActivityCropBinding.inflate(layoutInflater) }
 
     override fun onReadyActivity(savedInstanceState: Bundle?) {
+
+        mBinding.cropRatioRecyclerView.iChangeRatioListener = object :CropRatioRecyclerView.IChangeRatioListener{
+
+            override fun onChangeRatio(width: Int, height: Int) {
+
+                mBinding.cropImageView.setCustomRatio(width,height)
+
+            }
+
+        }
 
         mBinding.next.setOnClickListener {
 

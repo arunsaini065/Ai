@@ -42,7 +42,7 @@
             custom:layout_constraintStart_toStartOf="parent"
             custom:layout_constraintTop_toBottomOf="@id/back_btn"
             custom:scv_background_color="@color/transparent"
-            custom:scv_crop_mode="free"
+            custom:scv_crop_mode="square"
             custom:scv_frame_color="@color/white"
             custom:scv_frame_stroke_weight="1dp"
             custom:scv_guide_color="@color/white"
