@@ -14,5 +14,6 @@
     <color name="semi_transparent_c">#66000000</color>
     <color name="semi_transparent_25">#25000000</color>
     <color name="semi_transparent_50">#50000000</color>
+    <color name="red_trans">#65FF0000</color>
 
 </resources>

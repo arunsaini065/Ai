@@ -31,6 +31,7 @@
     <dimen name="cropiwa_default_grid_stroke_width">1dp</dimen>
     <dimen name="cropiwa_default_min_height">40dp</dimen>
     <dimen name="cropiwa_default_min_width">40dp</dimen>
+    <dimen name="_30dp">30dp</dimen>
 
 
     <declare-styleable name="scv_CropImageView">

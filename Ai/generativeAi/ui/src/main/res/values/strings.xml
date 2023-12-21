@@ -20,4 +20,10 @@
     <string name="upload">Upload</string>
     <string name="change">Change</string>
     <string name="image_to_image">Image to image</string>
+    <string name="generative_fill">Generative fill</string>
+    <string name="advance_settings">Advance Settings</string>
+    <string name="enter_prompt">Enter prompt...</string>
+    <string name="type_what_you_want_to_insert">Type what you want to insert</string>
+    <string name="brush">Brush</string>
+    <string name="eraser">Eraser</string>
 </resources>

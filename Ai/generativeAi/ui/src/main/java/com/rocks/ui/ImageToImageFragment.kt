@@ -80,7 +80,15 @@ class ImageToImageFragment: AiBaseFragment<ImageToImageFragmentBinding>() {
 
                 runCatching {
 
-                    CropActivity.goToAiCropActivity(requireActivity(), activityResult.data?.data, activityLauncher)
+                    if (args.fromFill){
+
+                        GenerativeFillActivity.goToGenerativeFillActivity(requireActivity(),activityResult.data?.data,activityLauncher)
+
+                    }else {
+
+                        CropActivity.goToAiCropActivity(requireActivity(), activityResult.data?.data, activityLauncher)
+
+                    }
                 }
 
             }else if (activityResult.resultCode == CROP_RQ){

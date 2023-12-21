@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/back_btn"
+            android:layout_marginTop="@dimen/spacing10"
+            android:layout_width="48dp"
+            android:scaleType="centerInside"
+            android:layout_height="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_back" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/generative_fill"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/back_btn"
+            app:layout_constraintStart_toEndOf="@+id/back_btn"
+            app:layout_constraintTop_toTopOf="@+id/back_btn" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/checkBox"
+                android:layout_marginBottom="@dimen/_20dp"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+                app:layout_constraintTop_toBottomOf="@+id/back_btn">
+            </View>
+        <com.rocks.ui.cutout.DrawView
+            android:id="@+id/drawView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/_20dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintTop_toBottomOf="@+id/back_btn" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40dp"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/_20dp"
+            app:layout_constraintBottom_toTopOf="@id/seekbar">
+
+            <TextView
+                android:id="@+id/brush"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/spacing10"
+                android:gravity="center"
+                android:text="@string/brush"
+
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/eraser"
+                android:layout_width="100dp"
+                android:background="@drawable/generate_output_bg"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/spacing10"
+                android:gravity="center"
+                android:text="@string/eraser"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:layout_marginStart="@dimen/_20dp"
+            android:layout_marginEnd="@dimen/_20dp"
+            android:progressDrawable="@drawable/progress_drawble_bg"
+            android:thumb="@drawable/custom_thumb_seek"
+            app:layout_constraintBottom_toTopOf="@+id/positive_prompt"
+            app:layout_constraintEnd_toEndOf="@+id/positive_prompt"
+            android:layout_marginBottom="@dimen/_20dp"
+            app:layout_constraintStart_toStartOf="@+id/positive_prompt"
+           />
+
+        <EditText
+            android:id="@+id/positive_prompt"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_of_pp"
+            android:gravity="center_vertical"
+            android:hint="@string/type_what_you_want_to_insert"
+            android:padding="@dimen/spacing10"
+            android:layout_marginBottom="@dimen/_30dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/_14dp"
+            app:layout_constraintBottom_toTopOf="@+id/advance"
+            app:layout_constraintEnd_toEndOf="@id/generate"
+            app:layout_constraintStart_toStartOf="@id/advance" />
+
+
+
+        <TextView
+            android:id="@+id/advance"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="@dimen/_30dp"
+            android:background="@drawable/selected_buket_name_bg"
+            android:gravity="center"
+            android:text="@string/advance_settings"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:layout_marginStart="@dimen/spacing10"
+            android:textStyle="bold"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintEnd_toStartOf="@id/generate"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/generate"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="@dimen/spacing10"
+            android:background="@drawable/generate_output_bg"
+            android:textColor="@color/white"
+            android:paddingStart="35dp"
+            app:drawableStartCompat="@drawable/trp_logo"
+            android:gravity="center_vertical"
+            android:drawablePadding="@dimen/_14dp"
+            android:text="@string/generate"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/advance"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/advance" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
