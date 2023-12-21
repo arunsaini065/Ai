@@ -1,6 +1,7 @@
 package com.rocks.ui
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -21,14 +22,24 @@ import com.rocks.uistate.ModelUiState
 import com.rocks.usecase.ModelUseCase
 import com.rocks.viewmodel.AiViewModel
 import kotlinx.coroutines.launch
+import kotlinx.parcelize.Parcelize
 
 class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCancelFragment {
 
-
+    @Parcelize
+    data class Args(val fromImgToImg:Boolean = false): Parcelable
 
     companion object{
 
-        fun getInstance() = TextToImageFragment()
+        fun getInstance(args: Args) = TextToImageFragment().apply {
+
+            arguments = Bundle().apply {
+
+                putParcelable("person", args)
+
+            }
+
+        }
 
     }
 
