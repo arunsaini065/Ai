@@ -15,7 +15,6 @@ import com.bumptech.glide.request.transition.Transition
 import com.rocks.ui.databinding.ActivityCropBinding
 import com.rocks.ui.ratio.CropRatioRecyclerView
 import com.rocks.ui.simplecropview.BitmapHolder
-import com.rocks.ui.simplecropview.CropImageView
 import com.rocks.ui.simplecropview.callback.CropCallback
 import com.rocks.ui.simplecropview.callback.LoadCallback
 import kotlinx.coroutines.launch
