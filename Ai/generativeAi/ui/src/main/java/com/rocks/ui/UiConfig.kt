@@ -2,6 +2,7 @@ package com.rocks.ui
 
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,7 +34,11 @@ fun ImageView.setTintColor(color:Int){
     this.setColorFilter(ContextCompat.getColor(context, color), PorterDuff.Mode.SRC_IN);
 }
 
+fun isOreoPlus() = Build.VERSION.SDK_INT > Build.VERSION_CODES.O
+
+
 const val PHOTO_SELECT_RQ = 34
+const val CROP_RQ = 35
 
 fun getDummyIns(): MutableList<InspirationData> {
 

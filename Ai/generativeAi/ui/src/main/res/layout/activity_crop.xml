@@ -7,29 +7,75 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".CropActivity">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/back_btn"
+            android:layout_marginTop="@dimen/spacing10"
+            android:layout_width="48dp"
+            android:scaleType="centerInside"
+            android:layout_height="48dp"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toTopOf="parent"
+            custom:srcCompat="@drawable/ic_back" />
 
-        <com.isseiaoki.simplecropview.CropImageView
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/crop"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            custom:layout_constraintBottom_toBottomOf="@+id/back_btn"
+            custom:layout_constraintStart_toEndOf="@+id/back_btn"
+            custom:layout_constraintTop_toTopOf="@+id/back_btn" />
+
+        <com.rocks.ui.simplecropview.CropImageView
             android:id="@+id/cropImageView"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_weight="1"
-            android:paddingLeft="16dp"
-            android:paddingTop="16dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="16dp"
-            custom:layout_constraintTop_toTopOf="parent"
-            custom:scv_background_color="@color/white"
-            custom:scv_crop_mode="fit_image"
-            custom:scv_frame_color="@color/colorAccent"
+            android:layout_height="0dp"
+            android:paddingLeft="8dp"
+            android:paddingTop="12dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="12dp"
+            custom:layout_constraintBottom_toTopOf="@+id/cropRatioRecyclerView"
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintHorizontal_bias="0.0"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toBottomOf="@id/back_btn"
+            custom:scv_background_color="@color/transparent"
+            custom:scv_crop_mode="free"
+            custom:scv_frame_color="@color/white"
             custom:scv_frame_stroke_weight="1dp"
-            custom:scv_guide_color="@color/colorAccent"
+            custom:scv_guide_color="@color/white"
             custom:scv_guide_show_mode="show_always"
             custom:scv_guide_stroke_weight="1dp"
-            custom:scv_handle_color="@color/colorAccent"
+            custom:scv_handle_color="@color/white"
             custom:scv_handle_show_mode="show_always"
-            custom:scv_handle_size="14dp"
+            custom:scv_handle_size="8dp"
             custom:scv_min_frame_size="50dp"
-            custom:scv_overlay_color="#834C4C4C"
+            android:layout_marginBottom="30dp"
+            custom:scv_overlay_color="@color/semi_transparent_c"
             custom:scv_touch_padding="8dp" />
+
+        <com.rocks.ui.ratio.CropRatioRecyclerView
+            android:id="@+id/cropRatioRecyclerView"
+            android:layout_marginBottom="@dimen/_20dp"
+            custom:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:background="@drawable/generate_output_bg"
+            android:layout_width="100dp"
+            android:layout_height="36dp"
+            android:textColor="@color/white"
+            android:id="@+id/next"
+            android:gravity="center"
+            android:text="@string/next"
+            android:textStyle="bold"
+            android:textSize="@dimen/_14dp"
+            android:layout_marginEnd="@dimen/spacing10"
+            custom:layout_constraintBottom_toBottomOf="@+id/back_btn"
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintTop_toTopOf="@+id/back_btn" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

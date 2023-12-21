@@ -54,5 +54,4 @@ dependencies {
 
     implementation ("com.github.bumptech.glide:glide:4.16.0")
 
-    implementation("com.isseiaoki:simplecropview:1.1.8")
 }

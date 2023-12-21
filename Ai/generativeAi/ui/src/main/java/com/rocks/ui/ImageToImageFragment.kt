@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rocks.ui.databinding.ImageToImageFragmentBinding
 import com.rocks.ui.discovermore.DiscoverMoreAdapter
 import com.rocks.ui.selectimg.PhotoSelectActivity
+import com.rocks.ui.simplecropview.BitmapHolder
 import kotlinx.parcelize.Parcelize
 
 class ImageToImageFragment: AiBaseFragment<ImageToImageFragmentBinding>() {
@@ -56,13 +57,13 @@ class ImageToImageFragment: AiBaseFragment<ImageToImageFragmentBinding>() {
 
         mBinding.galleryView.setOnClickListener {
 
-            PhotoSelectActivity.goToAiHomeActivity(requireActivity(),activityLauncher)
+            PhotoSelectActivity.goToAiPhotoActivity(requireActivity(),activityLauncher)
 
         }
 
         mBinding.btnGenerate.setOnClickListener {
 
-            PhotoSelectActivity.goToAiHomeActivity(requireActivity(),activityLauncher)
+            PhotoSelectActivity.goToAiPhotoActivity(requireActivity(),activityLauncher)
 
         }
 
@@ -84,6 +85,11 @@ class ImageToImageFragment: AiBaseFragment<ImageToImageFragmentBinding>() {
 
             if (activityResult.resultCode== PHOTO_SELECT_RQ){
 
+                CropActivity.goToAiCropActivity(requireActivity(),activityResult.data?.data,activityLauncher)
+
+            }else if (activityResult.resultCode == CROP_RQ){
+
+                Log.d("@Arun", "onRegisterForActivityResult: "+BitmapHolder.getBitmap())
 
             }
     }

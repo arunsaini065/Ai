@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.viewModels
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -13,7 +12,6 @@ import com.rocks.fetcher.MediaViewModel
 import com.rocks.ui.AiBaseActivity
 import com.rocks.ui.PHOTO_SELECT_RQ
 import com.rocks.ui.databinding.ActivityPhotoSelectBinding
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class PhotoSelectActivity : AiBaseActivity<ActivityPhotoSelectBinding>() {
@@ -38,13 +36,7 @@ class PhotoSelectActivity : AiBaseActivity<ActivityPhotoSelectBinding>() {
 
     companion object{
 
-        fun goToAiHomeActivity(activity: Activity){
-
-            activity.startActivity(Intent(activity, PhotoSelectActivity::class.java))
-
-        }
-
-        fun goToAiHomeActivity(activity: Activity, launcher: ActivityResultLauncher<Intent>){
+        fun goToAiPhotoActivity(activity: Activity, launcher: ActivityResultLauncher<Intent>){
 
             launcher.launch(Intent(activity, PhotoSelectActivity::class.java))
 

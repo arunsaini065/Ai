@@ -4,6 +4,8 @@
     <application>
         <activity
             android:name=".CropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Ai.Theme"
             android:exported="false" />
         <activity
             android:name=".selectimg.PhotoSelectActivity"
