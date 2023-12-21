@@ -1,9 +1,7 @@
-package com.rocks.ui.simplecropview.callback;
+package com.rocks.ui.simplecropview.callback
 
-import android.net.Uri;
+import android.net.Uri
 
-
-
-public interface SaveCallback extends Callback {
-  void onSuccess(Uri uri);
+interface SaveCallback : Callback {
+    fun onSuccess(uri: Uri?)
 }

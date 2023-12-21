@@ -83,8 +83,7 @@ class CropActivity : AiBaseActivity<ActivityCropBinding>() {
 
                     _originalBitmap = resource
 
-                    mBinding.cropImageView.load(resource).useThumbnail(true)
-                        .execute(object : LoadCallback {
+                    mBinding.cropImageView.load(resource).useThumbnail(true).execute(object : LoadCallback {
 
                             override fun onSuccess() {
 

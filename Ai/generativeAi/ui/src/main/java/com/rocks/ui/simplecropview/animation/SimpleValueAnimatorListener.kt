@@ -1,9 +1,7 @@
-package com.rocks.ui.simplecropview.animation;
+package com.rocks.ui.simplecropview.animation
 
-public interface SimpleValueAnimatorListener {
-  void onAnimationStarted();
-
-  void onAnimationUpdated(float scale);
-
-  void onAnimationFinished();
+interface SimpleValueAnimatorListener {
+    fun onAnimationStarted()
+    fun onAnimationUpdated(scale: Float)
+    fun onAnimationFinished()
 }

@@ -1,87 +1,60 @@
-package com.rocks.ui.simplecropview.animation;
+package com.rocks.ui.simplecropview.animation
 
-import android.os.SystemClock;
-import android.view.animation.Interpolator;
+import android.os.SystemClock
+import android.view.animation.Interpolator
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 
-
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
-public class ValueAnimatorV8 implements SimpleValueAnimator {
-  private static final int FRAME_RATE = 30;
-  private static final int UPDATE_SPAN = Math.round((float) 1000 / (float) FRAME_RATE);
-  private static final int DEFAULT_ANIMATION_DURATION = 150;
-
-  private Interpolator mInterpolator;
-  ScheduledExecutorService service;
-  long start;
-  boolean isAnimationStarted = false;
-  long duration;
-  private SimpleValueAnimatorListener animatorListener = new SimpleValueAnimatorListener() {
-    @Override
-    public void onAnimationStarted() {
-
+class ValueAnimatorV8(private val mInterpolator: Interpolator) : SimpleValueAnimator {
+    var service: ScheduledExecutorService? = null
+    var start: Long = 0
+    override var isAnimationStarted = false
+    var duration: Long = 0
+    private var animatorListener: SimpleValueAnimatorListener =
+        object : SimpleValueAnimatorListener {
+            override fun onAnimationStarted() {}
+            override fun onAnimationUpdated(scale: Float) {}
+            override fun onAnimationFinished() {}
+        }
+    private val runnable = Runnable {
+        val elapsed = SystemClock.uptimeMillis() - start
+        if (elapsed > duration) {
+            isAnimationStarted = false
+            animatorListener.onAnimationFinished()
+            service!!.shutdown()
+            return@Runnable
+        }
+        val scale = Math.min(mInterpolator.getInterpolation(elapsed.toFloat() / duration), 1f)
+        animatorListener.onAnimationUpdated(scale)
     }
 
-    @Override
-    public void onAnimationUpdated(float scale) {
-
+    override fun startAnimation(duration: Long) {
+        if (duration >= 0) {
+            this.duration = duration
+        } else {
+            this.duration = DEFAULT_ANIMATION_DURATION.toLong()
+        }
+        isAnimationStarted = true
+        animatorListener.onAnimationStarted()
+        start = SystemClock.uptimeMillis()
+        service = Executors.newSingleThreadScheduledExecutor()
+        service?.scheduleAtFixedRate(runnable, 0, UPDATE_SPAN.toLong(), TimeUnit.MILLISECONDS)
     }
 
-    @Override
-    public void onAnimationFinished() {
-
+    override fun cancelAnimation() {
+        isAnimationStarted = false
+        service!!.shutdown()
+        animatorListener.onAnimationFinished()
     }
-  };
 
-  private final Runnable runnable = new Runnable() {
-    @Override
-    public void run() {
-      long elapsed = SystemClock.uptimeMillis() - start;
-      if (elapsed > duration) {
-        isAnimationStarted = false;
-        animatorListener.onAnimationFinished();
-        service.shutdown();
-        return;
-      }
-      float scale = Math.min(mInterpolator.getInterpolation((float) elapsed / duration), 1);
-      animatorListener.onAnimationUpdated(scale);
+    override fun addAnimatorListener(animatorListener: SimpleValueAnimatorListener?) {
+        if (animatorListener != null) this.animatorListener = animatorListener
     }
-  };
 
-  public ValueAnimatorV8(Interpolator interpolator) {
-    this.mInterpolator = interpolator;
-  }
-
-  @Override
-  public void startAnimation(long duration) {
-    if (duration >= 0) {
-      this.duration = duration;
-    } else {
-      this.duration = DEFAULT_ANIMATION_DURATION;
+    companion object {
+        private const val FRAME_RATE = 30
+        private val UPDATE_SPAN = Math.round(1000f / FRAME_RATE.toFloat())
+        private const val DEFAULT_ANIMATION_DURATION = 150
     }
-    isAnimationStarted = true;
-    animatorListener.onAnimationStarted();
-    start = SystemClock.uptimeMillis();
-    service = Executors.newSingleThreadScheduledExecutor();
-    service.scheduleAtFixedRate(runnable, 0, UPDATE_SPAN, TimeUnit.MILLISECONDS);
-  }
-
-  @Override
-  public void cancelAnimation() {
-    isAnimationStarted = false;
-    service.shutdown();
-    animatorListener.onAnimationFinished();
-  }
-
-  @Override
-  public boolean isAnimationStarted() {
-    return isAnimationStarted;
-  }
-
-  @Override
-  public void addAnimatorListener(SimpleValueAnimatorListener animatorListener) {
-    if (animatorListener != null) this.animatorListener = animatorListener;
-  }
 }

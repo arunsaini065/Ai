@@ -1,87 +1,68 @@
-package com.rocks.ui.simplecropview.animation;
+package com.rocks.ui.simplecropview.animation
 
-import android.animation.Animator;
-import android.animation.ValueAnimator;
-import android.annotation.TargetApi;
-import android.os.Build;
-import android.view.animation.Interpolator;
+import android.animation.Animator
+import android.animation.ValueAnimator
+import android.animation.ValueAnimator.AnimatorUpdateListener
+import android.annotation.TargetApi
+import android.os.Build
+import android.view.animation.Interpolator
 
-@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH) public class ValueAnimatorV14
-    implements SimpleValueAnimator, Animator.AnimatorListener,
-    ValueAnimator.AnimatorUpdateListener {
-  private static final int DEFAULT_ANIMATION_DURATION = 150;
-  private ValueAnimator animator;
-  private SimpleValueAnimatorListener animatorListener = new SimpleValueAnimatorListener() {
-    @Override
-    public void onAnimationStarted() {
+@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+class ValueAnimatorV14(interpolator: Interpolator?) : SimpleValueAnimator,
+    Animator.AnimatorListener, AnimatorUpdateListener {
+    private val animator: ValueAnimator
+    private var animatorListener: SimpleValueAnimatorListener =
+        object : SimpleValueAnimatorListener {
+            override fun onAnimationStarted() {}
+            override fun onAnimationUpdated(scale: Float) {}
+            override fun onAnimationFinished() {}
+        }
 
+    init {
+        animator = ValueAnimator.ofFloat(0.0f, 1.0f)
+        animator.addListener(this)
+        animator.addUpdateListener(this)
+        animator.interpolator = interpolator
     }
 
-    @Override
-    public void onAnimationUpdated(float scale) {
-
+    override fun startAnimation(duration: Long) {
+        if (duration >= 0) {
+            animator.setDuration(duration)
+        } else {
+            animator.setDuration(DEFAULT_ANIMATION_DURATION.toLong())
+        }
+        animator.start()
     }
 
-    @Override
-    public void onAnimationFinished() {
-
+    override fun cancelAnimation() {
+        animator.cancel()
     }
-  };
 
-  public ValueAnimatorV14(Interpolator interpolator) {
-    animator = ValueAnimator.ofFloat(0.0f, 1.0f);
-    animator.addListener(this);
-    animator.addUpdateListener(this);
-    animator.setInterpolator(interpolator);
-  }
+    override val isAnimationStarted: Boolean
+        get() = animator.isStarted
 
-  @Override
-  public void startAnimation(long duration) {
-    if (duration >= 0) {
-      animator.setDuration(duration);
-    } else {
-      animator.setDuration(DEFAULT_ANIMATION_DURATION);
+    override fun addAnimatorListener(animatorListener: SimpleValueAnimatorListener?) {
+        if (animatorListener != null) this.animatorListener = animatorListener
     }
-    animator.start();
-  }
 
-  @Override
-  public void cancelAnimation() {
-    animator.cancel();
-  }
+    override fun onAnimationStart(animation: Animator) {
+        animatorListener.onAnimationStarted()
+    }
 
-  @Override
-  public boolean isAnimationStarted() {
-    return animator.isStarted();
-  }
+    override fun onAnimationEnd(animation: Animator) {
+        animatorListener.onAnimationFinished()
+    }
 
-  @Override
-  public void addAnimatorListener(SimpleValueAnimatorListener animatorListener) {
-    if (animatorListener != null) this.animatorListener = animatorListener;
-  }
+    override fun onAnimationCancel(animation: Animator) {
+        animatorListener.onAnimationFinished()
+    }
 
-  @Override
-  public void onAnimationStart(Animator animation) {
-    animatorListener.onAnimationStarted();
-  }
+    override fun onAnimationRepeat(animation: Animator) {}
+    override fun onAnimationUpdate(animation: ValueAnimator) {
+        animatorListener.onAnimationUpdated(animation.animatedFraction)
+    }
 
-  @Override
-  public void onAnimationEnd(Animator animation) {
-    animatorListener.onAnimationFinished();
-  }
-
-  @Override
-  public void onAnimationCancel(Animator animation) {
-    animatorListener.onAnimationFinished();
-  }
-
-  @Override
-  public void onAnimationRepeat(Animator animation) {
-
-  }
-
-  @Override
-  public void onAnimationUpdate(ValueAnimator animation) {
-    animatorListener.onAnimationUpdated(animation.getAnimatedFraction());
-  }
+    companion object {
+        private const val DEFAULT_ANIMATION_DURATION = 150
+    }
 }

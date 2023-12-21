@@ -1,7 +1,5 @@
-package com.rocks.ui.simplecropview.callback;
+package com.rocks.ui.simplecropview.callback
 
-
-
-public interface LoadCallback extends Callback {
-  void onSuccess();
+interface LoadCallback : Callback {
+    fun onSuccess()
 }

@@ -1,12 +1,9 @@
-package com.rocks.ui.simplecropview.animation;
+package com.rocks.ui.simplecropview.animation
 
-
-@SuppressWarnings("unused") public interface SimpleValueAnimator {
-  void startAnimation(long duration);
-
-  void cancelAnimation();
-
-  boolean isAnimationStarted();
-
-  void addAnimatorListener(SimpleValueAnimatorListener animatorListener);
+@Suppress("unused")
+interface SimpleValueAnimator {
+    fun startAnimation(duration: Long)
+    fun cancelAnimation()
+    val isAnimationStarted: Boolean
+    fun addAnimatorListener(animatorListener: SimpleValueAnimatorListener?)
 }
