@@ -62,6 +62,12 @@ class GenerativeFillActivity : AiBaseActivity<ActivityGenerativeFillBinding>() {
 
         }
 
+        mBinding.advance.setOnClickListener {
+
+            SettingBtmSheet().show(supportFragmentManager,"ADVANCE")
+
+        }
+
         mBinding.eraser.setOnClickListener {
 
             builder?.setAction(DrawView.DrawViewAction.MANUAL_CLEAR)
