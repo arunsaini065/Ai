@@ -213,7 +213,9 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
         }
 
 
-        btnGenerate.setOnClickListener {
+        btnMoreGenerate.setOnClickListener {
+            ResultActivity.goToAiResultActivity(requireActivity())
+
 
             runCatching {
 

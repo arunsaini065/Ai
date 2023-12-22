@@ -26,4 +26,6 @@
     <string name="type_what_you_want_to_insert">Type what you want to insert</string>
     <string name="brush">Brush</string>
     <string name="eraser">Eraser</string>
+    <string name="generate_more">Generate More</string>
+    <string name="variate">Variate</string>
 </resources>

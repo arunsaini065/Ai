@@ -179,7 +179,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_marginTop="40dp"
-                android:id="@+id/btnGenerate"
+                android:id="@+id/btnMoreGenerate"
                 app:layout_constraintEnd_toEndOf="@id/advance_choose"
                 app:layout_constraintTop_toBottomOf="@id/advance_choose"
                 app:layout_constraintStart_toStartOf="@id/advance_choose"
@@ -222,7 +222,7 @@
                 android:textSize="14dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/advance_choose"
-                app:layout_constraintTop_toBottomOf="@+id/btnGenerate" />
+                app:layout_constraintTop_toBottomOf="@+id/btnMoreGenerate" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/m_inspiration_rv"
