@@ -24,6 +24,7 @@ import com.rocks.ui.simplecropview.BitmapHolder
 import com.rocks.uistate.ModelUiState
 import com.rocks.usecase.ModelUseCase
 import com.rocks.viewmodel.AiViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 
@@ -118,17 +119,30 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
 
         _viewModel.postModelIdsList(Api.getBodyOnlyKey(bodyDataHandler))
 
-        mInspirationRv.apply {
+        lifecycleScope.launch {
 
-            layoutManager = LinearLayoutManager(requireContext(),RecyclerView.HORIZONTAL,false)
+            _viewModel.getAllInspiration(requireContext()).collect{
 
-            adapter = InspirationAdapter().apply {
+                mInspirationRv.apply {
 
-                submitList(getDummyIns())
+                    layoutManager = LinearLayoutManager(requireContext(),RecyclerView.HORIZONTAL,false)
+
+                    adapter = InspirationAdapter().apply {
+
+                        submitList(it)
+
+                    }
+
+                }
 
             }
 
+
+
         }
+
+
+
 
         mModelTv.text = bodyDataHandler.modelId
 

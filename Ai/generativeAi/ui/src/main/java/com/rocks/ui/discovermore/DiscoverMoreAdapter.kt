@@ -3,7 +3,7 @@ package com.rocks.ui.discovermore
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
-import com.rocks.ui.inspiration.InspirationData
+import com.rocks.InspirationData
 import com.rocks.ui.toBinding
 
 class DiscoverMoreAdapter: ListAdapter<InspirationData, DiscoverMoreHolder>(InspirationData.DIFF) {
@@ -17,7 +17,7 @@ class DiscoverMoreAdapter: ListAdapter<InspirationData, DiscoverMoreHolder>(Insp
     override fun onBindViewHolder(holder: DiscoverMoreHolder, position: Int) {
 
 
-        Glide.with(holder.itemView.context).load(getItem(position).url).centerCrop().into(holder.binding.imageItem)
+        Glide.with(holder.itemView.context).load(getItem(position).imageUrl).centerCrop().into(holder.binding.imageItem)
 
 
     }

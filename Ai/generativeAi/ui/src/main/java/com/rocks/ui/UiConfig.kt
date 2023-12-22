@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
-import com.rocks.ui.inspiration.InspirationData
+import com.rocks.InspirationData
 
 
 inline fun <reified V : ViewDataBinding> ViewGroup.toBinding(): V {

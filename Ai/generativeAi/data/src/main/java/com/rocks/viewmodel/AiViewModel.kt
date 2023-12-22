@@ -1,8 +1,12 @@
 package com.rocks.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.rocks.BodyDataHandler
+import com.rocks.InspirationData
 import com.rocks.api.Api
 import com.rocks.model.ApiOutput
 import com.rocks.model.ModelListDataItem
@@ -10,8 +14,11 @@ import com.rocks.model.SchedulerList
 import com.rocks.model.UploadImage
 import com.rocks.uistate.ModelUiState
 import com.rocks.usecase.ModelUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
 
@@ -114,5 +121,32 @@ class AiViewModel (private val modelUseCase: ModelUseCase): ViewModel() {
     }
 
 
+    fun getAllInspiration(context: Context) = flow {
+
+        runCatching {
+
+            val fileString = readJsonFromAssets(context)
+
+
+
+             emit(parseJsonToModel(fileString))
+
+        }
+
+    }.flowOn(Dispatchers.IO)
+
+    private fun readJsonFromAssets(context: Context): String {
+
+        return context.assets.open("inspirations.json").bufferedReader().use { it.readText() }
+
+    }
+
+    private fun parseJsonToModel(jsonString: String): MutableList<InspirationData> {
+
+        val gson = Gson()
+
+        return gson.fromJson(jsonString, object : TypeToken<MutableList<InspirationData>>() {}.type)
+
+    }
 
 }

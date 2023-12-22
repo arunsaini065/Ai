@@ -3,6 +3,7 @@ package com.rocks.ui.inspiration
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
+import com.rocks.InspirationData
 import com.rocks.ui.toBinding
 
 class InspirationAdapter : ListAdapter<InspirationData, InspirationHolder>(InspirationData.DIFF) {
@@ -16,7 +17,7 @@ class InspirationAdapter : ListAdapter<InspirationData, InspirationHolder>(Inspi
     override fun onBindViewHolder(holder: InspirationHolder, position: Int) {
 
 
-        Glide.with(holder.itemView.context).load(getItem(position).url).centerCrop().into(holder.binding.imageItem)
+        Glide.with(holder.itemView.context).load(getItem(position).imageUrl).centerCrop().into(holder.binding.imageItem)
 
 
     }
