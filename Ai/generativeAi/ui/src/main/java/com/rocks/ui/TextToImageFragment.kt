@@ -127,7 +127,14 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
 
                     layoutManager = LinearLayoutManager(requireContext(),RecyclerView.HORIZONTAL,false)
 
-                    adapter = InspirationAdapter().apply {
+                    adapter = InspirationAdapter{
+
+                        activity?.showTryInspiration(it){
+
+
+                        }
+
+                    }.apply {
 
                         submitList(it)
 

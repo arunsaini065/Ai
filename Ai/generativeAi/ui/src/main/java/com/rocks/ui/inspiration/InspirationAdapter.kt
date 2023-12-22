@@ -4,9 +4,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.bumptech.glide.Glide
 import com.rocks.InspirationData
+import com.rocks.ui.simplecropview.callback.CropCallback
 import com.rocks.ui.toBinding
 
-class InspirationAdapter : ListAdapter<InspirationData, InspirationHolder>(InspirationData.DIFF) {
+class InspirationAdapter(val callback:(InspirationData)->Unit) : ListAdapter<InspirationData, InspirationHolder>(InspirationData.DIFF) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InspirationHolder {
 
@@ -18,6 +19,13 @@ class InspirationAdapter : ListAdapter<InspirationData, InspirationHolder>(Inspi
 
 
         Glide.with(holder.itemView.context).load(getItem(position).imageUrl).centerCrop().into(holder.binding.imageItem)
+
+
+        holder.itemView.setOnClickListener {
+
+            callback(getItem(holder.adapterPosition))
+
+        }
 
 
     }

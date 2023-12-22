@@ -132,7 +132,7 @@ public final class BitmapUtils {
 
     } catch (Exception e) {
       throw new RuntimeException(
-          "Failed to load sampled bitmap: " + uri + "\r\n" + e.getMessage(), e);
+          "Failed to load sampled bitmap: " + uri + "\r" + e.getMessage(), e);
     }
   }
 
@@ -280,7 +280,7 @@ public final class BitmapUtils {
                   + sampleMulti
                   + "): "
                   + loadedImageUri
-                  + "\r\n"
+                  + "\r"
                   + e.getMessage(),
               e);
         }
@@ -557,7 +557,7 @@ public final class BitmapUtils {
       throw e;
     } catch (Exception e) {
       throw new RuntimeException(
-          "Failed to load sampled bitmap: " + loadedImageUri + "\r\n" + e.getMessage(), e);
+          "Failed to load sampled bitmap: " + loadedImageUri + "\r" + e.getMessage(), e);
     }
     return new BitmapSampled(result, sampleSize);
   }
@@ -627,7 +627,7 @@ public final class BitmapUtils {
       } while (options.inSampleSize <= 512);
     } catch (Exception e) {
       throw new RuntimeException(
-          "Failed to load sampled bitmap: " + uri + "\r\n" + e.getMessage(), e);
+          "Failed to load sampled bitmap: " + uri + "\r" + e.getMessage(), e);
     } finally {
       closeSafe(stream);
       if (decoder != null) {

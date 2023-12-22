@@ -30,4 +30,5 @@
     <string name="variate">Variate</string>
     <string name="tap_to_edit_input">Tap to edit Input</string>
     <string name="what_do_you_want_to_create">What do you want to create?</string>
+    <string name="try_now">Try Now</string>
 </resources>
