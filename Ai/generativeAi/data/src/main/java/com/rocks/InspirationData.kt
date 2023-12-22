@@ -15,7 +15,9 @@ data class InspirationData(
     val modelId: String?=null,
 
     @SerializedName("name")
-    val name: String?=null
+    val name: String?=null,
+    @SerializedName("type")
+    val type: Int
 
 ){
 
@@ -24,7 +26,7 @@ data class InspirationData(
         val DUMMY = InspirationData(
             name = "",
             imageUrl = "https://fastly.picsum.photos/id/278/536/354.jpg?hmac=B3RGgunW6oirJoQEgt80to9HNb7oZqLut-4fFVVc9NM"
-        )
+       , type = 0 )
 
         val DIFF = object : ItemCallback<InspirationData>() {
 
