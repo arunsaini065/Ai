@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_40dp"
-            android:text="Variate"
+            android:text="@string/variate"
             android:textColor="@color/white"
             android:textSize="@dimen/_18dp"
             app:layout_constraintEnd_toEndOf="parent"
