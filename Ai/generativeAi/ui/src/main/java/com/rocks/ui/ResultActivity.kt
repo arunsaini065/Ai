@@ -238,6 +238,15 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
         }
 
+        mBinding.btnMoreVariate.setOnClickListener {
+
+            showMoreVariateSheet {
+
+
+            }
+
+        }
+
         mBinding.positivePrompt.setOnClickListener {
 
              EditInputBtmSheet().apply {

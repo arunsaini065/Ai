@@ -1,5 +1,6 @@
 package com.rocks.ui
 
+import android.app.Activity
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Build
@@ -10,7 +11,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rocks.InspirationData
+import com.rocks.ui.databinding.MoreVariateBottomSheetBinding
+import com.rocks.ui.simplecropview.callback.CropCallback
 
 
 inline fun <reified V : ViewDataBinding> ViewGroup.toBinding(): V {
@@ -61,4 +65,29 @@ fun getDummyIns(): MutableList<InspirationData> {
             drawable.colorFilter = PorterDuffColorFilter(ContextCompat.getColor(context, color), PorterDuff.Mode.SRC_IN)
         }
     }
+}
+
+fun Activity.showMoreVariateSheet(callback:()->Unit){
+
+    val binding = MoreVariateBottomSheetBinding.inflate(layoutInflater)
+
+    BottomSheetDialog(this,R.style.BootomSheetDialogTheme).apply {
+
+
+        setContentView(binding.root)
+
+        show()
+
+    }
+
+    with(binding){
+
+        btnMoreGenerate.setOnClickListener {
+
+            callback()
+
+        }
+
+    }
+
 }
