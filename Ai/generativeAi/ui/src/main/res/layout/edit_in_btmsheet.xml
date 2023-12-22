@@ -19,7 +19,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="44dp"
-            android:layout_height="1dp">
+            android:layout_height="4dp">
         </View>
 
         <TextView
@@ -53,6 +53,7 @@
                 android:gravity="top"
                 android:padding="@dimen/spacing10"
                 android:textColorHint="@color/white"
+                android:textSize="@dimen/_14dp"
                 android:hint="@string/what_do_you_want_to_create"
                 android:background="@drawable/bg_boarder"
                 android:layout_height="120dp"

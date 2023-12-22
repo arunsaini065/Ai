@@ -64,6 +64,7 @@
             android:hint="@string/enter_prompt"
             android:padding="10dp"
             android:layout_marginTop="@dimen/_40dp"
+            android:textSize="@dimen/_14dp"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="@id/result_loader"
             app:layout_constraintStart_toStartOf="@id/result_loader"
