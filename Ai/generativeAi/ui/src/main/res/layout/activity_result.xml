@@ -86,7 +86,7 @@
             android:paddingStart="@dimen/_40dp"
             app:drawableStartCompat="@drawable/trp_logo"
             android:text="@string/variate"
-            android:textSize="@dimen/_18dp"
+            android:textSize="@dimen/_16dp"
             android:textStyle="bold"
             android:layout_width="0dp"
             android:layout_marginEnd="4dp"
@@ -108,7 +108,7 @@
             android:textColor="@color/white"
             app:drawableStartCompat="@drawable/trp_logo"
             android:text="@string/generate_more"
-            android:textSize="@dimen/_18dp"
+            android:textSize="@dimen/_16dp"
             android:textStyle="bold"
             android:layout_width="0dp"
             android:layout_height="60dp">
