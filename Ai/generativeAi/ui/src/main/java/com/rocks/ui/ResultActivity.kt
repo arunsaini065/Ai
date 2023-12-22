@@ -204,32 +204,27 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
         }
 
-//        mBinding.mDownload.setOnClickListener {
-//
-//            if (::downloadBitmap.isInitialized){
-//
-//                FileDownloader(lifecycleScope).saveImage(downloadBitmap){
-//
-//                    MediaScannerConnection(this,object :MediaScannerConnection.MediaScannerConnectionClient{
-//                        override fun onScanCompleted(path: String?, uri: Uri?) {
-//
-//                        }
-//
-//                        override fun onMediaScannerConnected() {
-//
-//                        }
-//                    }).scanFile(it.absolutePath,"image/png")
-//                }
-//
-//            }
-//
-//        }
-//
-//        mBinding.btnGenerate.setOnClickListener {
-//
-//           onGenerator()
-//
-//        }
+        mBinding.save.setOnClickListener {
+
+            if (::downloadBitmap.isInitialized){
+
+                FileDownloader(lifecycleScope).saveImage(downloadBitmap){
+
+                    MediaScannerConnection(this,object :MediaScannerConnection.MediaScannerConnectionClient{
+                        override fun onScanCompleted(path: String?, uri: Uri?) {
+
+                        }
+
+                        override fun onMediaScannerConnected() {
+
+                        }
+                    }).scanFile(it.absolutePath,"image/png")
+                }
+
+            }
+
+        }
+
 
 
         mBinding.mBackPress.setOnClickListener {
