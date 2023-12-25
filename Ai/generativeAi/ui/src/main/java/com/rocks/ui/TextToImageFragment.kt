@@ -14,6 +14,7 @@ import com.rocks.AspectRatio
 import com.rocks.BodyDataHandler
 import com.rocks.OutPutSingleton
 import com.rocks.api.Api
+import com.rocks.convertBase64
 import com.rocks.factory.AiViewModelFactory
 import com.rocks.impl.ModelDataRepositoryImpl
 import com.rocks.ui.databinding.TextToImageFragmentBinding
@@ -24,6 +25,7 @@ import com.rocks.ui.simplecropview.BitmapHolder
 import com.rocks.uistate.ModelUiState
 import com.rocks.usecase.ModelUseCase
 import com.rocks.viewmodel.AiViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
@@ -105,8 +107,13 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
             mBinding.mInspirationRv.beGone()
 
             mBinding.inspirationTxt.beGone()
+            val bitmap = BitmapHolder.getBitmap()
+            lifecycleScope.launch(Dispatchers.IO) {
 
-            mBinding.uploadedImg.setImageBitmap(BitmapHolder.getBitmap())
+                bodyDataHandler.base64 = bitmap?.convertBase64()
+
+            }
+            mBinding.uploadedImg.setImageBitmap(bitmap)
 
         }
 
@@ -319,8 +326,13 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
 
         }else if (activityResult.resultCode == CROP_RQ){
             runCatching {
+                val bitmap = BitmapHolder.getBitmap()
+                 lifecycleScope.launch(Dispatchers.IO) {
 
-                mBinding.uploadedImg.setImageBitmap(BitmapHolder.getBitmap())
+                     bodyDataHandler.base64 = bitmap?.convertBase64()
+
+                 }
+                mBinding.uploadedImg.setImageBitmap(bitmap)
 
             }
 

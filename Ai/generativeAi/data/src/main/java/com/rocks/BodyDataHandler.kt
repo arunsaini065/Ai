@@ -34,7 +34,7 @@ class BodyDataHandler {
 
     var tomesd:String?="yes"
 
-    var base64:String?="yes"
+    var base64:String?=""
 
     var scheduler:String?="UniPCMultistepScheduler"
 
