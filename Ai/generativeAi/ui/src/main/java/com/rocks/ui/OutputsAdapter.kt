@@ -1,7 +1,7 @@
 package com.rocks.ui
 
-import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import com.bumptech.glide.Glide
@@ -18,16 +18,14 @@ class OutputsAdapter: AiModelBaseAdapter<Bitmap>(DIFF) {
 
             override fun areItemsTheSame(oldItem: Bitmap, newItem: Bitmap): Boolean {
 
-                return oldItem==newItem
-
+                return false
             }
 
 
 
-            @SuppressLint("DiffUtilEquals")
             override fun areContentsTheSame(oldItem: Bitmap, newItem: Bitmap): Boolean {
 
-                return oldItem==newItem
+                return false
 
             }
 

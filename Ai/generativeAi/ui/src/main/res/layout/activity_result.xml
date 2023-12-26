@@ -144,8 +144,7 @@
 
         </ScrollView>
         <include
-            android:visibility="gone"
-            android:id="@+id/result_loader_progress"
+            android:id="@+id/progress_layer"
             layout="@layout/loader_view">
         </include>
     </FrameLayout>

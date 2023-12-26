@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -33,7 +34,6 @@ import kotlinx.coroutines.launch
 class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerListener,OnGeneratorListener,OnCancelFragment {
 
 
-    val outputsAdapter by lazy { OutputsAdapter() }
 
     val outputList = mutableListOf<Bitmap>()
 
@@ -94,7 +94,6 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
     override fun onReadyActivity(savedInstanceState: Bundle?) {
 
-        mBinding.outputView.adapter = outputsAdapter
 
         getOutPut()
 
@@ -105,7 +104,7 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
              if (it is ModelUiState.Success){
 
-                 mBinding.resultLoaderProgress.beGone()
+                 mBinding.progressLayer.resultLoaderProgress.beGone()
 
                  if (it.data!=null) {
 
@@ -116,11 +115,15 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
                  }
              }else if (it is ModelUiState.Loading){
 
-                 mBinding.resultLoaderProgress.beVisible()
+                 mBinding.progressLayer.resultLoaderProgress.beVisible()
 
              } else if (it is ModelUiState.Error){
 
-                 mBinding.resultLoaderProgress.beGone()
+                 mBinding.progressLayer.resultLoaderProgress.beGone()
+
+             }else if (it is ModelUiState.Processing){
+
+                 Toast.makeText(this@ResultActivity,"upload Processing",Toast.LENGTH_SHORT).show()
 
              }
 
@@ -149,7 +152,9 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
                                 override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>, isFirstResource: Boolean): Boolean {
 
-                                    mBinding.resultLoaderProgress.beGone()
+                                    mBinding.progressLayer.resultLoaderProgress.beGone()
+                                    Log.d("@Arun", "onLoadFailed: ")
+
 
                                     return false
 
@@ -157,13 +162,17 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
                                 override fun onResourceReady(resource: Bitmap, model: Any, target: Target<Bitmap>?, dataSource: DataSource, isFirstResource: Boolean): Boolean {
 
-                                    mBinding.resultLoaderProgress.beGone()
+                                    mBinding.progressLayer.resultLoaderProgress.beGone()
 
                                     downloadBitmap=resource
 
                                     outputList.add(resource)
 
-                                    outputsAdapter.submitList(outputList)
+                                    mBinding.outputView.adapter = OutputsAdapter().apply {
+
+                                        submitList(outputList)
+                                    }
+
 
                                     return false
 
@@ -174,14 +183,12 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
                 } else if (it is ModelUiState.Error){
 
-                    mBinding.resultLoaderProgress.beGone()
-
-                    Toast.makeText(this@ResultActivity,""+it.message,Toast.LENGTH_SHORT).show()
+                    mBinding.progressLayer.resultLoaderProgress.beGone()
 
 
                 }else if (it is ModelUiState.Loading){
 
-                    mBinding.resultLoaderProgress.beVisible()
+                    mBinding.progressLayer.resultLoaderProgress.beVisible()
 
                 } else if (it is ModelUiState.Processing){
 
