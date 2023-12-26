@@ -6,12 +6,18 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.viewModels
 import androidx.fragment.app.commit
+import com.rocks.BodyDataHandler
+import com.rocks.OnBodyHandlerListener
 import com.rocks.ui.databinding.ActivityImageToImageBinding
 
-class ImageToImageActivity : AiBaseActivity<ActivityImageToImageBinding>() {
+class ImageToImageActivity : AiBaseActivity<ActivityImageToImageBinding>(),OnBodyHandlerListener {
 
     private val sourceUri  by lazy { intent?.data }
+
+    private val _aiUiViewModel by viewModels<AiUiViewModel>()
+
 
     companion object{
 
@@ -61,6 +67,10 @@ class ImageToImageActivity : AiBaseActivity<ActivityImageToImageBinding>() {
 
 
         }
+    }
+
+    override fun getHandlerBody(): BodyDataHandler {
+        return _aiUiViewModel.bodyDataHandler
     }
 
 
