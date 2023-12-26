@@ -172,7 +172,20 @@ class ModelBtmSheet: BottomSheetDialogFragment() {
 
 
         }.apply {
+
+            if (::onBodyHandlerListener.isInitialized) {
+                isModelId = if (isStyle){
+
+                    onBodyHandlerListener.getHandlerBody().loraModel
+
+                }else{
+                    onBodyHandlerListener.getHandlerBody().modelId
+                }
+
+            }
+
             submitList(list.data)
+
         }
     }
 

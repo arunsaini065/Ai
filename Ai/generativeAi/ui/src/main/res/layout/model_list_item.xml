@@ -16,7 +16,14 @@
             android:background="#272829"
             android:layout_width="match_parent"
             android:layout_height="100dp"/>
-
+        <View
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/selected"
+            android:background="@drawable/bg_boarder_selected"
+            app:shapeAppearance="@style/ShapeAppearanceOverlay.App.10_percent"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"/>
         <TextView
             android:layout_marginTop="@dimen/spacing10"
             android:id="@+id/model_itm_id"

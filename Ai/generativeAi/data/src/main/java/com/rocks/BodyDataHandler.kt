@@ -44,7 +44,7 @@ class BodyDataHandler {
 
     var strength = 0.7
 
-    var loraModel:String? ="hacked-tech"
+    var loraModel:String? =""
 
     var loraStrength:String? =null
 

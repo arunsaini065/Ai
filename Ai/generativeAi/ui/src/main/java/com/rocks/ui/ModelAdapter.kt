@@ -8,6 +8,8 @@ import com.rocks.ui.base.AiModelBaseHolder
 class ModelAdapter(private var isStyle:Boolean, var callback:(ModelListDataItem)->Unit): AiModelBaseAdapter<ModelListDataItem>(ModelListDataItem.DIFF) {
 
 
+    var isModelId:String? = ""
+
     companion object{
 
          const val HEADER = -1
@@ -105,9 +107,28 @@ class ModelAdapter(private var isStyle:Boolean, var callback:(ModelListDataItem)
 
             }
 
-        }else if (holder is ModelTopIHolder){
+            if (isModelId.isNullOrEmpty().not() && isModelId?.contains(item.model_id) == true){
+
+                holder.binding.selected.setBackgroundResource(R.drawable.bg_boarder_selected)
+
+            }else{
+
+                holder.binding.selected.setBackgroundResource(0)
 
 
+            }
+
+        }else if (holder is NoEffectHolder){
+
+             if (isModelId.isNullOrEmpty()){
+
+                 holder.binding.effectMain.setBackgroundResource(R.drawable.bg_boarder_selected)
+
+             }else{
+
+                 holder.binding.effectMain.setBackgroundResource(0)
+
+             }
 
         }
 
