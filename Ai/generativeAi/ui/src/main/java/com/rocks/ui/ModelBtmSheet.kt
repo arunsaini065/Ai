@@ -154,6 +154,7 @@ class ModelBtmSheet: BottomSheetDialogFragment() {
             if (::onBodyHandlerListener.isInitialized) {
 
                 if (it != null) {
+
                     if (isStyle) {
 
                         onBodyHandlerListener.getHandlerBody().loraModel = it.model_id
@@ -163,6 +164,7 @@ class ModelBtmSheet: BottomSheetDialogFragment() {
                         onBodyHandlerListener.getHandlerBody().modelId = it.model_id
 
                     }
+
                 }else {
                     onBodyHandlerListener.getHandlerBody().loraModel = ""
                 }
