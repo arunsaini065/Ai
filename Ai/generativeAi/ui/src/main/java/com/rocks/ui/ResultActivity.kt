@@ -24,15 +24,18 @@ import com.rocks.api.Api
 import com.rocks.downloader.FileDownloader
 import com.rocks.factory.AiViewModelFactory
 import com.rocks.impl.ModelDataRepositoryImpl
-import com.rocks.model.UploadImage
 import com.rocks.ui.databinding.ActivityResultBinding
 import com.rocks.uistate.ModelUiState
 import com.rocks.usecase.ModelUseCase
 import com.rocks.viewmodel.AiViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerListener,OnGeneratorListener,OnCancelFragment {
+
+
+    val outputsAdapter by lazy { OutputsAdapter() }
+
+    val outputList = mutableListOf<Bitmap>()
 
     override fun onGenerator() {
 
@@ -91,36 +94,9 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
     override fun onReadyActivity(savedInstanceState: Bundle?) {
 
+        mBinding.outputView.adapter = outputsAdapter
 
-        if (OutPutSingleton.hasBodyHandler()){
-
-            val body = OutPutSingleton.getBodyHandler()
-
-            if (body != null) {
-
-                bodyDataHandler = body
-
-            }
-
-            mBinding.positivePrompt.setText(body?.positivePrompt)
-
-            if (body != null) {
-
-                 if (body.isAddImage){
-
-                     _viewModel.uploadImage(Api.getBodyForUploadImage(bodyDataHandler))
-
-                 }else {
-
-                     _viewModel.postModelIdBase(body)
-
-                 }
-
-
-            }
-
-
-        }
+        getOutPut()
 
         lifecycleScope.launch {
 
@@ -142,14 +118,9 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
                  mBinding.resultLoaderProgress.beVisible()
 
-             } else if (it is ModelUiState.Processing){
-
-                 Toast.makeText(this@ResultActivity,"Processing",Toast.LENGTH_SHORT).show()
-
              } else if (it is ModelUiState.Error){
-                 mBinding.resultLoaderProgress.beGone()
 
-                 Toast.makeText(this@ResultActivity,""+it.message,Toast.LENGTH_SHORT).show()
+                 mBinding.resultLoaderProgress.beGone()
 
              }
 
@@ -168,6 +139,7 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
 
                     if (it.data != null) {
+
 
                         Glide.with(this@ResultActivity).asBitmap()
 
@@ -188,6 +160,10 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
                                     mBinding.resultLoaderProgress.beGone()
 
                                     downloadBitmap=resource
+
+                                    outputList.add(resource)
+
+                                    outputsAdapter.submitList(outputList)
 
                                     return false
 
@@ -247,10 +223,21 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
         }
 
+        mBinding.btnTry.setOnClickListener {
+
+            showMoreVariateSheet(true) {
+
+                getOutPut()
+
+            }
+
+        }
+
         mBinding.btnMoreVariate.setOnClickListener {
 
-            showMoreVariateSheet {
+            showMoreVariateSheet(true) {
 
+                getOutPut()
 
             }
 
@@ -263,6 +250,39 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
                  show(supportFragmentManager,"EDIT_INPUT")
 
              }
+        }
+    }
+
+    private fun getOutPut() {
+
+        if (OutPutSingleton.hasBodyHandler()) {
+
+            val body = OutPutSingleton.getBodyHandler()
+
+            if (body != null) {
+
+                bodyDataHandler = body
+
+            }
+
+            mBinding.positivePrompt.setText(body?.positivePrompt)
+
+            if (body != null) {
+
+                if (body.isAddImage) {
+
+                    _viewModel.uploadImage(Api.getBodyForUploadImage(bodyDataHandler))
+
+                } else {
+
+                    _viewModel.postModelIdBase(body)
+
+                }
+
+
+            }
+
+
         }
     }
 

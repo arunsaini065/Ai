@@ -17,7 +17,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rocks.InspirationData
 import com.rocks.ui.databinding.MoreVariateBottomSheetBinding
 import com.rocks.ui.databinding.TryInspirationBinding
-import com.rocks.ui.simplecropview.callback.CropCallback
 
 
 inline fun <reified V : ViewDataBinding> ViewGroup.toBinding(): V {
@@ -79,7 +78,7 @@ fun getDummyIns(): MutableList<InspirationData> {
     }
 }
 
-fun Activity.showMoreVariateSheet(callback:()->Unit){
+fun Activity.showMoreVariateSheet(fromGenerate: Boolean, callback: () -> Unit){
 
     val binding = MoreVariateBottomSheetBinding.inflate(layoutInflater)
 
@@ -91,6 +90,12 @@ fun Activity.showMoreVariateSheet(callback:()->Unit){
         show()
 
         with(binding){
+
+            if (fromGenerate){
+
+                btnMoreGenerate.text = getString(R.string.generate)
+
+            }
 
             btnMoreGenerate.setOnClickListener {
 

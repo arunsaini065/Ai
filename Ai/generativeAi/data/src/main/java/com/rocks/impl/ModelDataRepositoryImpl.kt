@@ -49,12 +49,7 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
                     runCatching {
 
-                        val newResult = result?.let {
-                            apiInterface?.getProcessingData(
-                                bodyDataHandler,
-                                it.id.toString()
-                            )
-                        }
+                        val newResult = result?.let { apiInterface?.getProcessingData(bodyDataHandler, it.id.toString()) }
 
                         if (newResult?.output.isNullOrEmpty().not()) {
 
