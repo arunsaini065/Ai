@@ -7,8 +7,8 @@ import android.os.Build
 import android.text.Html
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.annotation.RequiresApi
-import com.rocks.ai.R
 import pub.devrel.easypermissions.EasyPermissions
+import java.util.Random
 
 
 fun String.stripHtml(): String {
@@ -82,3 +82,8 @@ fun Context.requestPermissions() {
 }
 
 
+fun seeds(): Int {
+    val min = 0
+    val max = 199999
+    return Random().nextInt((max - min) + 1) + min
+}

@@ -131,7 +131,7 @@
             tools:ignore="NotSibling" />
 
         <include
-            android:id="@+id/seek_3"
+            android:id="@+id/seeds_layout"
             layout="@layout/seed_seekbar">
         </include>
 

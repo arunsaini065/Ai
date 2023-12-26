@@ -1,5 +1,6 @@
 package com.rocks.ui
 
+import Preference
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
@@ -14,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rocks.AspectRatio
 import com.rocks.OnBodyHandlerListener
+import com.rocks.seeds
 import com.rocks.ui.databinding.ChooseSettingBtmsheetBinding
 import com.rocks.ui.ratio.CropRatioRecyclerView
 import kotlinx.coroutines.launch
@@ -87,6 +89,31 @@ class SettingBtmSheet: BottomSheetDialogFragment() {
                 }
             }
         })
+
+        val keySeeds ="keySeeds"
+
+        val keyCheckBox ="keyCheckBox"
+
+
+        _settingBinding.seedsLayout.checkBox.isChecked = Preference.getBoolean(requireContext(),keyCheckBox)
+
+
+        val  seeds =  if (_settingBinding.seedsLayout.checkBox.isChecked) Preference.getString(requireContext(),keySeeds) else seeds().toString()
+
+        _settingBinding.seedsLayout.seedText.text = seeds
+
+        _settingBinding.seedsLayout.checkBox.setOnCheckedChangeListener { _, isChecked ->
+
+            Preference.putBoolean(requireContext(),keyCheckBox,isChecked)
+
+            if (isChecked){
+
+                Preference.putString(requireContext(),keySeeds,seeds)
+
+            }
+
+        }
+
         _settingBinding.seek2.stepsSeekbar.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
