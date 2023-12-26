@@ -147,7 +147,7 @@ class ModelDataRepositoryImpl(private val apiInterface: ApiInterface?) : ModelDa
 
         }.onFailure {
 
-            emit(ModelUiState.Error("error"))
+            emit(ModelUiState.Error(it.message?:"",null))
         }
 
 

@@ -104,15 +104,14 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
 
             mBinding.uploadedImgGp.beVisible()
 
-            mBinding.mInspirationRv.beGone()
-
-            mBinding.inspirationTxt.beGone()
             val bitmap = BitmapHolder.getBitmap()
+
             lifecycleScope.launch(Dispatchers.IO) {
 
                 bodyDataHandler.base64 = bitmap?.convertBase64()
 
             }
+            bodyDataHandler.isAddImage = true
             mBinding.uploadedImg.setImageBitmap(bitmap)
 
         }
@@ -205,34 +204,6 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
 
             }
         }
-        lifecycleScope.launch {
-
-
-            _viewModel.stateflowAiModel.collect{
-
-                if (it is ModelUiState.Success) {
-
-
-                    if (it.data != null) {
-
-                        OutPutSingleton.setOutput(it.data)
-
-                        OutPutSingleton.setBodyHandler(bodyDataHandler)
-
-                        ResultActivity.goToAiResultActivity(requireActivity(), activityLauncher)
-                    }
-
-                } else if (it is ModelUiState.Error){
-
-                    Toast.makeText(context,""+it.message, Toast.LENGTH_SHORT).show()
-
-
-
-                }
-            }
-
-        }
-
 
 
         aspectRatioRv.iChangeRatioListener= object : CropRatioRecyclerView.IChangeRatioListener{
@@ -249,70 +220,26 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
 
 
         btnMoreGenerate.setOnClickListener {
-            ResultActivity.goToAiResultActivity(requireActivity())
-
 
             runCatching {
 
-                if (bodyDataHandler.isAddImage && bodyDataHandler.uploadImage==null) {
+                val prompt = positivePrompt.text?.toString() ?: ""
 
-                    _viewModel.uploadImage(Api.getBodyForUploadImage(bodyDataHandler))
+                if (prompt.isEmpty().not()) {
 
-                } else {
+                    bodyDataHandler.positivePrompt = prompt
 
-                    val prompt = positivePrompt.text?.toString() ?: ""
+                }else{
 
-                    if (prompt.isEmpty().not()) {
-
-                        bodyDataHandler.positivePrompt = prompt
-
-                        _viewModel.postModelIdBase(bodyDataHandler)
-
-                    }
-
-                }
-            }
-
-
-
-        }
-
-        lifecycleScope.launch {
-
-            _viewModel.stateflowUploadImage.collect{
-
-                when (it) {
-                    is ModelUiState.Success -> {
-
-                        if (it.data!=null) {
-
-                            bodyDataHandler.uploadImage = it.data
-
-
-                            _viewModel.postModelIdBase(bodyDataHandler)
-                        }
-
-                    }
-
-                    is ModelUiState.Error -> {
-
-                        Toast.makeText(requireContext(),""+it.message, Toast.LENGTH_SHORT).show()
-
-
-
-                    }
-
-                    is ModelUiState.Loading -> {
-
-                    }
-
-                    else -> {
-
-                    }
+                    return@runCatching
                 }
 
+                OutPutSingleton.setBodyHandler(bodyDataHandler)
+
+                ResultActivity.goToAiResultActivity(requireActivity(), activityLauncher)
 
             }
+
 
         }
 
@@ -339,6 +266,7 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
                      bodyDataHandler.base64 = bitmap?.convertBase64()
 
                  }
+                bodyDataHandler.isAddImage = true
                 mBinding.uploadedImg.setImageBitmap(bitmap)
 
             }

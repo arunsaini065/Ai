@@ -8,6 +8,11 @@
         android:layout_marginTop="@dimen/_20dp"
         android:layout_height="match_parent"
         >
+        <include
+            android:visibility="gone"
+            android:id="@+id/result_loader_progress"
+            layout="@layout/loader_view">
+        </include>
        <androidx.appcompat.widget.AppCompatImageView
            android:id="@+id/m_back_press"
            app:layout_constraintTop_toTopOf="parent"
@@ -59,15 +64,6 @@
             tools:layout_editor_absoluteX="15dp" />
 
 
-        <ProgressBar
-            android:id="@+id/result_progress_loader"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/result_loader"
-            app:layout_constraintEnd_toEndOf="@+id/result_loader"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/result_loader" />
 
 
         <EditText

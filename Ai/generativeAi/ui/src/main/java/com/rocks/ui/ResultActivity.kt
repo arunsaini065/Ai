@@ -24,10 +24,12 @@ import com.rocks.api.Api
 import com.rocks.downloader.FileDownloader
 import com.rocks.factory.AiViewModelFactory
 import com.rocks.impl.ModelDataRepositoryImpl
+import com.rocks.model.UploadImage
 import com.rocks.ui.databinding.ActivityResultBinding
 import com.rocks.uistate.ModelUiState
 import com.rocks.usecase.ModelUseCase
 import com.rocks.viewmodel.AiViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerListener,OnGeneratorListener,OnCancelFragment {
@@ -89,46 +91,6 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
     override fun onReadyActivity(savedInstanceState: Bundle?) {
 
-        if (OutPutSingleton.hasOutput()) {
-
-            val outPutSingleton = OutPutSingleton.getOutPut()
-
-            if (outPutSingleton?.output?.isEmpty() == false){
-
-                mBinding.resultProgressLoader.beVisible()
-
-                Glide.with(this).asBitmap()
-
-                    .load(outPutSingleton.output[0])
-
-                    .addListener(object :RequestListener<Bitmap>{
-
-                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>, isFirstResource: Boolean): Boolean {
-
-                            mBinding.resultProgressLoader.beGone()
-
-                            return false
-
-                        }
-
-                        override fun onResourceReady(resource: Bitmap, model: Any, target: Target<Bitmap>?, dataSource: DataSource, isFirstResource: Boolean): Boolean {
-
-                            mBinding.resultProgressLoader.beGone()
-
-                            downloadBitmap=resource
-
-                            return false
-
-                        }
-
-                    }).into(mBinding.resultLoader)
-
-
-            }
-
-
-
-        }
 
         if (OutPutSingleton.hasBodyHandler()){
 
@@ -140,10 +102,59 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
             }
 
-            mBinding.positivePrompt.setText( body?.positivePrompt)
+            mBinding.positivePrompt.setText(body?.positivePrompt)
 
-            _viewModel.postModelIdsList(Api.getBodyOnlyKey(bodyDataHandler))
+            if (body != null) {
 
+                 if (body.isAddImage){
+
+                     _viewModel.uploadImage(Api.getBodyForUploadImage(bodyDataHandler))
+
+                 }else {
+
+                     _viewModel.postModelIdBase(body)
+
+                 }
+
+
+            }
+
+
+        }
+
+        lifecycleScope.launch {
+
+
+         _viewModel.stateflowUploadImage.collect{
+
+             if (it is ModelUiState.Success){
+
+                 mBinding.resultLoaderProgress.beGone()
+
+                 if (it.data!=null) {
+
+                     bodyDataHandler.uploadImage = it.data
+
+
+                     _viewModel.postModelIdBase(bodyDataHandler)
+                 }
+             }else if (it is ModelUiState.Loading){
+
+                 mBinding.resultLoaderProgress.beVisible()
+
+             } else if (it is ModelUiState.Processing){
+
+                 Toast.makeText(this@ResultActivity,"Processing",Toast.LENGTH_SHORT).show()
+
+             } else if (it is ModelUiState.Error){
+                 mBinding.resultLoaderProgress.beGone()
+
+                 Toast.makeText(this@ResultActivity,""+it.message,Toast.LENGTH_SHORT).show()
+
+             }
+
+
+         }
 
 
         }
@@ -166,7 +177,7 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
                                 override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>, isFirstResource: Boolean): Boolean {
 
-                                    mBinding.resultProgressLoader.beGone()
+                                    mBinding.resultLoaderProgress.beGone()
 
                                     return false
 
@@ -174,7 +185,7 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
                                 override fun onResourceReady(resource: Bitmap, model: Any, target: Target<Bitmap>?, dataSource: DataSource, isFirstResource: Boolean): Boolean {
 
-                                    mBinding.resultProgressLoader.beGone()
+                                    mBinding.resultLoaderProgress.beGone()
 
                                     downloadBitmap=resource
 
@@ -187,16 +198,19 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
 
                 } else if (it is ModelUiState.Error){
 
-                    mBinding.resultProgressLoader.beGone()
+                    mBinding.resultLoaderProgress.beGone()
 
                     Toast.makeText(this@ResultActivity,""+it.message,Toast.LENGTH_SHORT).show()
 
 
                 }else if (it is ModelUiState.Loading){
 
-                    mBinding.resultProgressLoader.beVisible()
+                    mBinding.resultLoaderProgress.beVisible()
+
                 } else if (it is ModelUiState.Processing){
+
                     Toast.makeText(this@ResultActivity,"Processing",Toast.LENGTH_SHORT).show()
+
                 }
 
             }
