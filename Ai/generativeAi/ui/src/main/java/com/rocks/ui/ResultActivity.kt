@@ -25,6 +25,7 @@ import com.rocks.api.Api
 import com.rocks.downloader.FileDownloader
 import com.rocks.factory.AiViewModelFactory
 import com.rocks.impl.ModelDataRepositoryImpl
+import com.rocks.seeds
 import com.rocks.ui.databinding.ActivityResultBinding
 import com.rocks.uistate.ModelUiState
 import com.rocks.usecase.ModelUseCase
@@ -233,7 +234,7 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
         mBinding.btnTry.setOnClickListener {
 
             showMoreVariateSheet(true) {
-
+                bodyDataHandler.seed = seeds()
                 getOutPut()
 
             }
@@ -243,7 +244,7 @@ class ResultActivity : AiBaseActivity<ActivityResultBinding>(),OnBodyHandlerList
         mBinding.btnMoreVariate.setOnClickListener {
 
             showMoreVariateSheet(true) {
-
+                bodyDataHandler.seed = seeds()
                 getOutPut()
 
             }
