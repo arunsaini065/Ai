@@ -5,7 +5,7 @@ import com.rocks.model.ModelListDataItem
 import com.rocks.ui.base.AiModelBaseAdapter
 import com.rocks.ui.base.AiModelBaseHolder
 
-class ModelAdapter(private var isStyle:Boolean, var callback:(ModelListDataItem)->Unit): AiModelBaseAdapter<ModelListDataItem>(ModelListDataItem.DIFF) {
+class ModelAdapter(private var isStyle:Boolean, var callback:(ModelListDataItem?)->Unit): AiModelBaseAdapter<ModelListDataItem>(ModelListDataItem.DIFF) {
 
 
     var isModelId:String? = ""
@@ -119,6 +119,12 @@ class ModelAdapter(private var isStyle:Boolean, var callback:(ModelListDataItem)
             }
 
         }else if (holder is NoEffectHolder){
+
+              holder.itemView.setOnClickListener {
+
+                  callback(null)
+
+              }
 
              if (isModelId.isNullOrEmpty()){
 

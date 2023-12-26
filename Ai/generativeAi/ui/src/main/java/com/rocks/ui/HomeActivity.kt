@@ -17,12 +17,9 @@ import com.rocks.usecase.ModelUseCase
 import com.rocks.viewmodel.AiViewModel
 
 
-class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener,OnCancelFragment {
-
-    override fun onCancel() {
+class HomeActivity : AiBaseActivity<ActivityHomeBinding>(),OnBodyHandlerListener {
 
 
-    }
 
 
 

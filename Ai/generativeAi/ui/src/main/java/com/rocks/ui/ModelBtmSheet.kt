@@ -82,9 +82,9 @@ class ModelBtmSheet: BottomSheetDialogFragment() {
 
         }
 
-        if (context is OnCancelFragment) {
+        if (requireParentFragment() is OnCancelFragment) {
 
-            onCancelFragment = context
+            onCancelFragment = requireParentFragment() as OnCancelFragment
 
         }
 
@@ -153,15 +153,18 @@ class ModelBtmSheet: BottomSheetDialogFragment() {
 
             if (::onBodyHandlerListener.isInitialized) {
 
+                if (it != null) {
+                    if (isStyle) {
 
-                if (isStyle) {
+                        onBodyHandlerListener.getHandlerBody().loraModel = it.model_id
 
-                    onBodyHandlerListener.getHandlerBody().loraModel = it.model_id
+                    } else {
 
-                }else{
+                        onBodyHandlerListener.getHandlerBody().modelId = it.model_id
 
-                    onBodyHandlerListener.getHandlerBody().modelId = it.model_id
-
+                    }
+                }else {
+                    onBodyHandlerListener.getHandlerBody().loraModel = ""
                 }
 
                 _aiUiViewModel.modelUpdate.value = onBodyHandlerListener.getHandlerBody()

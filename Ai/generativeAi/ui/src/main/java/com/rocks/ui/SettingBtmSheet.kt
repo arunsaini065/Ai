@@ -204,9 +204,9 @@ class SettingBtmSheet: BottomSheetDialogFragment() {
             onBodyHandlerListener = context
 
         }
-        if (context is OnCancelFragment) {
+        if (requireParentFragment() is OnCancelFragment) {
 
-            onCancelFragment = context
+            onCancelFragment = requireParentFragment() as OnCancelFragment
 
         }
 
