@@ -99,6 +99,7 @@ class CropRatioRecyclerView : RecyclerView {
 
         }
 
+        @SuppressLint("NotifyDataSetChanged")
         override fun onBindViewHolder(holder: CropRatioViewHolder, position: Int) {
 
             val item = _ratioMutableList[position]
@@ -188,19 +189,27 @@ class CropRatioRecyclerView : RecyclerView {
     @SuppressLint("NotifyDataSetChanged")
     fun notifySelectedItem(bodyDataHandler: BodyDataHandler?, lifecycleScope: LifecycleCoroutineScope) {
 
-        runCatching {
 
-            lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO) {
 
-                selectedItem = _ratioMutableList.map { it.toId() }.indexOf(bodyDataHandler?.aspectRatio?.toId())
+            runCatching {
 
-                withContext(Dispatchers.Main){
+                val index = _ratioMutableList.map { it.toId() }.indexOf(bodyDataHandler?.aspectRatio?.toId())
+
+                if (index<0){
+                    return@launch
+                }
+
+                selectedItem = index
+
+                withContext(Dispatchers.Main) {
 
                     adapter?.notifyDataSetChanged()
 
-                }
-            }
 
+                }
+
+            }
 
         }
 

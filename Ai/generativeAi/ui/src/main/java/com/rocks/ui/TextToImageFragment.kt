@@ -138,6 +138,13 @@ class TextToImageFragment : AiBaseFragment<TextToImageFragmentBinding>(),OnCance
 
                         activity?.showTryInspiration(it){
 
+                            bodyDataHandler.positivePrompt = it.description
+
+                            bodyDataHandler.modelId = it.modelId
+
+                            mModelTv.text = bodyDataHandler.modelId
+
+                            mBinding.positivePrompt.setText(bodyDataHandler.positivePrompt)
 
                         }
 
