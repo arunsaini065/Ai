@@ -55,19 +55,6 @@ val Int.pxToDp: Int
 val Int.dpToPx: Int
     get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
-fun getDummyIns(): MutableList<InspirationData> {
-
-    val list = mutableListOf<InspirationData>()
-
-    repeat(10){
-
-        list.add(InspirationData.DUMMY)
-
-    }
-
-    return list
-
-}
 
 
  fun TextView.setTextViewDrawableColor(color: Int) {

@@ -62,13 +62,9 @@ class ImageToImageFragment: AiBaseFragment<ImageToImageFragmentBinding>() {
 
         mBinding.dcRv.run {
 
-            layoutManager = GridLayoutManager(requireContext(),2,RecyclerView.HORIZONTAL,false)
+            layoutManager = GridLayoutManager(requireContext(),1,RecyclerView.HORIZONTAL,false)
 
-            adapter = DiscoverMoreAdapter().apply {
-
-                submitList(getDummyIns())
-
-            }
+            adapter = DiscoverMoreAdapter()
 
         }
 

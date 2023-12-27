@@ -14,10 +14,14 @@ class DiscoverMoreAdapter: ListAdapter<InspirationData, DiscoverMoreHolder>(Insp
 
     }
 
+    override fun getItemCount(): Int {
+        return super.getItemCount()+1
+    }
+
     override fun onBindViewHolder(holder: DiscoverMoreHolder, position: Int) {
 
 
-        Glide.with(holder.itemView.context).load(getItem(position).imageUrl).centerCrop().into(holder.binding.imageItem)
+        Glide.with(holder.itemView.context).load("https://img.rareprob.com/img/AI/img_example1.jpg").fitCenter().into(holder.binding.imageItem)
 
 
     }

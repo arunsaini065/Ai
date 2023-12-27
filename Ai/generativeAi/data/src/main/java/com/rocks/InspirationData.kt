@@ -25,7 +25,7 @@ data class InspirationData(
 
         val DUMMY = InspirationData(
             name = "",
-            imageUrl = "https://fastly.picsum.photos/id/278/536/354.jpg?hmac=B3RGgunW6oirJoQEgt80to9HNb7oZqLut-4fFVVc9NM"
+            imageUrl = "https://img.rareprob.com/img/AI/img_example1.jpg"
        , type = 0 )
 
         val DIFF = object : ItemCallback<InspirationData>() {

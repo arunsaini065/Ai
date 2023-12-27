@@ -10,19 +10,29 @@ import android.os.Bundle
 import android.widget.SeekBar
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.rocks.BodyDataHandler
+import com.rocks.OnBodyHandlerListener
+import com.rocks.api.Api
+import com.rocks.factory.AiViewModelFactory
+import com.rocks.impl.ModelDataRepositoryImpl
 import com.rocks.ui.cutout.CheckerboardDrawable
 import com.rocks.ui.cutout.CutOut
 import com.rocks.ui.cutout.DrawView
 import com.rocks.ui.databinding.ActivityGenerativeFillBinding
+import com.rocks.usecase.ModelUseCase
+import com.rocks.viewmodel.AiViewModel
 
-class GenerativeFillActivity : AiBaseActivity<ActivityGenerativeFillBinding>() {
+class GenerativeFillActivity : AiBaseActivity<ActivityGenerativeFillBinding>(),OnBodyHandlerListener {
 
     private val sourceUri  by lazy { intent?.data }
 
     private val builder by lazy { CutOut(mBinding.drawView).active()?.init() }
+    private val _aiUiViewModel by viewModels<AiUiViewModel>()
 
 
     companion object{
@@ -124,6 +134,10 @@ class GenerativeFillActivity : AiBaseActivity<ActivityGenerativeFillBinding>() {
 
     }
 
+    override fun getHandlerBody(): BodyDataHandler {
 
+        return _aiUiViewModel.bodyDataHandler
+
+    }
 
 }
