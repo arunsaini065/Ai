@@ -9,6 +9,7 @@ import com.rocks.BodyDataHandler
 import com.rocks.InspirationData
 import com.rocks.api.Api
 import com.rocks.model.ApiOutput
+import com.rocks.model.LoraModel
 import com.rocks.model.ModelListDataItem
 import com.rocks.model.SchedulerList
 import com.rocks.model.UploadImage
@@ -102,50 +103,52 @@ class AiViewModel (private val modelUseCase: ModelUseCase): ViewModel() {
     }
 
 
-    fun getLocalLoRAId(): ModelUiState<MutableList<ModelListDataItem>> {
-        val listOfLoRAid = mutableListOf<ModelListDataItem>()
-        val listOf = Api.listOfLoRAModel
-        val dummyUrl = "https://fastly.picsum.photos/id/278/536/354.jpg?hmac=B3RGgunW6oirJoQEgt80to9HNb7oZqLut-4fFVVc9NM"
-        listOf.forEach {
-            listOfLoRAid.add(
-                ModelListDataItem(
-                    "", "",
-                    "", "",
-                    "", "", "", it, "", dummyUrl, ""
-                )
-            )
+    fun getLocalLoRAId(context: Context) = flow {
 
+        runCatching {
+
+            val fileString = readJsonFromAssets(context, "lora_model.json")
+
+            val listOf  = parseJsonToModelLoraModel(fileString).map { it.toModelListDataItem() }.toMutableList()
+
+            emit(ModelUiState.Success(listOf))
         }
-
-        return ModelUiState.Success(listOfLoRAid)
-    }
+    }.flowOn(Dispatchers.IO)
 
 
     fun getAllInspiration(context: Context) = flow {
 
         runCatching {
 
-            val fileString = readJsonFromAssets(context)
+            val fileString = readJsonFromAssets(context,"inspirations.json")
 
 
 
-             emit(parseJsonToModel(fileString))
+             emit(parseJsonToModelInspirationData(fileString))
 
         }
 
     }.flowOn(Dispatchers.IO)
 
-    private fun readJsonFromAssets(context: Context): String {
+    private fun readJsonFromAssets(context: Context,name:String): String {
 
-        return context.assets.open("inspirations.json").bufferedReader().use { it.readText() }
+        return context.assets.open(name).bufferedReader().use { it.readText() }
 
     }
 
-    private fun parseJsonToModel(jsonString: String): MutableList<InspirationData> {
+    private fun parseJsonToModelInspirationData(jsonString: String): MutableList<InspirationData> {
 
         val gson = Gson()
 
         return gson.fromJson(jsonString, object : TypeToken<MutableList<InspirationData>>() {}.type)
+
+    }
+
+    private fun parseJsonToModelLoraModel(jsonString: String): MutableList<LoraModel> {
+
+        val gson = Gson()
+
+        return gson.fromJson(jsonString, object : TypeToken<MutableList<LoraModel>>() {}.type)
 
     }
 

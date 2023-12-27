@@ -133,24 +133,6 @@ object Api {
         return null
 
     }
-    val listOfLoRAModel = mutableListOf(
-        "hacked-tech",
-        "t-3d-model-V2",
-        "bawart",
-        "neonpunk",
-        "cyberpunk",
-        "gigachad",
-        "pencilsketchstyle",
-        "dlogo-dall-e-trained",
-        "sdxlpaintsplash",
-        "xiangrikui",
-        "steampunkai",
-        "3d-rendering-style",
-        "epi-noise-offset-v2",
-        "more_details",
-        "bloodstained---vecto",
-        "beautiful-detail-eye",
-    )
 
 }
 

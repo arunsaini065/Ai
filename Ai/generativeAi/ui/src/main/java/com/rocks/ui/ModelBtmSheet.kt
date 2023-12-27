@@ -102,8 +102,13 @@ class ModelBtmSheet: BottomSheetDialogFragment() {
 
                if (isStyle) {
 
+                   _viewModel.getLocalLoRAId(requireContext()).collect{
 
-                   loadModelAdapter(_viewModel.getLocalLoRAId())
+                       loadModelAdapter(it)
+
+
+                   }
+
 
 
                } else {
